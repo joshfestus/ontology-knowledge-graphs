@@ -1,0 +1,20 @@
+@prefix tw:   <https://tarnwick.example/ontology#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+tw:Product a owl:Class ; rdfs:label "product" .
+tw:Store a owl:Class ; rdfs:label "store" .
+
+tw:Organization a owl:Class ; rdfs:label "organization" .
+tw:Supplier a owl:Class ;
+    rdfs:label "supplier" ;
+    rdfs:subClassOf tw:Organization .
+
+tw:Place a owl:Class ; rdfs:label "place" .
+tw:Region a owl:Class ; rdfs:label "sales region" ;
+    rdfs:subClassOf tw:Place .
+tw:State a owl:Class ; rdfs:label "state" ;
+    rdfs:subClassOf tw:Place .
+tw:Town a owl:Class ; rdfs:label "town" ;
+    rdfs:subClassOf tw:Place .
+

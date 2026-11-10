@@ -1,0 +1,7 @@
+@prefix tw:     <https://tarnwick.example/ontology#> .
+@prefix vendor: <https://tarnwick.example/purchasing/vendor/> .
+@prefix rdfs:   <http://www.w3.org/2000/01/rdf-schema#> .
+
+vendor:77
+    rdfs:label "Brisgate Textiles Ltd" ;
+    tw:country "United Kingdom" .

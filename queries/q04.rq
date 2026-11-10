@@ -1,0 +1,11 @@
+# 4. Which suppliers does Tarnwick still buy from?
+PREFIX tw:   <https://tarnwick.example/ontology#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?supplier ?since WHERE {
+  ?s a tw:Supplier ;
+     rdfs:label ?supplier ;
+     tw:firstSupplied ?since .
+  FILTER NOT EXISTS { ?s tw:lastSupplied ?until }
+}
+ORDER BY ?supplier

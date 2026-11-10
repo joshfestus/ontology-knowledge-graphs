@@ -1,0 +1,7 @@
+# Which products are discontinued?
+PREFIX tw: <https://tarnwick.example/ontology#>
+
+SELECT ?product WHERE {
+  ?product tw:hasStatus tw:Discontinued .
+}
+ORDER BY ?product

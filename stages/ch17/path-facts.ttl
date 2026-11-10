@@ -1,0 +1,14 @@
+@prefix tw:      <https://tarnwick.example/ontology#> .
+@prefix store:   <https://tarnwick.example/id/store/> .
+@prefix stock:   <https://tarnwick.example/id/stock/> .
+@prefix prod:    <https://tarnwick.example/id/product/> .
+@prefix sup:     <https://tarnwick.example/id/supplier/> .
+@prefix company: <https://tarnwick.example/id/org/> .
+
+# The RDF facts behind the shortest path from the Burlington store to
+# Lowmoor Holdings.
+stock:ST-BTV-TW-K103 tw:atStore store:ST-BTV ;
+    tw:product prod:TW-K103 ;
+    tw:quantity 9 .
+prod:TW-K103 tw:suppliedBy sup:SUP-02 .
+sup:SUP-02 tw:parentOrganization company:ORG-01 .

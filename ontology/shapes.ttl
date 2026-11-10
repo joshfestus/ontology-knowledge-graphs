@@ -1,0 +1,165 @@
+@prefix tw:   <https://tarnwick.example/ontology#> .
+@prefix tws:  <https://tarnwick.example/shapes#> .
+@prefix sh:   <http://www.w3.org/ns/shacl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+
+# What a complete, sensible Tarnwick record looks like (Chapter 12).
+# The ontology says what things mean; these shapes say what the data
+# must contain before anyone relies on it.
+
+tws:ProductShape a sh:NodeShape ;
+    sh:targetClass tw:Product ;
+    sh:property [
+        sh:path tw:sku ;
+        sh:minCount 1 ; sh:maxCount 1 ;
+        sh:datatype xsd:string ;
+        sh:pattern "^TW-[A-Z][0-9]{3}$" ;
+        sh:message "Every product needs exactly one SKU like TW-A123." ] ;
+    sh:property [
+        sh:path rdfs:label ;
+        sh:minCount 1 ;
+        sh:message "Every product needs a name." ] ;
+    sh:property [
+        sh:path tw:priceUSD ;
+        sh:minCount 1 ; sh:maxCount 1 ;
+        sh:datatype xsd:decimal ; sh:minExclusive 0 ;
+        sh:message "Every product needs one price above zero." ] ;
+    sh:property [
+        sh:path tw:weightGrams ;
+        sh:minCount 1 ; sh:maxCount 1 ;
+        sh:datatype xsd:integer ; sh:minExclusive 0 ;
+        sh:message """Every product needs one weight in grams, so
+            customers can compare packed weights.""" ] ;
+    sh:property [
+        sh:path tw:inCategory ;
+        sh:minCount 1 ;
+        sh:class skos:Concept ;
+        sh:message """Every product must be in at least one category
+            from the taxonomy.""" ] ;
+    sh:property [
+        sh:path tw:suppliedBy ;
+        sh:minCount 1 ; sh:maxCount 1 ;
+        sh:class tw:Supplier ;
+        sh:message "Every product needs exactly one known supplier." ] ;
+    sh:property [
+        sh:path tw:hasStatus ;
+        sh:minCount 1 ; sh:maxCount 1 ;
+        sh:in ( tw:Active tw:Discontinued tw:Recalled ) ;
+        sh:message """Every product needs one status: active,
+            discontinued or recalled.""" ] ;
+    sh:property [
+        sh:path tw:releaseDate ;
+        sh:minCount 1 ; sh:maxCount 1 ;
+        sh:datatype xsd:date ;
+        sh:message "Every product needs a release date." ] ;
+    sh:sparql [
+        sh:message "A tent must have a season rating." ;
+        sh:prefixes tws:prefixes ;
+        sh:select """
+            SELECT $this WHERE {
+                $this tw:inCategory/skos:broader* ?tent .
+                ?tent skos:notation "TENT" .
+                FILTER NOT EXISTS { $this tw:seasonRating ?rating }
+            }""" ] .
+
+tws:OrderShape a sh:NodeShape ;
+    sh:targetClass tw:Order ;
+    sh:property [
+        sh:path tw:placedBy ;
+        sh:minCount 1 ; sh:maxCount 1 ;
+        sh:class tw:Customer ] ;
+    sh:property [
+        sh:path tw:soldAt ;
+        sh:minCount 1 ; sh:maxCount 1 ;
+        sh:class tw:Store ] ;
+    sh:property [
+        sh:path tw:orderDate ;
+        sh:minCount 1 ; sh:maxCount 1 ;
+        sh:datatype xsd:date ] ;
+    sh:property [
+        sh:path tw:hasLine ;
+        sh:minCount 1 ;
+        sh:message "An order with no lines sold nothing." ] ;
+    sh:sparql [
+        sh:message """This order sells a product before the product's
+            release date.""" ;
+        sh:prefixes tws:prefixes ;
+        sh:select """
+            SELECT $this ?value WHERE {
+                $this tw:orderDate ?ordered ;
+                      tw:hasLine/tw:product ?value .
+                ?value tw:releaseDate ?released .
+                FILTER (?ordered < ?released)
+            }""" ] ;
+    sh:sparql [
+        sh:message """This order is dated while the customer's account
+            was closed.""" ;
+        sh:prefixes tws:prefixes ;
+        sh:select """
+            SELECT $this WHERE {
+                $this tw:orderDate ?ordered ; tw:placedBy ?customer .
+                ?customer tw:accountClosed ?closed .
+                FILTER (?ordered > ?closed)
+            }""" ] .
+
+tws:OrderLineShape a sh:NodeShape ;
+    sh:targetClass tw:OrderLine ;
+    sh:property [
+        sh:path tw:product ;
+        sh:minCount 1 ; sh:maxCount 1 ;
+        sh:class tw:Product ] ;
+    sh:property [
+        sh:path tw:quantity ;
+        sh:minCount 1 ; sh:maxCount 1 ;
+        sh:datatype xsd:integer ; sh:minInclusive 1 ] ;
+    sh:property [
+        sh:path tw:unitPriceUSD ;
+        sh:minCount 1 ; sh:maxCount 1 ;
+        sh:datatype xsd:decimal ; sh:minExclusive 0 ] .
+
+tws:CustomerShape a sh:NodeShape ;
+    sh:targetClass tw:Customer ;
+    sh:property [
+        sh:path tw:homeTown ;
+        sh:minCount 1 ; sh:maxCount 1 ;
+        sh:class tw:Town ] ;
+    sh:property [
+        sh:path tw:accountOpened ;
+        sh:minCount 1 ; sh:maxCount 1 ;
+        sh:datatype xsd:date ] ;
+    sh:property [
+        sh:path tw:marketingOptIn ;
+        sh:minCount 1 ; sh:maxCount 1 ;
+        sh:datatype xsd:boolean ] .
+
+tws:SupplierShape a sh:NodeShape ;
+    sh:targetClass tw:Supplier ;
+    sh:property [ sh:path rdfs:label ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path tw:country ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [
+        sh:path tw:firstSupplied ;
+        sh:minCount 1 ; sh:maxCount 1 ;
+        sh:datatype xsd:date ] .
+
+tws:StockShape a sh:NodeShape ;
+    sh:targetClass tw:StockLevel ;
+    sh:property [
+        sh:path tw:atStore ;
+        sh:minCount 1 ; sh:maxCount 1 ;
+        sh:class tw:Store ] ;
+    sh:property [
+        sh:path tw:product ;
+        sh:minCount 1 ; sh:maxCount 1 ;
+        sh:class tw:Product ] ;
+    sh:property [
+        sh:path tw:quantity ;
+        sh:minCount 1 ; sh:maxCount 1 ;
+        sh:datatype xsd:integer ; sh:minInclusive 0 ] .
+
+tws:prefixes sh:declare
+    [ sh:prefix "tw" ;
+      sh:namespace "https://tarnwick.example/ontology#"^^xsd:anyURI ] ,
+    [ sh:prefix "skos" ;
+      sh:namespace "http://www.w3.org/2004/02/skos/core#"^^xsd:anyURI ] .

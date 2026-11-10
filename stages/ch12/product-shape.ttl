@@ -1,0 +1,22 @@
+@prefix tw:   <https://tarnwick.example/ontology#> .
+@prefix tws:  <https://tarnwick.example/shapes#> .
+@prefix sh:   <http://www.w3.org/ns/shacl#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+
+tws:ProductShape a sh:NodeShape ;
+    sh:targetClass tw:Product ;
+    sh:property [
+        sh:path tw:sku ;
+        sh:minCount 1 ; sh:maxCount 1 ;
+        sh:pattern "^TW-[A-Z][0-9]{3}$" ;
+        sh:message "Every product needs exactly one SKU like TW-A123." ] ;
+    sh:property [
+        sh:path tw:weightGrams ;
+        sh:minCount 1 ; sh:maxCount 1 ;
+        sh:datatype xsd:integer ;
+        sh:message "Every product needs one weight in whole grams." ] ;
+    sh:property [
+        sh:path tw:hasStatus ;
+        sh:minCount 1 ; sh:maxCount 1 ;
+        sh:in ( tw:Active tw:Discontinued tw:Recalled ) ;
+        sh:message "Every product needs one of the three statuses." ] .

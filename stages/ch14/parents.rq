@@ -1,0 +1,13 @@
+# Every supplier, with its parent company if it has one.
+PREFIX tw:   <https://tarnwick.example/ontology#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?supplier ?parent WHERE {
+  ?s a tw:Supplier ;
+     rdfs:label ?supplier .
+  OPTIONAL {
+    ?s tw:parentOrganization ?p .
+    ?p rdfs:label ?parent .
+  }
+}
+ORDER BY ?supplier

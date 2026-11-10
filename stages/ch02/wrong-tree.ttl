@@ -1,0 +1,294 @@
+@prefix cat:  <https://tarnwick.example/id/category/> .
+@prefix prob: <https://tarnwick.example/id/problem/> .
+@prefix tid:  <https://tarnwick.example/id/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+
+tid:categories a skos:ConceptScheme ;
+    skos:prefLabel "Tarnwick product categories"@en .
+
+cat:CAMP a skos:Concept ;
+    skos:inScheme tid:categories ;
+    skos:prefLabel "Camping"@en ;
+    skos:notation "CAMP" ;
+    skos:topConceptOf tid:categories ;
+    skos:definition """Equipment for sleeping, cooking and sheltering
+        outdoors overnight."""@en .
+
+cat:TENT a skos:Concept ;
+    skos:inScheme tid:categories ;
+    skos:prefLabel "Tents"@en ;
+    skos:notation "TENT" ;
+    skos:related cat:TENT-ACC ;
+    skos:broader cat:CAMP ;
+    skos:definition """Portable shelters made of fabric held up by poles
+        or air beams."""@en .
+
+cat:TENT-BP a skos:Concept ;
+    skos:inScheme tid:categories ;
+    skos:prefLabel "Backpacking Tents"@en ;
+    skos:notation "TENT-BP" ;
+    skos:broader cat:TENT ;
+    skos:definition """Tents light and small enough to carry on foot for
+        several days."""@en .
+
+cat:TENT-FAM a skos:Concept ;
+    skos:inScheme tid:categories ;
+    skos:prefLabel "Family Tents"@en ;
+    skos:altLabel "Shelters"@en ;
+    skos:notation "TENT-FAM" ;
+    skos:broader cat:TENT ;
+    skos:definition """Tents for car camping, too heavy to carry far, with
+        room to stand up."""@en .
+
+cat:TENT-ACC a skos:Concept ;
+    skos:inScheme tid:categories ;
+    skos:prefLabel "Tent Accessories"@en ;
+    skos:altLabel "Tent Extras"@en ;
+    skos:notation "TENT-ACC" ;
+    skos:related cat:TENT ;
+    skos:broader cat:TENT ;
+    skos:definition """Parts and add-ons that are used with a tent but
+        sold separately."""@en .
+
+cat:SLEEP a skos:Concept ;
+    skos:inScheme tid:categories ;
+    skos:prefLabel "Sleeping"@en ;
+    skos:altLabel "Sleep Systems"@en ;
+    skos:notation "SLEEP" ;
+    skos:broader cat:CAMP ;
+    skos:definition """Products that keep a person warm and comfortable
+        while sleeping outdoors."""@en .
+
+cat:SLEEP-BAG a skos:Concept ;
+    skos:inScheme tid:categories ;
+    skos:prefLabel "Sleeping Bags"@en ;
+    skos:notation "SLEEP-BAG" ;
+    skos:related cat:SLEEP-MAT ;
+    skos:broader cat:SLEEP ;
+    skos:definition """Insulated bags to sleep inside, rated by the lowest
+        comfortable temperature."""@en .
+
+cat:SLEEP-MAT a skos:Concept ;
+    skos:inScheme tid:categories ;
+    skos:prefLabel "Sleeping Mats"@en ;
+    skos:notation "SLEEP-MAT" ;
+    skos:related cat:SLEEP-BAG ;
+    skos:broader cat:SLEEP ;
+    skos:definition """Pads that go under a sleeping bag to insulate from
+        the ground."""@en .
+
+cat:KITCHEN a skos:Concept ;
+    skos:inScheme tid:categories ;
+    skos:prefLabel "Camp Kitchen"@en ;
+    skos:altLabel "Cook Systems"@en ;
+    skos:notation "KITCHEN" ;
+    skos:broader cat:CAMP ;
+        skos:definition """Equipment for cooking and boiling water
+        outdoors."""@en .
+
+cat:STOVE a skos:Concept ;
+    skos:inScheme tid:categories ;
+    skos:prefLabel "Stoves"@en ;
+    skos:notation "STOVE" ;
+    skos:related cat:COOK ;
+    skos:broader cat:KITCHEN ;
+    skos:definition """Portable burners that run on gas canisters or
+        liquid fuel."""@en .
+
+cat:COOK a skos:Concept ;
+    skos:inScheme tid:categories ;
+    skos:prefLabel "Cookware"@en ;
+    skos:notation "COOK" ;
+    skos:related cat:STOVE ;
+    skos:broader cat:KITCHEN ;
+    skos:definition "Pots, pans and kettles for outdoor cooking."@en .
+
+cat:REPAIR a skos:Concept ;
+    skos:inScheme tid:categories ;
+    skos:prefLabel "Repair and Care"@en ;
+    skos:notation "REPAIR" ;
+    skos:broader cat:CAMP ;
+        skos:definition """Products for fixing and maintaining outdoor
+        gear."""@en .
+
+cat:HIKE a skos:Concept ;
+    skos:inScheme tid:categories ;
+    skos:prefLabel "Hiking"@en ;
+    skos:notation "HIKE" ;
+    skos:topConceptOf tid:categories ;
+    skos:definition """Equipment for walking on trails, for a day or for
+        longer."""@en .
+
+cat:FOOT a skos:Concept ;
+    skos:inScheme tid:categories ;
+    skos:prefLabel "Footwear"@en ;
+    skos:notation "FOOT" ;
+    skos:broader cat:HIKE ;
+        skos:definition """Boots and shoes made for walking on rough
+        ground."""@en .
+
+cat:BOOT a skos:Concept ;
+    skos:inScheme tid:categories ;
+    skos:prefLabel "Hiking Boots"@en ;
+    skos:altLabel "Boots"@en ;
+    skos:notation "BOOT" ;
+    skos:broader cat:FOOT ;
+    skos:definition """Footwear that covers the ankle, for support on
+        rough or wet ground."""@en .
+
+cat:SHOE a skos:Concept ;
+    skos:inScheme tid:categories ;
+    skos:prefLabel "Trail Shoes"@en ;
+    skos:altLabel "Trail Runners"@en ;
+    skos:notation "SHOE" ;
+    skos:broader cat:FOOT ;
+        skos:definition """Low cut footwear for trails, lighter than
+        boots."""@en .
+
+cat:PACK a skos:Concept ;
+    skos:inScheme tid:categories ;
+    skos:prefLabel "Packs"@en ;
+    skos:altLabel "Rucksacks"@en ;
+    skos:altLabel "Backpacks"@en ;
+    skos:notation "PACK" ;
+    skos:broader cat:HIKE ;
+    skos:definition "Bags carried on the back."@en .
+
+cat:PACK-DAY a skos:Concept ;
+    skos:inScheme tid:categories ;
+    skos:prefLabel "Daypacks"@en ;
+    skos:notation "PACK-DAY" ;
+    skos:broader cat:PACK ;
+    skos:definition """Packs under 35 litres, for trips that end the same
+        day."""@en .
+
+cat:PACK-BP a skos:Concept ;
+    skos:inScheme tid:categories ;
+    skos:prefLabel "Backpacking Packs"@en ;
+    skos:notation "PACK-BP" ;
+    skos:broader cat:PACK ;
+    skos:definition """Packs of 35 litres or more with a hip belt, for
+        overnight trips."""@en .
+
+cat:CLOTH a skos:Concept ;
+    skos:inScheme tid:categories ;
+    skos:prefLabel "Clothing"@en ;
+    skos:notation "CLOTH" ;
+    skos:topConceptOf tid:categories ;
+    skos:definition "Garments made for outdoor use."@en .
+
+cat:JACKET a skos:Concept ;
+    skos:inScheme tid:categories ;
+    skos:prefLabel "Jackets"@en ;
+    skos:notation "JACKET" ;
+    skos:broader cat:CLOTH ;
+    skos:definition "Outer garments for the upper body."@en .
+
+cat:JACKET-WP a skos:Concept ;
+    skos:inScheme tid:categories ;
+    skos:prefLabel "Waterproof Jackets"@en ;
+    skos:altLabel "Hardshells"@en ;
+    skos:altLabel "Rain Jackets"@en ;
+    skos:notation "JACKET-WP" ;
+    skos:broader cat:JACKET ;
+    skos:definition """Jackets that keep rain out while letting sweat
+        escape."""@en .
+
+cat:JACKET-INS a skos:Concept ;
+    skos:inScheme tid:categories ;
+    skos:prefLabel "Insulated Jackets"@en ;
+    skos:altLabel "Insulation"@en ;
+    skos:altLabel "Puffer Jackets"@en ;
+    skos:notation "JACKET-INS" ;
+    skos:broader cat:JACKET ;
+    skos:definition """Jackets filled with down or synthetic fibres to
+        keep heat in."""@en .
+
+cat:BASE a skos:Concept ;
+    skos:inScheme tid:categories ;
+    skos:prefLabel "Base Layers"@en ;
+    skos:notation "BASE" ;
+    skos:broader cat:CLOTH ;
+    skos:definition """Garments worn next to the skin to move sweat away
+        from it."""@en .
+
+cat:CLIMB a skos:Concept ;
+    skos:inScheme tid:categories ;
+    skos:prefLabel "Climbing"@en ;
+    skos:notation "CLIMB" ;
+    skos:topConceptOf tid:categories ;
+    skos:definition """Equipment for rock climbing. Tarnwick plans to
+        start selling it."""@en .
+
+cat:HARNESS a skos:Concept ;
+    skos:inScheme tid:categories ;
+    skos:prefLabel "Harnesses"@en ;
+    skos:notation "HARNESS" ;
+    skos:broader cat:CLIMB ;
+    skos:definition "Climbing harnesses. No products yet."@en .
+
+tid:problems a skos:ConceptScheme ;
+    skos:prefLabel "Tarnwick support problem types"@en .
+
+prob:leak a skos:Concept ;
+    skos:inScheme tid:problems ;
+    skos:topConceptOf tid:problems ;
+    skos:prefLabel "leak"@en ;
+        skos:definition """Water getting in through fabric, seams or
+        vents."""@en .
+
+prob:zipper a skos:Concept ;
+    skos:inScheme tid:problems ;
+    skos:topConceptOf tid:problems ;
+    skos:prefLabel "zipper fault"@en ;
+    skos:definition "A zip that splits, sticks or breaks."@en .
+
+prob:deflation a skos:Concept ;
+    skos:inScheme tid:problems ;
+    skos:topConceptOf tid:problems ;
+    skos:prefLabel "loss of air"@en ;
+    skos:definition "An inflatable product going soft or flat."@en .
+
+prob:strap a skos:Concept ;
+    skos:inScheme tid:problems ;
+    skos:topConceptOf tid:problems ;
+    skos:prefLabel "strap or buckle fault"@en ;
+        skos:definition """A strap, buckle or adjuster that breaks or
+        slips."""@en .
+
+prob:ignition a skos:Concept ;
+    skos:inScheme tid:problems ;
+    skos:topConceptOf tid:problems ;
+    skos:prefLabel "stove will not light or burns badly"@en ;
+    skos:definition "A stove that will not light, or burns unsafely."@en .
+
+prob:missing-part a skos:Concept ;
+    skos:inScheme tid:problems ;
+    skos:topConceptOf tid:problems ;
+    skos:prefLabel "missing part"@en ;
+    skos:definition "A product arrived without one of its parts."@en .
+
+prob:sizing a skos:Concept ;
+    skos:inScheme tid:problems ;
+    skos:topConceptOf tid:problems ;
+    skos:prefLabel "size or fit"@en ;
+    skos:definition "A product that does not fit the customer."@en .
+
+prob:delivery a skos:Concept ;
+    skos:inScheme tid:problems ;
+    skos:topConceptOf tid:problems ;
+    skos:prefLabel "delivery problem"@en ;
+    skos:definition "A late, lost or damaged delivery."@en .
+
+prob:wrong-item a skos:Concept ;
+    skos:inScheme tid:problems ;
+    skos:topConceptOf tid:problems ;
+    skos:prefLabel "wrong item sent"@en ;
+    skos:definition """The customer received a different product from the
+        one ordered."""@en .
+
+prob:seam a skos:Concept ;
+    skos:inScheme tid:problems ;
+    skos:topConceptOf tid:problems ;
+    skos:prefLabel "seam or stitching failure"@en ;
+    skos:definition "Stitching or bonding coming apart."@en .

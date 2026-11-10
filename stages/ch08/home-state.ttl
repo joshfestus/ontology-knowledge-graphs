@@ -1,0 +1,8 @@
+@prefix tw:    <https://tarnwick.example/ontology#> .
+@prefix cust:  <https://tarnwick.example/id/customer/> .
+@prefix place: <https://tarnwick.example/id/place/> .
+
+place:CO a tw:State .
+
+cust:C-0001 a tw:Customer ;
+    tw:homeTown place:CO .

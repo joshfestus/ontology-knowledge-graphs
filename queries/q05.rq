@@ -1,0 +1,16 @@
+# 5. Which products on sale today came from a supplier Tarnwick has
+#    stopped using?
+PREFIX tw:   <https://tarnwick.example/ontology#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#>
+
+SELECT ?sku ?name ?supplier ?lastSupplied WHERE {
+  ?product tw:hasStatus tw:Active ;
+           tw:sku ?sku ;
+           rdfs:label ?name ;
+           tw:suppliedBy ?s .
+  ?s rdfs:label ?supplier ;
+     tw:lastSupplied ?lastSupplied .
+  FILTER (?lastSupplied < "2026-09-30"^^xsd:date)
+}
+ORDER BY ?sku

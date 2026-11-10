@@ -1,0 +1,12 @@
+@prefix tw:   <https://tarnwick.example/ontology#> .
+@prefix prod: <https://tarnwick.example/id/product/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+
+prod:TW-T102
+    rdfs:label "Backpacking Tent 2P"@en ;
+    tw:sku "TW-T102" ;
+    tw:priceUSD 249.00 ;
+    tw:weightGrams 1640 ;
+    tw:seasonRating 3 ;
+    tw:releaseDate "2024-03-01"^^xsd:date .

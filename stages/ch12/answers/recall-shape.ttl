@@ -1,0 +1,22 @@
+@prefix tw:   <https://tarnwick.example/ontology#> .
+@prefix tws:  <https://tarnwick.example/shapes#> .
+@prefix sh:   <http://www.w3.org/ns/shacl#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+
+tws:RecalledStockShape a sh:NodeShape ;
+    sh:targetClass tw:StockLevel ;
+    sh:sparql [
+        sh:message """This store still holds units of a recalled product.
+            Take them off sale and return them under the recall policy.""" ;
+        sh:prefixes tws:prefixes ;
+        sh:select """
+            SELECT $this ?value WHERE {
+                $this tw:product ?value ;
+                      tw:quantity ?units .
+                ?value tw:hasStatus tw:Recalled .
+                FILTER (?units > 0)
+            }""" ] .
+
+tws:prefixes sh:declare
+    [ sh:prefix "tw" ;
+      sh:namespace "https://tarnwick.example/ontology#"^^xsd:anyURI ] .

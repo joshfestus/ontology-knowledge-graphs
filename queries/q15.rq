@@ -1,0 +1,11 @@
+# 15. Which products contain down, and in which country is their supplier
+#     based?
+PREFIX tw: <https://tarnwick.example/ontology#>
+
+SELECT ?sku ?material ?country WHERE {
+  ?product tw:sku ?sku ;
+           tw:mainMaterial ?material ;
+           tw:suppliedBy/tw:country ?country .
+  FILTER (CONTAINS(?material, "down"))
+}
+ORDER BY ?sku

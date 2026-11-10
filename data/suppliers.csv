@@ -1,0 +1,7 @@
+supplier_id,name,country,first_supplied,last_supplied,parent_org
+SUP-01,Brisgate Textiles Ltd,United Kingdom,2019-02-01,,
+SUP-02,Corran Alloy Works,Canada,2020-06-15,,ORG-01
+SUP-03,Mirefield Down Company,Poland,2018-09-01,2025-06-30,
+SUP-04,Wrenmoor Insulation,United States,2024-01-10,,
+SUP-05,Quillan Packworks Inc.,United States,2019-05-20,,ORG-01
+SUP-06,Tallowmere Footwear,Portugal,2021-03-01,,

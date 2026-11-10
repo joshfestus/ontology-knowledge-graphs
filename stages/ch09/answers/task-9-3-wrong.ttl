@@ -1,0 +1,5 @@
+@prefix cat:  <https://tarnwick.example/id/category/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+
+# Stoves already sit under Camp Kitchen, so this breaks the SKOS rule.
+cat:STOVE skos:related cat:KITCHEN .

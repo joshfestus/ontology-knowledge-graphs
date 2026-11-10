@@ -1,0 +1,10 @@
+# 19. Which policy applies when a customer returns a recalled product?
+PREFIX tw:   <https://tarnwick.example/ontology#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?sku ?policy ?effective WHERE {
+  ?recall tw:product/tw:sku ?sku ;
+          tw:handledUnder ?p .
+  ?p rdfs:label ?policy ;
+     tw:effective ?effective .
+}

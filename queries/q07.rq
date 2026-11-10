@@ -1,0 +1,14 @@
+# 7. Which stores have a given product in stock, and how many?
+PREFIX tw:   <https://tarnwick.example/ontology#>
+PREFIX prod: <https://tarnwick.example/id/product/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?store ?quantity WHERE {
+  VALUES ?product { prod:TW-T102 }
+  ?level tw:product ?product ;
+         tw:atStore ?s ;
+         tw:quantity ?quantity .
+  ?s rdfs:label ?store .
+  FILTER (?quantity > 0)
+}
+ORDER BY DESC(?quantity) ?store

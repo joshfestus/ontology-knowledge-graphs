@@ -1,0 +1,8 @@
+@prefix tw:   <https://tarnwick.example/ontology#> .
+@prefix sup:  <https://tarnwick.example/id/supplier/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+# Copied from the product file to record a sample tent Brisgate sent,
+# with the subject left unchanged.
+sup:SUP-01 a tw:Product ;
+    rdfs:label "Sample tent from Brisgate" .

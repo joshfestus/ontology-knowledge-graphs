@@ -1,0 +1,13 @@
+# 11. Which customers are active under the marketing definition?
+# Marketing: placed at least one order in the twelve months up to today.
+PREFIX tw:  <https://tarnwick.example/ontology#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+SELECT DISTINCT ?customer WHERE {
+  ?order tw:placedBy ?c ;
+         tw:orderDate ?date .
+  FILTER (?date > "2025-09-30"^^xsd:date
+          && ?date <= "2026-09-30"^^xsd:date)
+  BIND (STRAFTER(STR(?c), "customer/") AS ?customer)
+}
+ORDER BY ?customer

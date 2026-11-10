@@ -1,0 +1,23 @@
+@prefix tw:    <https://tarnwick.example/ontology#> .
+@prefix prod:  <https://tarnwick.example/id/product/> .
+@prefix order: <https://tarnwick.example/id/order/> .
+@prefix line:  <https://tarnwick.example/id/line/> .
+@prefix cust:  <https://tarnwick.example/id/customer/> .
+@prefix store: <https://tarnwick.example/id/store/> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+
+order:O-00238
+    tw:placedBy cust:C-0091 ;
+    tw:soldAt store:ST-WEB ;
+    tw:orderDate "2025-04-23"^^xsd:date ;
+    tw:hasLine line:O-00238-TW-T102 , line:O-00238-TW-A101 .
+
+line:O-00238-TW-T102
+    tw:product prod:TW-T102 ;
+    tw:quantity 1 ;
+    tw:unitPriceUSD 249.00 .
+
+line:O-00238-TW-A101
+    tw:product prod:TW-A101 ;
+    tw:quantity 2 ;
+    tw:unitPriceUSD 49.00 .

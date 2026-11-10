@@ -1,0 +1,22 @@
+@prefix tw:   <https://tarnwick.example/ontology#> .
+@prefix tws:  <https://tarnwick.example/shapes#> .
+@prefix sh:   <http://www.w3.org/ns/shacl#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+
+tws:CustomerShape a sh:NodeShape ;
+    sh:targetClass tw:Customer ;
+    sh:property [
+        sh:path tw:homeTown ;
+        sh:minCount 1 ; sh:maxCount 1 ;
+        sh:class tw:Town ;
+        sh:message "Every customer needs one home town." ] ;
+    sh:property [
+        sh:path tw:accountOpened ;
+        sh:minCount 1 ; sh:maxCount 1 ;
+        sh:datatype xsd:date ;
+        sh:message "Every customer needs one account opening date." ] ;
+    sh:property [
+        sh:path tw:marketingOptIn ;
+        sh:minCount 1 ; sh:maxCount 1 ;
+        sh:datatype xsd:boolean ;
+        sh:message "Every customer needs a marketing choice, true or false." ] .

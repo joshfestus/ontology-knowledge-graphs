@@ -1,0 +1,23 @@
+@prefix tw:   <https://tarnwick.example/ontology#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+
+tw:Product
+    rdfs:label "product" ;
+    skos:definition """Something Tarnwick sells, identified by one SKU.
+        Each size or version with its own SKU is a separate product.""" .
+
+tw:Supplier
+    rdfs:label "supplier" ;
+    skos:definition """An organization that Tarnwick buys products from,
+        or has bought products from in the past.""" .
+
+tw:suppliedBy
+    rdfs:label "supplied by" ;
+    skos:definition """Links a product to the supplier Tarnwick buys it
+        from.""" .
+
+tw:weightGrams
+    rdfs:label "weight in grams" ;
+    skos:definition """The weight of one unit as packed for a trip,
+        without retail packaging. Footwear is weighed as a pair.""" .

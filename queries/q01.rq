@@ -1,0 +1,13 @@
+# 1. Which products are tents, whatever the website calls them?
+PREFIX tw:   <https://tarnwick.example/ontology#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+SELECT ?sku ?name ?webLabel WHERE {
+  ?category skos:prefLabel|skos:altLabel "Tents"@en .
+  ?product tw:inCategory/skos:broader* ?category ;
+           tw:sku ?sku ;
+           rdfs:label ?name ;
+           tw:webCategoryLabel ?webLabel .
+}
+ORDER BY ?sku

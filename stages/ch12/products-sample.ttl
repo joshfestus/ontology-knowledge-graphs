@@ -1,0 +1,16 @@
+@prefix tw:   <https://tarnwick.example/ontology#> .
+@prefix prod: <https://tarnwick.example/id/product/> .
+
+prod:TW-T102 a tw:Product ;
+    tw:sku "TW-T102" ;
+    tw:weightGrams 1640 ;
+    tw:hasStatus tw:Active .
+
+prod:TW-A107 a tw:Product ;
+    tw:sku "TW-A107" ;
+    tw:hasStatus tw:Active .
+
+prod:TW-K101 a tw:Product ;
+    tw:sku "TW-K1O1" ;
+    tw:weightGrams 85 ;
+    tw:hasStatus tw:Active , tw:OnSale .

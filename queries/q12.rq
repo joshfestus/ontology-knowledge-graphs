@@ -1,0 +1,16 @@
+# 12. Which customers are active under the finance definition,
+#     and how do the two lists differ?
+# Finance: the account is open and the customer has ordered at least once.
+PREFIX tw:  <https://tarnwick.example/ontology#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+SELECT ?customer ?finance ?marketing WHERE {
+  ?c a tw:Customer .
+  BIND (STRAFTER(STR(?c), "customer/") AS ?customer)
+  BIND (EXISTS { ?o tw:placedBy ?c }
+        && NOT EXISTS { ?c tw:accountClosed ?closed } AS ?finance)
+  BIND (EXISTS { ?o2 tw:placedBy ?c ; tw:orderDate ?d .
+                 FILTER (?d > "2025-09-30"^^xsd:date) } AS ?marketing)
+  FILTER (?finance != ?marketing)
+}
+ORDER BY ?customer

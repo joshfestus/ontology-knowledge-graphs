@@ -1,0 +1,8 @@
+@prefix tw:     <https://tarnwick.example/ontology#> .
+@prefix rdfs:   <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+
+tw:Product rdfs:subClassOf schema:Product .
+tw:Organization rdfs:subClassOf schema:Organization .
+tw:sku rdfs:subPropertyOf schema:sku .
+tw:parentOrganization rdfs:subPropertyOf schema:parentOrganization .

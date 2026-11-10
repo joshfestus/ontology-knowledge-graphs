@@ -1,0 +1,8 @@
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+@prefix place: <https://tarnwick.example/id/place/> .
+@prefix store: <https://tarnwick.example/id/store/> .
+@prefix wd:    <http://www.wikidata.org/entity/> .
+
+place:BOULDER skos:exactMatch wd:Q192517 .
+place:CO skos:exactMatch wd:Q1261 .
+store:ST-BOU skos:exactMatch wd:Q192517 .

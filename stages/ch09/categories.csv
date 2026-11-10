@@ -1,0 +1,27 @@
+code,label,parent,other_names
+CAMP,Camping,,
+TENT,Tents,CAMP,
+TENT-BP,Backpacking Tents,TENT,
+TENT-FAM,Family Tents,TENT,Shelters
+TENT-ACC,Tent Accessories,CAMP,Tent Extras
+SLEEP,Sleeping,CAMP,Sleep Systems
+SLEEP-BAG,Sleeping Bags,SLEEP,
+SLEEP-MAT,Sleeping Mats,SLEEP,
+KITCHEN,Camp Kitchen,CAMP,Cook Systems
+STOVE,Stoves,KITCHEN,
+COOK,Cookware,KITCHEN,
+REPAIR,Repair and Care,CAMP,
+HIKE,Hiking,,
+FOOT,Footwear,HIKE,
+BOOT,Hiking Boots,FOOT,Boots
+SHOE,Trail Shoes,FOOT,Trail Runners
+PACK,Packs,HIKE,Rucksacks; Backpacks
+PACK-DAY,Daypacks,PACK,
+PACK-BP,Backpacking Packs,PACK,
+CLOTH,Clothing,,
+JACKET,Jackets,CLOTH,
+JACKET-WP,Waterproof Jackets,JACKET,Hardshells; Rain Jackets
+JACKET-INS,Insulated Jackets,JACKET,Insulation; Puffer Jackets
+BASE,Base Layers,CLOTH,
+CLIMB,Climbing,,
+HARNESS,Harnesses,CLIMB,

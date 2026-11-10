@@ -1,0 +1,13 @@
+# Each named graph in the full Tarnwick graph, and where it came from.
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX prov:    <http://www.w3.org/ns/prov#>
+PREFIX rdfs:    <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?graph ?from WHERE {
+  { ?g dcterms:source ?file . ?file rdfs:label ?from }
+  UNION
+  { ?g prov:wasGeneratedBy ?step . ?step rdfs:label ?from }
+  FILTER (STRSTARTS(STR(?g), "https://tarnwick.example/graph/"))
+  BIND (STRAFTER(STR(?g), "/graph/") AS ?graph)
+}
+ORDER BY ?graph

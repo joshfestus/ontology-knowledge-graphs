@@ -1,0 +1,39 @@
+[project]
+name = "tarnwick"
+version = "0.1.0"
+description = "The Tarnwick Supply knowledge graph for Ontology and Knowledge Graphs for Beginners"
+readme = "README.md"
+license = "MIT AND CC-BY-4.0"
+license-files = ["LICENSE", "LICENSE-DATA"]
+authors = [
+    { name = "Josh Festus" }
+]
+requires-python = ">=3.14"
+dependencies = [
+    "openai==3.49.0",
+    "owlrl==7.6.2",
+    "pyshacl==0.40.2",
+    "rdflib==7.6.0",
+]
+
+[project.scripts]
+tarnwick = "tarnwick.cli:main"
+
+[build-system]
+requires = ["uv_build>=0.12.13,<0.13.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "pytest>=9.2.0",
+    "ruff>=0.17.4",
+]
+
+[tool.pytest.ini_options]
+filterwarnings = [
+    "error",
+    "ignore::DeprecationWarning:rdflib.*",
+]
+
+[tool.ruff]
+line-length = 100

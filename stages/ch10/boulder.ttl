@@ -1,0 +1,11 @@
+@prefix tw:    <https://tarnwick.example/ontology#> .
+@prefix place: <https://tarnwick.example/id/place/> .
+@prefix store: <https://tarnwick.example/id/store/> .
+
+store:ST-BOU a tw:Store ;
+    tw:locatedIn place:BOULDER .
+
+place:BOULDER a tw:Town ; tw:partOf place:CO .
+place:CO a tw:State ; tw:partOf place:MTW .
+place:MTW a tw:Region ; tw:partOf place:US .
+place:US a tw:Country .

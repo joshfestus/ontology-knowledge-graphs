@@ -1,0 +1,22 @@
+@prefix tw:   <https://tarnwick.example/ontology#> .
+@prefix tws:  <https://tarnwick.example/shapes#> .
+@prefix sh:   <http://www.w3.org/ns/shacl#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+
+tws:TentShape a sh:NodeShape ;
+    sh:targetClass tw:Product ;
+    sh:sparql [
+        sh:message "A tent must have a season rating." ;
+        sh:prefixes tws:prefixes ;
+        sh:select """
+            SELECT $this WHERE {
+                $this tw:inCategory/skos:broader* ?tent .
+                ?tent skos:notation "TENT" .
+                FILTER NOT EXISTS { $this tw:seasonRating ?rating }
+            }""" ] .
+
+tws:prefixes sh:declare
+    [ sh:prefix "tw" ;
+      sh:namespace "https://tarnwick.example/ontology#"^^xsd:anyURI ] ,
+    [ sh:prefix "skos" ;
+      sh:namespace "http://www.w3.org/2004/02/skos/core#"^^xsd:anyURI ] .

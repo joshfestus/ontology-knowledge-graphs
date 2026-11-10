@@ -1,0 +1,9 @@
+# Products with no weight in grams written down.
+PREFIX tw: <https://tarnwick.example/ontology#>
+
+SELECT ?sku WHERE {
+  ?product a tw:Product ;
+           tw:sku ?sku .
+  FILTER NOT EXISTS { ?product tw:weightGrams ?weight }
+}
+ORDER BY ?sku

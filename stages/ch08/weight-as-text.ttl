@@ -1,0 +1,5 @@
+@prefix tw:   <https://tarnwick.example/ontology#> .
+@prefix prod: <https://tarnwick.example/id/product/> .
+
+prod:TW-T102 a tw:Product ;
+    tw:weightGrams "1640 g" .

@@ -1,0 +1,7 @@
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+@prefix place: <https://tarnwick.example/id/place/> .
+@prefix wd:    <http://www.wikidata.org/entity/> .
+
+place:DENVER skos:exactMatch wd:Q16554 .
+place:BEND skos:exactMatch wd:Q671288 .
+place:PORTLAND skos:exactMatch wd:Q6106 .

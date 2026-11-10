@@ -1,0 +1,11 @@
+# 25. Which categories have no products at all?
+PREFIX tw:   <https://tarnwick.example/ontology#>
+PREFIX tid:  <https://tarnwick.example/id/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+SELECT ?category WHERE {
+  ?c skos:inScheme tid:categories ;
+     skos:prefLabel ?category .
+  FILTER NOT EXISTS { ?product tw:inCategory/skos:broader* ?c }
+}
+ORDER BY ?category

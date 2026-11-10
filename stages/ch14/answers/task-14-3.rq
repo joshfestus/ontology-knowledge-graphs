@@ -1,0 +1,13 @@
+# What is each store's revenue over every order?
+PREFIX tw:   <https://tarnwick.example/ontology#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?store (SUM(?quantity * ?price) AS ?revenue) WHERE {
+  ?order tw:soldAt ?s ;
+         tw:hasLine ?line .
+  ?line tw:quantity ?quantity ;
+        tw:unitPriceUSD ?price .
+  ?s rdfs:label ?store .
+}
+GROUP BY ?store
+ORDER BY DESC(?revenue)

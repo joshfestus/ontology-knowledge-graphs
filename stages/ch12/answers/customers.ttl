@@ -1,0 +1,18 @@
+@prefix tw:    <https://tarnwick.example/ontology#> .
+@prefix cust:  <https://tarnwick.example/id/customer/> .
+@prefix place: <https://tarnwick.example/id/place/> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+
+place:BOULDER a tw:Town .
+place:CO a tw:State .
+
+# Passes every constraint, as in data/customers.csv.
+cust:C-0001 a tw:Customer ;
+    tw:homeTown place:BOULDER ;
+    tw:accountOpened "2023-07-06"^^xsd:date ;
+    tw:marketingOptIn true .
+
+# Fails each one: a state for a town, no date, and "yes" as text.
+cust:C-0999 a tw:Customer ;
+    tw:homeTown place:CO ;
+    tw:marketingOptIn "yes" .

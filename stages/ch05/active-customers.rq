@@ -1,0 +1,17 @@
+# How many customers are active, by each team's definition?
+# Marketing: ordered in the twelve months up to 30 September 2026.
+# Finance: account still open, and ordered at least once.
+PREFIX tw:  <https://tarnwick.example/ontology#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+SELECT (SUM(?m) AS ?marketing) (SUM(?f) AS ?finance)
+       (SUM(?m * ?f) AS ?both)
+       (SUM(?m * (1 - ?f)) AS ?marketingOnly)
+       (SUM(?f * (1 - ?m)) AS ?financeOnly)
+WHERE {
+  ?c a tw:Customer .
+  BIND (IF(EXISTS { ?o tw:placedBy ?c ; tw:orderDate ?d .
+                    FILTER (?d > "2025-09-30"^^xsd:date) }, 1, 0) AS ?m)
+  BIND (IF(EXISTS { ?o2 tw:placedBy ?c }
+           && NOT EXISTS { ?c tw:accountClosed ?x }, 1, 0) AS ?f)
+}

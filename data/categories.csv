@@ -1,0 +1,27 @@
+code,label,parent
+CAMP,Camping,
+TENT,Tents,CAMP
+TENT-BP,Backpacking Tents,TENT
+TENT-FAM,Family Tents,TENT
+TENT-ACC,Tent Accessories,CAMP
+SLEEP,Sleeping,CAMP
+SLEEP-BAG,Sleeping Bags,SLEEP
+SLEEP-MAT,Sleeping Mats,SLEEP
+KITCHEN,Camp Kitchen,CAMP
+STOVE,Stoves,KITCHEN
+COOK,Cookware,KITCHEN
+REPAIR,Repair and Care,CAMP
+HIKE,Hiking,
+FOOT,Footwear,HIKE
+BOOT,Hiking Boots,FOOT
+SHOE,Trail Shoes,FOOT
+PACK,Packs,HIKE
+PACK-DAY,Daypacks,PACK
+PACK-BP,Backpacking Packs,PACK
+CLOTH,Clothing,
+JACKET,Jackets,CLOTH
+JACKET-WP,Waterproof Jackets,JACKET
+JACKET-INS,Insulated Jackets,JACKET
+BASE,Base Layers,CLOTH
+CLIMB,Climbing,
+HARNESS,Harnesses,CLIMB

@@ -1,0 +1,14 @@
+@prefix tw:   <https://tarnwick.example/ontology#> .
+@prefix prod: <https://tarnwick.example/id/product/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+
+# Every product is supplied by at least one supplier.
+tw:Product rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty tw:suppliedBy ;
+    owl:someValuesFrom tw:Supplier
+] .
+
+# A product recorded without its supplier.
+prod:TW-A107 a tw:Product .

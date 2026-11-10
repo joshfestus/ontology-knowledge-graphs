@@ -1,0 +1,5 @@
+@prefix tw:    <https://tarnwick.example/ontology#> .
+@prefix prod:  <https://tarnwick.example/id/product/> .
+@prefix store: <https://tarnwick.example/id/store/> .
+
+store:ST-BOU tw:stocks prod:TW-T102 .

@@ -1,0 +1,8 @@
+@prefix tw:   <https://tarnwick.example/ontology#> .
+@prefix prod: <https://tarnwick.example/id/product/> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+
+tw:fits owl:inverseOf tw:fittedBy .
+
+prod:TW-A101 tw:fits prod:TW-T102 .
+prod:TW-A102 tw:fits prod:TW-T201 .

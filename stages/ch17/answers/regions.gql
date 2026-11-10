@@ -1,0 +1,4 @@
+MATCH (c:Customer)-[:LIVES_IN]->(:Place)-[:PART_OF]->(:Place)
+      -[:PART_OF]->(r:Place {kind: 'Region'})
+RETURN r.name, COUNT(c) AS customers
+ORDER BY customers DESC

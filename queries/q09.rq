@@ -1,0 +1,11 @@
+# 9. What are all the names a category is known by?
+PREFIX cat:  <https://tarnwick.example/id/category/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+SELECT ?label ?kind WHERE {
+  VALUES ?category { cat:PACK }
+  { ?category skos:prefLabel ?label . BIND ("preferred" AS ?kind) }
+  UNION
+  { ?category skos:altLabel ?label . BIND ("alternative" AS ?kind) }
+}
+ORDER BY DESC(?kind) ?label

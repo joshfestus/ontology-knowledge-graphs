@@ -1,0 +1,8 @@
+# The revenue of every order line in the graph, for checking the totals.
+PREFIX tw: <https://tarnwick.example/ontology#>
+
+SELECT (SUM(?quantity * ?price) AS ?revenue) WHERE {
+  ?line a tw:OrderLine ;
+        tw:quantity ?quantity ;
+        tw:unitPriceUSD ?price .
+}

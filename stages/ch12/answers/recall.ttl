@@ -1,0 +1,12 @@
+@prefix tw:    <https://tarnwick.example/ontology#> .
+@prefix prod:  <https://tarnwick.example/id/product/> .
+@prefix store: <https://tarnwick.example/id/store/> .
+@prefix stock: <https://tarnwick.example/id/stock/> .
+
+prod:TW-S202 tw:hasStatus tw:Recalled .
+
+# A test record, not in Tarnwick's files.
+stock:ST-BOU-TW-S202 a tw:StockLevel ;
+    tw:atStore store:ST-BOU ;
+    tw:product prod:TW-S202 ;
+    tw:quantity 3 .

@@ -1,0 +1,5 @@
+@prefix tw:   <https://tarnwick.example/ontology#> .
+@prefix prod: <https://tarnwick.example/id/product/> .
+
+prod:TW-A101 tw:fits prod:TW-T102
+prod:TW-A102 tw:fits prod:TW-T201 .

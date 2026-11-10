@@ -1,0 +1,20 @@
+Tarnwick Supply ontology, taxonomy, shapes, data, queries and saved model
+answers
+
+Copyright (c) 2026 Josh Festus
+
+The files under ontology/, data/, queries/, llm-cache/ and the Turtle, CSV,
+SPARQL and GQL files under stages/ are licensed under the Creative Commons
+Attribution 4.0 International License (CC BY 4.0).
+
+You may copy, share and adapt them for any purpose, including commercially,
+provided you give appropriate credit, link to the license, and indicate if
+changes were made. Suggested credit:
+
+  Tarnwick Supply files from "Ontology and Knowledge Graphs for Beginners"
+  by Josh Festus, licensed under CC BY 4.0.
+
+The full license: https://creativecommons.org/licenses/by/4.0/legalcode
+
+Tarnwick Supply, its suppliers, products, stores, customers and documents are
+invented. Any resemblance to a real organization or person is coincidental.
