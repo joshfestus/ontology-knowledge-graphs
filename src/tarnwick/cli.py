@@ -18,6 +18,7 @@
     tarnwick path FROM TO       the shortest path between two nodes
     tarnwick similar SKU        products bought by the same customers
     tarnwick diff OLD NEW       what changed between two ontology versions
+    tarnwick chat QUESTION      ask a language model about Tarnwick
     tarnwick skos FILE.csv      a category spreadsheet as SKOS concepts
     tarnwick tree [FILE...]     a taxonomy as a tree, with its problems
     tarnwick coverage           which ontology terms each question needs
@@ -86,6 +87,10 @@ def main(argv=None):
     df = sub.add_parser("diff", help="compare two versions of an ontology")
     df.add_argument("old")
     df.add_argument("new")
+    ch = sub.add_parser("chat", help="ask a language model about Tarnwick")
+    ch.add_argument("question")
+    ch.add_argument("--files", nargs="*", default=[],
+                    help="spreadsheets from data/ to paste in with the question")
     sk = sub.add_parser("skos", help="a category spreadsheet as SKOS Turtle")
     sk.add_argument("file")
     tr = sub.add_parser("tree", help="a taxonomy as a tree, checked")
@@ -173,6 +178,10 @@ def main(argv=None):
     if args.command == "diff":
         from .diff import report as diff_report
         print(diff_report(args.old, args.new))
+        return 0
+    if args.command == "chat":
+        from .chat import report as chat_report
+        print(chat_report(args.question, args.files))
         return 0
     if args.command == "skos":
         from .skos import csv_to_turtle

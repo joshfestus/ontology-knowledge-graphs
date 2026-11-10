@@ -1,0 +1,9 @@
+{
+ "model": "gpt-5.6-luna",
+ "instructions": "You are an assistant answering questions about a company called Tarnwick Supply. Answer briefly, in plain sentences.",
+ "input": "File web_catalogue.csv:\nsku,web_category\nTW-T101,Tents\nTW-T102,Tents\nTW-T103,Tents\nTW-T104,Tents\nTW-T105,Tents\nTW-T106,Tents\nTW-T201,Shelters\nTW-T202,Shelters\nTW-T203,Shelters\nTW-T204,Tents\nTW-A101,Tent Extras\nTW-A102,Tent Extras\nTW-A103,Tent Extras\nTW-A104,Tent Extras\nTW-A105,Tent Extras\nTW-A106,Tent Extras\nTW-A107,Tent Extras\nTW-S101,Sleep Systems\nTW-S102,Sleep Systems\nTW-S103,Sleep Systems\nTW-S104,Sleep Systems\nTW-S105,Sleep Systems\nTW-S201,Sleep Systems\nTW-S202,Sleep Systems\nTW-S203,Sleep Systems\nTW-K101,Cook Systems\nTW-K102,Cook Systems\nTW-K103,Cook Systems\nTW-K201,Cook Systems\nTW-K202,Cook Systems\nTW-K203,Cook Systems\nTW-P101,Rucksacks\nTW-P102,Rucksacks\nTW-P201,Rucksacks\nTW-P202,Rucksacks\nTW-P203,Rucksacks\nTW-F101,Boots\nTW-F102,Boots\nTW-F103,Boots\nTW-F201,Trail Runners\nTW-F202,Trail Runners\nTW-C101,Hardshells\nTW-C102,Hardshells\nTW-C103,Hardshells\nTW-C201,Insulation\nTW-C202,Insulation\nTW-C203,Insulation\nTW-C301,Base Layers\nTW-C302,Base Layers\n\n\nUsing the files above, answer this question: How many tents does Tarnwick sell?",
+ "answer": "Tarnwick sells 7 tents.",
+ "input_tokens": 400,
+ "output_tokens": 50,
+ "cost_usd": 0.00014
+}
