@@ -20,6 +20,7 @@
     tarnwick diff OLD NEW       what changed between two ontology versions
     tarnwick chat QUESTION      ask a language model about Tarnwick
     tarnwick extract [TICKET]   facts from ticket text, read by a language model
+    tarnwick rag QUESTION       answer from retrieved text, graph facts, or both
     tarnwick skos FILE.csv      a category spreadsheet as SKOS concepts
     tarnwick tree [FILE...]     a taxonomy as a tree, with its problems
     tarnwick coverage           which ontology terms each question needs
@@ -100,6 +101,13 @@ def main(argv=None):
                     help="the facts that pass every check, as Turtle")
     ex.add_argument("--free", action="store_true", help="read without the ontology")
     ex.add_argument("--policy", help="read the return rules in a policy document")
+    rg = sub.add_parser("rag", help="answer from retrieved text or graph facts")
+    rg.add_argument("question")
+    rg.add_argument("--using", default="graph", choices=("text", "graph", "both"))
+    rg.add_argument("--top", type=int, default=3,
+                    help="how many policy paragraphs to retrieve")
+    rg.add_argument("--answer-only", action="store_true",
+                    help="leave out what was given to the model")
     ch = sub.add_parser("chat", help="ask a language model about Tarnwick")
     ch.add_argument("question")
     ch.add_argument("--files", nargs="*", default=[],
@@ -191,6 +199,10 @@ def main(argv=None):
     if args.command == "diff":
         from .diff import report as diff_report
         print(diff_report(args.old, args.new))
+        return 0
+    if args.command == "rag":
+        from .rag import report as rag_report
+        print(rag_report(args.question, args.using, not args.answer_only, args.top))
         return 0
     if args.command == "extract":
         from . import extract
