@@ -58,6 +58,8 @@ run from inside its folder. Worked answers to the tasks are in each folder's
 | `src/tarnwick/` | The `tarnwick` command |
 | `llm-cache/` | Every answer the language model gave for the book, so the results can be reproduced without an account |
 | `tests/` | Every answer checked a second way, straight from the CSV files |
+| `QUESTIONS.md` | The thirty competency questions, with the chapter that first answers each |
+| `SOURCES.md` | Where each fact the book states about a standard, a date or a published finding comes from |
 
 ## Language model settings
 
