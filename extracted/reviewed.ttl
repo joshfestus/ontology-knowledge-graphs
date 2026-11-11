@@ -3,7 +3,7 @@
 @prefix prod:   <https://tarnwick.example/id/product/> .
 @prefix prob:   <https://tarnwick.example/id/problem/> .
 
-# Written by customer service after reading the three tickets that
+# Written by hand by a person who read the three tickets that
 # tarnwick extract held back.
 
 # The model's reading was right, but its quote joined words that are
