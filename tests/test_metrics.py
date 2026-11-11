@@ -100,3 +100,12 @@ def test_the_answer_to_task_21_4():
 def test_an_earlier_reporting_date():
     assert mt.compute("active-customers-marketing", as_of="2026-06-30")[0][1] == 98
     assert mt.compute("active-customers-finance", as_of="2026-06-30")[0][1] == 118
+
+
+def test_the_chapter_21_copy_of_the_definitions_is_current():
+    """stages/ch21/metrics.ttl lets Task 21.4 run inside the stage folder; it
+    must stay the same as ontology/metrics.ttl."""
+    from pathlib import Path
+    root = Path(__file__).resolve().parents[1]
+    assert ((root / "stages" / "ch21" / "metrics.ttl").read_bytes()
+            == (root / "ontology" / "metrics.ttl").read_bytes())

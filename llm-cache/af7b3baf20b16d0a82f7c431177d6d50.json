@@ -1,0 +1,20 @@
+{
+ "model": "gpt-5.6-luna",
+ "instructions": "You check a customer service answer against the numbered facts it was written from. For each sentence, read only the facts it cites and decide: \"supported\" if everything the sentence says is in those facts; \"misstated\" if it changes something in them, such as a number, a condition, a product or who does what; \"added\" if it makes a claim the cited facts do not contain. Give a short reason for any verdict other than supported.",
+ "input": "Facts:\n[1] The Down Insulated Jacket (TW-C201) is in the category Insulated Jackets, which is part of Jackets, which is part of Clothing.\n[2] The Down Insulated Jacket has the status discontinued.\n[3] The Down Insulated Jacket was replaced by the Down Insulated Jacket Mk II (TW-C203).\n[4] The return rule for the Down Insulated Jacket is the standard return window, set on Clothing, the nearest category above it with a rule: 30 days after delivery, on condition: Unused and in the original packaging. It is stated in the Tarnwick Supply Returns Policy.\n[5] The Down Insulated Jacket Mk II (TW-C203) is in the category Insulated Jackets, which is part of Jackets, which is part of Clothing.\n[6] The Down Insulated Jacket Mk II has the status active.\n[7] The return rule for the Down Insulated Jacket Mk II is the standard return window, set on Clothing, the nearest category above it with a rule: 30 days after delivery, on condition: Unused and in the original packaging. It is stated in the Tarnwick Supply Returns Policy.\n[8] Tents, packs, jackets and footwear are covered against defects in materials and workmanship for 2 years from the date of purchase.\n[9] The warranty does not cover normal wear, damage from accidents, improper care, or alterations. Seam leaks in a tent's first year are treated as a defect and repaired or replaced at no cost.\n\nSentences:\n1. The Down Insulated Jacket is discontinued, so it is no longer sold. [2] It was replaced by the Down Insulated Jacket Mk II (TW-C203). [3]",
+ "answer": {
+  "sentences": [
+   {
+    "number": 1,
+    "verdict": "added",
+    "reason": "Fact [2] says the jacket is discontinued, but it does not state that it is no longer sold. The replacement claim is supported by [3]."
+   }
+  ]
+ },
+ "input_tokens": 520,
+ "cached_tokens": 0,
+ "output_tokens": 134,
+ "cost_usd": 0.000265,
+ "seconds": 2.99,
+ "run": 3
+}

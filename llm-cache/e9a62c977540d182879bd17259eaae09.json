@@ -1,0 +1,16 @@
+{
+ "model": "gpt-5.6-luna",
+ "instructions": "List the Tarnwick products this customer question is about, using only the codes below. Give an empty list if it names none.\n\nTW-T101 Backpacking Tent 1P\nTW-T102 Backpacking Tent 2P\nTW-T103 Ultralight Tent 2P\nTW-T104 Winter Tent 2P\nTW-T105 Backpacking Tent 3P\nTW-T106 Backpacking Tent 3P Mk II\nTW-T201 Family Tent 4P\nTW-T202 Family Tent 6P\nTW-T203 Cabin Tent 8P\nTW-T204 Pop Up Festival Tent 2P\nTW-A101 Footprint for Backpacking Tent 2P\nTW-A102 Footprint for Family Tent 4P\nTW-A103 Footprint for Family Tent 6P\nTW-A104 Aluminum Tent Stakes (12)\nTW-A105 Tent Repair Kit\nTW-A106 Footprint for Ultralight Tent 2P\nTW-A107 Seam Sealer\nTW-S101 Down Sleeping Bag 20F\nTW-S102 Down Sleeping Bag 0F\nTW-S103 Synthetic Sleeping Bag 30F\nTW-S104 Down Sleeping Bag 20F Mk II\nTW-S105 Down Sleeping Bag 0F Mk II\nTW-S201 Self Inflating Mat\nTW-S202 Insulated Air Mat\nTW-S203 Closed Cell Foam Mat\nTW-K101 Canister Stove\nTW-K102 Integrated Stove System\nTW-K103 Liquid Fuel Stove\nTW-K201 Titanium Pot 750 ml\nTW-K202 Cook Set 2P\nTW-K203 Camp Kettle 1 L\nTW-P101 Daypack 22 L\nTW-P102 Daypack 30 L\nTW-P201 Backpacking Pack 50 L\nTW-P202 Backpacking Pack 65 L\nTW-P203 Backpacking Pack 40 L Women's Fit\nTW-F101 Leather Hiking Boot Men's\nTW-F102 Leather Hiking Boot Women's\nTW-F103 Winter Hiking Boot\nTW-F201 Trail Running Shoe\nTW-F202 Waterproof Hiking Shoe\nTW-C101 Waterproof Jacket Men's\nTW-C102 Waterproof Jacket Women's\nTW-C103 Packable Rain Shell\nTW-C201 Down Insulated Jacket\nTW-C202 Synthetic Insulated Jacket\nTW-C203 Down Insulated Jacket Mk II\nTW-C301 Merino Base Layer Top\nTW-C302 Merino Base Layer Leggings",
+ "input": "Is the Down Insulated Jacket still sold, and what replaced it?",
+ "answer": {
+  "skus": [
+   "TW-C201",
+   "TW-C203"
+  ]
+ },
+ "input_tokens": 731,
+ "cached_tokens": 0,
+ "output_tokens": 51,
+ "cost_usd": 0.000207,
+ "seconds": 2.1
+}

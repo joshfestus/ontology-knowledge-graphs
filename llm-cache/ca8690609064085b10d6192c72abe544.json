@@ -1,0 +1,20 @@
+{
+ "model": "gpt-5.6-luna",
+ "instructions": "You check a customer service answer against the customer's question and the numbered facts it was written from. What the customer says about their own situation, such as how long ago something arrived, may be taken as true. For each sentence, read the question and the facts it cites and decide: \"supported\" if everything the sentence says follows from those; \"misstated\" if it changes something in them, such as a number, a date, a condition, a product or who does what; \"added\" if it makes a claim neither the question nor the cited facts contain. Give a short reason for any verdict other than supported.",
+ "input": "Customer question: My Backpacking Tent 2P arrived 20 days ago and I have not opened it. Can I return it?\n\nFacts:\n[1] The Backpacking Tent 2P (TW-T102) is in the category Backpacking Tents, which is part of Tents, which is part of Camping.\n[2] The Backpacking Tent 2P has the status active.\n[3] The return rule for the Backpacking Tent 2P is the standard return window, set on Camping, the nearest category above it with a rule: 30 days after delivery, on condition: Unused and in the original packaging. It is stated in the Tarnwick Supply Returns Policy.\n[4] Refunds are made to the original payment method within 10 business days of the return arriving at our warehouse. Orders placed at Tarnwick Online can be returned to any Tarnwick store.\n[5] Items in stock leave the warehouse within 2 business days. Delivery usually takes 3 to 6 business days after that. Family and cabin tents ship by freight and can take up to 10 business days.\n[6] A recalled product can be returned at any time, in any condition, with or without proof of purchase. The customer chooses between a full refund of the price paid and a replacement product of equal or greater value. Return shipping is paid by Tarnwick.\n\nSentences:\n1. Yes. You can return the Backpacking Tent 2P because it is within the 30-day return window and remains unopened in its original packaging. [3]",
+ "answer": {
+  "sentences": [
+   {
+    "number": 1,
+    "verdict": "supported",
+    "reason": ""
+   }
+  ]
+ },
+ "input_tokens": 517,
+ "cached_tokens": 0,
+ "output_tokens": 26,
+ "cost_usd": 0.000135,
+ "seconds": 1.71,
+ "run": 2
+}

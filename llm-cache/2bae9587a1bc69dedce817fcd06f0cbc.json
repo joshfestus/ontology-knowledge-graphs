@@ -1,0 +1,12 @@
+{
+ "model": "gpt-5.6-luna",
+ "instructions": "You answer questions from customers of Tarnwick Supply, an outdoor gear retailer. Use only the numbered facts below. After each sentence, put the numbers of the facts it relies on in square brackets, such as [2] or [1, 3]. If the facts do not answer the question, say that you cannot tell from the information you have, and do not guess. Answer briefly, in plain sentences.",
+ "input": "Facts:\n[1] The Down Sleeping Bag 20F (TW-S101) is in the category Sleeping Bags, which is part of Sleeping, which is part of Camping.\n[2] The Down Sleeping Bag 20F has the status discontinued.\n[3] The Down Sleeping Bag 20F was replaced by the Down Sleeping Bag 20F Mk II (TW-S104).\n[4] The return rule for the Down Sleeping Bag 20F is the sleeping gear return window, set on Sleeping, the nearest category above it with a rule: 30 days after delivery, on condition: Compression sack or packaging seal unbroken. It is stated in the Tarnwick Supply Returns Policy.\n[5] The Down Sleeping Bag 20F Mk II (TW-S104) is in the category Sleeping Bags, which is part of Sleeping, which is part of Camping.\n[6] The Down Sleeping Bag 20F Mk II has the status active.\n[7] The return rule for the Down Sleeping Bag 20F Mk II is the sleeping gear return window, set on Sleeping, the nearest category above it with a rule: 30 days after delivery, on condition: Compression sack or packaging seal unbroken. It is stated in the Tarnwick Supply Returns Policy.\n[8] Sleeping bags and sleeping mats can be returned within 30 days only if the compression sack or packaging seal is unbroken, for hygiene reasons.\n[9] Stoves and cookware are covered for 1 year. Sleeping bags and sleeping mats are covered for 1 year.\n[10] The warranty does not cover normal wear, damage from accidents, improper care, or alterations. Seam leaks in a tent's first year are treated as a defect and repaired or replaced at no cost.\n\nCustomer question: I have the old Down Sleeping Bag 20F. Is it still sold, and what replaced it?",
+ "answer": "The old Down Sleeping Bag 20F is discontinued and is no longer sold. [2] It was replaced by the Down Sleeping Bag 20F Mk II (TW-S104). [3]",
+ "input_tokens": 473,
+ "cached_tokens": 0,
+ "output_tokens": 44,
+ "cost_usd": 0.000147,
+ "seconds": 1.95,
+ "run": 2
+}

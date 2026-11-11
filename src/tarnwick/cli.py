@@ -25,6 +25,7 @@
     tarnwick mcp                the graph's tools as an MCP server on stdio
     tarnwick agent CUSTOMER MESSAGE   a support agent using those tools
     tarnwick metric NAME            a metric from the semantic layer
+    tarnwick measure            the model's answers with and without the graph
     tarnwick skos FILE.csv      a category spreadsheet as SKOS concepts
     tarnwick tree [FILE...]     a taxonomy as a tree, with its problems
     tarnwick coverage           which ontology terms each question needs
@@ -139,6 +140,18 @@ def main(argv=None):
     wq.add_argument("--map-file", help="give the model this map instead of Tarnwick's")
     wq.add_argument("--map", dest="show_map", action="store_true",
                     help="print the ontology map the model is given")
+    ms = sub.add_parser("measure", help="the model's answers with and without the graph")
+    ms.add_argument("--runs", type=int, default=3, help="times each question is asked")
+    ms.add_argument("--question", type=int, metavar="N", help="one question, run by run")
+    ms.add_argument("--terms", action="store_true",
+                    help="how often the written queries used each inverse pair")
+    ms.add_argument("--citations", action="store_true",
+                    help="whether cited sentences say what their facts say")
+    ms.add_argument("--using", default="both", choices=("text", "graph", "both"),
+                    help="retrieval for --citations")
+    ms.add_argument("--summary", action="store_true", help="with --citations, counts only")
+    ms.add_argument("--facts-only", action="store_true",
+                    help="with --citations, the first judge, which never saw the question")
     rg = sub.add_parser("rag", help="answer from retrieved text or graph facts")
     rg.add_argument("question")
     rg.add_argument("--using", default="graph", choices=("text", "graph", "both"))
@@ -293,6 +306,18 @@ def main(argv=None):
             print(textquery.report(args.question, not args.no_map,
                                    not args.no_reasoner, map_text,
                                    None if args.all_rows else 12))
+        return 0
+    if args.command == "measure":
+        from . import measure
+        if args.citations:
+            print(measure.citations(args.runs, args.using, not args.summary,
+                                    not args.facts_only))
+        elif args.terms:
+            print(measure.terms_report(args.runs))
+        elif args.question:
+            print(measure.question_report(args.question, args.runs))
+        else:
+            print(measure.report(args.runs))
         return 0
     if args.command == "rag":
         from .rag import report as rag_report

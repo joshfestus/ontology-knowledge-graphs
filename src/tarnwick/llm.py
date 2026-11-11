@@ -23,6 +23,7 @@ and the call is refused if that would pass the budget.
 import hashlib
 import json
 import os
+import time
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -84,24 +85,30 @@ def cost_of(model, input_tokens, cached_tokens, output_tokens):
             + output_tokens * out) / 1_000_000
 
 
-def key_for(model, instructions, text, schema, max_output_tokens):
-    blob = json.dumps([model, instructions, text, schema, max_output_tokens],
-                      sort_keys=True, ensure_ascii=False)
+def key_for(model, instructions, text, schema, max_output_tokens, run=1):
+    parts = [model, instructions, text, schema, max_output_tokens]
+    if run != 1:
+        parts.append(f"run {run}")      # a repeat of the same request
+    blob = json.dumps(parts, sort_keys=True, ensure_ascii=False)
     return hashlib.sha256(blob.encode("utf-8")).hexdigest()[:32]
 
 
-def ask(instructions, text, schema=None, max_output_tokens=1200, effort="low"):
+def ask(instructions, text, schema=None, max_output_tokens=1200, effort="low",
+        run=1, details=False):
     """The model's answer to `text`, following `instructions`.
 
     With a JSON schema, the answer is parsed JSON that fits it; otherwise
-    it is plain text. A saved answer is returned without calling anyone."""
+    it is plain text. A saved answer is returned without calling anyone.
+    A run number above 1 asks the same question again as a separate
+    request, to see how much the answers move. With details, the saved
+    record comes back too: tokens, cost and seconds taken."""
     model = model_name()
     CACHE.mkdir(exist_ok=True)
-    key = key_for(model, instructions, text, schema, max_output_tokens)
+    key = key_for(model, instructions, text, schema, max_output_tokens, run)
     path = CACHE / f"{key}.json"
     if path.exists():
         saved = json.loads(path.read_text(encoding="utf-8"))
-        return saved["answer"]
+        return (saved["answer"], saved) if details else saved["answer"]
 
     # the most this call could cost: every input word a token, at most
     # max_output_tokens back
@@ -121,7 +128,9 @@ def ask(instructions, text, schema=None, max_output_tokens=1200, effort="low"):
     if schema is not None:
         request["text"] = {"format": {"type": "json_schema", "name": "answer",
                                       "schema": schema, "strict": True}}
+    started = time.monotonic()
     response = client.responses.create(**request)
+    seconds = time.monotonic() - started
     usage = response.usage
     cached = getattr(usage.input_tokens_details, "cached_tokens", 0) or 0
     cost = cost_of(model, usage.input_tokens, cached, usage.output_tokens)
@@ -130,13 +139,17 @@ def ask(instructions, text, schema=None, max_output_tokens=1200, effort="low"):
     answer = response.output_text
     if schema is not None:
         answer = json.loads(answer)
-    path.write_text(json.dumps({"model": model, "instructions": instructions,
-                                "input": text, "answer": answer,
-                                "input_tokens": usage.input_tokens,
-                                "output_tokens": usage.output_tokens,
-                                "cost_usd": round(cost, 6)},
-                               indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
-    return answer
+    saved = {"model": model, "instructions": instructions,
+             "input": text, "answer": answer,
+             "input_tokens": usage.input_tokens,
+             "cached_tokens": cached,
+             "output_tokens": usage.output_tokens,
+             "cost_usd": round(cost, 6), "seconds": round(seconds, 2)}
+    if run != 1:
+        saved["run"] = run
+    path.write_text(json.dumps(saved, indent=1, ensure_ascii=False) + "\n",
+                    encoding="utf-8")
+    return (answer, saved) if details else answer
 
 
 def spend_report():

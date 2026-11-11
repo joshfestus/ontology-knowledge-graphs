@@ -119,7 +119,8 @@ SCHEMA = {"type": "object", "additionalProperties": False, "required": ["query"]
           "properties": {"query": {"type": "string"}}}
 
 
-def write(question, use_map=True, problems=None, previous=None, map_text=None):
+def write(question, use_map=True, problems=None, previous=None, map_text=None,
+          run=1, details=False):
     """The model's query for a question; with problems, its repair."""
     if not use_map:
         instructions = BARE
@@ -129,7 +130,11 @@ def write(question, use_map=True, problems=None, previous=None, map_text=None):
     if problems:
         text += ("\n\nYour query was:\n" + previous + "\n\nIt has these problems:\n"
                  + "\n".join(problems) + "\n\nWrite the query again, fixed.")
-    return ask(instructions, text, schema=SCHEMA, max_output_tokens=4000)["query"]
+    answer = ask(instructions, text, schema=SCHEMA, max_output_tokens=4000,
+                 run=run, details=details)
+    if details:
+        return answer[0]["query"], answer[1]
+    return answer["query"]
 
 
 # --------------------------------------------------------------- the checks
@@ -214,13 +219,18 @@ def run(query, reason=True, seconds=LIMIT_SECONDS):
     return out
 
 
-def attempt(question, use_map=True, map_text=None):
-    """(first query, its problems, final query, final problems)."""
-    first = write(question, use_map, map_text=map_text)
+def attempt(question, use_map=True, map_text=None, run=1, calls=None):
+    """(first query, its problems, final query, final problems). Each
+    call's saved record is added to `calls` when a list is given."""
+    first, saved = write(question, use_map, map_text=map_text, run=run, details=True)
+    if calls is not None:
+        calls.append(saved)
     problems = check(first)
     if not problems:
         return first, [], first, []
-    second = write(question, use_map, problems, first, map_text)
+    second, saved = write(question, use_map, problems, first, map_text, run, True)
+    if calls is not None:
+        calls.append(saved)
     return first, problems, second, check(second)
 
 
@@ -314,7 +324,7 @@ BENCH = {
 
 # The columns of the reference answer that the worded question asks for,
 # where it is not all of them.
-KEY = {9: [0], 15: [0, 2], 21: [0], 27: [0, 2]}
+KEY = {9: [0], 10: [0], 12: [0], 15: [0, 2], 21: [0], 27: [0, 2], 30: [0, 1]}
 
 
 def names(value, ds):
@@ -333,41 +343,135 @@ def names(value, ds):
     return out
 
 
+NUMBER = re.compile(r"-?\d+(\.\d+)?")
+
+
 def norm(v):
+    """A value as text, with numbers written one way: 12, 12.0 and "12.00"
+    all become 12."""
     if isinstance(v, (int, float, Decimal)) and not isinstance(v, bool):
         try:
             return str(Decimal(str(v)).normalize())
         except InvalidOperation:
             return str(v)
-    if isinstance(v, Literal):
-        return str(v)
-    return "" if v is None else str(v)
+    text = "" if v is None else str(v).strip()
+    if NUMBER.fullmatch(text):
+        return str(Decimal(text).normalize())
+    return text
 
 
 def also_called(value, ds):
-    """A reference value and, for a SKU or a Tarnwick IRI, the thing's name."""
+    """A reference value and, for a Tarnwick thing given by IRI, SKU or
+    name, every other way of writing it."""
     out = names(value, ds)
-    for thing in ds.subjects(TW.sku, Literal(str(value))):
-        out |= {str(o) for o in ds.objects(thing, RDFS.label)}
+    if isinstance(value, (str, Literal)) and str(value).strip():
+        text = str(value)
+        things = set(ds.subjects(TW.sku, Literal(text)))
+        for p in (RDFS.label, SKOS.prefLabel):
+            things |= {t for t in ds.subjects(p, Literal(text))
+                       if isinstance(t, URIRef) and str(t).startswith(str(ID))}
+            things |= {t for t in ds.subjects(p, Literal(text, lang="en"))
+                       if isinstance(t, URIRef) and str(t).startswith(str(ID))}
+        for thing in things:
+            out.add(str(thing).rsplit("/", 1)[-1].rsplit("#", 1)[-1])
+            for p in (RDFS.label, SKOS.prefLabel, TW.sku):
+                out |= {str(o) for o in ds.objects(thing, p)}
     return out
+
+
+def header(row):
+    """True for a row of column names, such as ("sku", "weight_g"): every
+    cell is text in lower case with no digits."""
+    return bool(row) and all(isinstance(v, str) and v.strip() and v == v.lower()
+                             and not any(c.isdigit() for c in v) for v in row)
+
+
+def found(want, have, text):
+    """A wanted value is in a row when one of its names is a cell of the
+    row, or, for a name that is not a number, appears in the row's text as
+    whole words, as in a cell "SUP-02 Corran Alloy Works"."""
+    if want & have:
+        return True
+    for w in want:
+        if len(w) < 3 or NUMBER.fullmatch(w):
+            continue
+        if re.search(rf"(?<![\w-]){re.escape(w)}(?![\w-])", text, re.I):
+            return True
+    return False
 
 
 def same_answer(expected, got, ds):
     """True when both have the same number of rows and each expected row's
     values all appear, in any column, in its own row of the answer. A
-    thing counts whether it is given by IRI, code or name."""
+    thing counts whether it is given by IRI, code or name. A first row of
+    column names is not counted as an answer."""
+    got = list(got)
+    if got and header(got[0]):
+        got = got[1:]
     if len(expected) != len(got):
         return False
-    pool = [set().union(*(names(v, ds) for v in row)) if row else set()
-            for row in got]
+    pool = [(set().union(*(names(v, ds) for v in row)) if row else set(),
+             " | ".join("" if v is None else str(v) for v in row)) for row in got]
     for row in expected:
         want = [also_called(v, ds) for v in row if v is not None]
-        hit = next((i for i, have in enumerate(pool)
-                    if all(w & have for w in want)), None)
+        hit = next((i for i, (have, text) in enumerate(pool)
+                    if all(found(w, have, text) for w in want)), None)
         if hit is None:
             return False
         pool.pop(hit)
     return True
+
+
+# Questions whose reference query ends with LIMIT, where rows below the
+# cut tie with the last row kept: {question: the column holding the count}.
+# Any of the tied rows is a right answer in those last places.
+TIES = {30: 2}
+
+
+def reference(n, ds):
+    """The reference rows for question n, keeping only the columns the
+    worded question asks for."""
+    rows = run_query(f"q{n:02d}", ds)[1]
+    return [tuple(r[i] for i in KEY[n]) for r in rows] if n in KEY else rows
+
+
+def right(n, got, ds):
+    """Whether rows `got` answer bench question n correctly."""
+    expected = reference(n, ds)
+    if n not in TIES or not expected:
+        return same_answer(expected, got, ds)
+    col = TIES[n]
+    text = (ROOT / "queries" / f"q{n:02d}.rq").read_text(encoding="utf-8")
+    full = ds.query(re.sub(r"(?im)^\s*LIMIT\s+\d+\s*$", "", text))
+    full = [tuple(v.toPython() if v is not None else None for v in r) for r in full]
+    last = run_query(f"q{n:02d}", ds)[1][-1][col]
+    sure = [r for r in full if r[col] > last]
+    tied = [r for r in full if r[col] == last]
+    keep = [i for i in range(len(full[0])) if n not in KEY or i in KEY[n]]
+    cut = lambda r: tuple(r[i] for i in keep)         # noqa: E731
+    got = list(got)
+    if got and header(got[0]):
+        got = got[1:]
+    if len(got) != len(expected):
+        return False
+    # the rows above the tie must all be there; each other row must be one
+    # of the tied rows
+    for chosen in _choices(got, [cut(r) for r in sure], ds):
+        if all(any(same_answer([cut(t)], [row], ds) for t in tied) for row in chosen):
+            return True
+    return False
+
+
+def _choices(got, sure, ds):
+    """The rows of `got` left after taking one row for each row of `sure`,
+    or nothing when some row of `sure` is missing."""
+    left = list(got)
+    for row in sure:
+        hit = next((i for i, g in enumerate(left) if same_answer([row], [g], ds)), None)
+        if hit is None:
+            return []
+        left.pop(hit)
+    return [left]
 
 
 def bench(use_map=True, map_text=None):
@@ -383,11 +487,8 @@ def bench(use_map=True, map_text=None):
         if left:
             verdict = "not run"
         else:
-            expected = run_query(f"q{n:02d}", ds)[1]
-            if n in KEY:
-                expected = [tuple(r[i] for i in KEY[n]) for r in expected]
             try:
-                ok = same_answer(expected, run(final)[1], ds)
+                ok = right(n, run(final)[1], ds)
                 verdict = "right" if ok else "wrong"
             except TooSlow:
                 verdict = "too slow"

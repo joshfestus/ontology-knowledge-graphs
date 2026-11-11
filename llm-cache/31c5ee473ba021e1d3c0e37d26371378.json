@@ -1,0 +1,19 @@
+{
+ "model": "gpt-5.6-luna",
+ "instructions": "You check a customer service answer against the customer's question and the numbered facts it was written from. What the customer says about their own situation, such as how long ago something arrived, may be taken as true. For each sentence, read the question and the facts it cites and decide: \"supported\" if everything the sentence says follows from those; \"misstated\" if it changes something in them, such as a number, a date, a condition, a product or who does what; \"added\" if it makes a claim neither the question nor the cited facts contain. Give a short reason for any verdict other than supported.",
+ "input": "Customer question: I have only worn my Leather Hiking Boot Women's indoors. It is 45 days since delivery. Can I still return them?\n\nFacts:\n[1] The Leather Hiking Boot Women's (TW-F102) is in the category Hiking Boots, which is part of Footwear, which is part of Hiking.\n[2] The Leather Hiking Boot Women's has the status active.\n[3] The return rule for the Leather Hiking Boot Women's is the footwear return window, set on Footwear, the nearest category above it with a rule: 60 days after delivery, on condition: Worn indoors only. It is stated in the Tarnwick Supply Returns Policy.\n[4] Footwear can be returned within 60 days of delivery if it has only been worn indoors. Boots and shoes with outdoor wear are handled under the Warranty Policy instead.\n[5] Most products can be returned within 30 days of delivery for a full refund, provided they are unused and in their original packaging.\n[6] Sleeping bags and sleeping mats can be returned within 30 days only if the compression sack or packaging seal is unbroken, for hygiene reasons.\n\nSentences:\n1. Yes. You can return the boots within 60 days of delivery if they have only been worn indoors. [3, 4]",
+ "answer": {
+  "sentences": [
+   {
+    "number": 1,
+    "verdict": "supported",
+    "reason": ""
+   }
+  ]
+ },
+ "input_tokens": 460,
+ "cached_tokens": 0,
+ "output_tokens": 26,
+ "cost_usd": 0.000123,
+ "seconds": 2.11
+}

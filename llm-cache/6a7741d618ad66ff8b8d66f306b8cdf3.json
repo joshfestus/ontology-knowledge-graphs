@@ -1,0 +1,24 @@
+{
+ "model": "gpt-5.6-luna",
+ "instructions": "You check a customer service answer against the customer's question and the numbered facts it was written from. What the customer says about their own situation, such as how long ago something arrived, may be taken as true. For each sentence, read the question and the facts it cites and decide: \"supported\" if everything the sentence says follows from those; \"misstated\" if it changes something in them, such as a number, a date, a condition, a product or who does what; \"added\" if it makes a claim neither the question nor the cited facts contain. Give a short reason for any verdict other than supported.",
+ "input": "Customer question: Is the Down Insulated Jacket still sold, and what replaced it?\n\nFacts:\n[1] The Down Insulated Jacket (TW-C201) is in the category Insulated Jackets, which is part of Jackets, which is part of Clothing.\n[2] The Down Insulated Jacket has the status discontinued.\n[3] The Down Insulated Jacket was replaced by the Down Insulated Jacket Mk II (TW-C203).\n[4] The return rule for the Down Insulated Jacket is the standard return window, set on Clothing, the nearest category above it with a rule: 30 days after delivery, on condition: Unused and in the original packaging. It is stated in the Tarnwick Supply Returns Policy.\n[5] The Down Insulated Jacket Mk II (TW-C203) is in the category Insulated Jackets, which is part of Jackets, which is part of Clothing.\n[6] The Down Insulated Jacket Mk II has the status active.\n[7] The return rule for the Down Insulated Jacket Mk II is the standard return window, set on Clothing, the nearest category above it with a rule: 30 days after delivery, on condition: Unused and in the original packaging. It is stated in the Tarnwick Supply Returns Policy.\n[8] Tents, packs, jackets and footwear are covered against defects in materials and workmanship for 2 years from the date of purchase.\n[9] The warranty does not cover normal wear, damage from accidents, improper care, or alterations. Seam leaks in a tent's first year are treated as a defect and repaired or replaced at no cost.\n\nSentences:\n1. The Down Insulated Jacket is discontinued and is no longer sold. [2] It was replaced by the Down Insulated Jacket Mk II (TW-C203). [3]",
+ "answer": {
+  "sentences": [
+   {
+    "number": 1,
+    "verdict": "supported",
+    "reason": ""
+   },
+   {
+    "number": 2,
+    "verdict": "supported",
+    "reason": ""
+   }
+  ]
+ },
+ "input_tokens": 568,
+ "cached_tokens": 0,
+ "output_tokens": 126,
+ "cost_usd": 0.000265,
+ "seconds": 2.92
+}
