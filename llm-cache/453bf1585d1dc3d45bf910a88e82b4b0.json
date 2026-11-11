@@ -1,0 +1,20 @@
+{
+ "model": "gpt-5.6-luna",
+ "instructions": "You are the customer support assistant for Tarnwick Supply, an outdoor gear retailer. You can call tools on Tarnwick's knowledge graph. Use them to find facts, and never state a fact about an order, a product or a policy that a tool has not given you. When a customer reports a problem with a product, record the contact with record_contact before you reply, so that a later conversation can find it. Choose one step at a time: call a tool, or reply to the customer when you have what you need. Keep replies brief and plain.",
+ "input": "Tools:\ncustomer_orders(customer): List a customer's orders: order ID, date, store and the products on each.\nproduct_facts(sku): Facts about one product from the knowledge graph: category, status, replacement, return rule and any recall.\ncustomer_history(customer): The support tickets a customer has raised, including notes of earlier conversations with this assistant.\nrecord_contact(customer, order, sku, problem, summary): Keep a note of this conversation as a support ticket, so a later conversation can find it. The order must be the customer's and the product must be on it.\n\nThe customer is signed in as C-0083.\nCustomer: Hello again. Last time I asked about my sleeping mat. What did you tell me I could do, and which order was it on?\n\nSteps so far:\n1. called customer_history {\"customer\": \"C-0083\"}\n   result: T-026 (ticket file) on 2026-05-31, order O-00077, product Insulated Air Mat, problem loss of air: My insulated air mat went flat twice in one night. I can't find a hole. The valve feels loose when I press it. I saw something online about a recall?\nA-001 (agent memory) on 2026-09-30, order O-00077, product Insulated Air Mat, problem loss of air: Customer reports the recalled Insulated Air Mat deflates during use. Recall remedy is a full refund or replacement mat, at the customer's choice.\nA-002 (agent memory) on 2026-09-30, order O-00077, product Insulated Air Mat, problem loss of air: Customer reports the recalled Insulated Air Mat deflates during use. Recall remedy is a full refund or replacement mat, at the customer's choice.\n\nWhat is your next step?",
+ "answer": {
+  "action": "reply",
+  "tool": "none",
+  "arguments": {
+   "customer": "C-0083",
+   "order": "O-00077",
+   "sku": "Insulated Air Mat",
+   "problem": "loss of air",
+   "summary": ""
+  },
+  "reply": "I told you that the recalled Insulated Air Mat was eligible for either a full refund or a replacement mat, at your choice. It was on order O-00077."
+ },
+ "input_tokens": 597,
+ "output_tokens": 122,
+ "cost_usd": 0.000266
+}

@@ -1,0 +1,20 @@
+{
+ "model": "gpt-5.6-luna",
+ "instructions": "You are the customer support assistant for Tarnwick Supply, an outdoor gear retailer. You can call tools on Tarnwick's knowledge graph. Use them to find facts, and never state a fact about an order, a product or a policy that a tool has not given you. When a customer reports a problem with a product, record the contact with record_contact before you reply, so that a later conversation can find it. Choose one step at a time: call a tool, or reply to the customer when you have what you need. Keep replies brief and plain.",
+ "input": "Tools:\ncustomer_orders(customer): List a customer's orders: order ID, date, store and the products on each.\nproduct_facts(sku): Facts about one product from the knowledge graph: category, status, replacement, return rule and any recall.\ncustomer_history(customer): The support tickets a customer has raised, including notes of earlier conversations with this assistant.\nrecord_contact(customer, order, sku, problem, summary): Keep a note of this conversation as a support ticket, so a later conversation can find it. The order must be the customer's and the product must be on it.\n\nThe customer is signed in as C-0083.\nCustomer: Hi. My sleeping mat keeps going flat at night and I have had it for a while. What can I do?\n\nSteps so far:\n1. called customer_orders {\"customer\": \"C-0083\"}\n   result: O-00077 on 2024-06-08 at Tarnwick Bend: TW-S202 Insulated Air Mat\nO-00537 on 2026-09-07 at Tarnwick Bend: TW-C302 Merino Base Layer Leggings; TW-K102 Integrated Stove System\n2. called product_facts {\"sku\": \"TW-S202\"}\n   result: The Insulated Air Mat (TW-S202) is in the category Sleeping Mats, which is part of Sleeping, which is part of Camping.\nThe Insulated Air Mat has the status recalled.\nThe return rule for the Insulated Air Mat is the sleeping gear return window, set on Sleeping, the nearest category above it with a rule: 30 days after delivery, on condition: Compression sack or packaging seal unbroken. It is stated in the Tarnwick Supply Returns Policy.\nThe Insulated Air Mat was recalled on 2026-05-12. Reason: The inflation valve can separate from the mat, which then deflates during use. Remedy: Full refund or a replacement mat, at the customer's choice. The recall is handled under the Tarnwick Supply Product Recall Policy.\n3. called record_contact {\"customer\": \"C-0083\", \"order\": \"O-00077\", \"sku\": \"TW-S202\", \"problem\": \"Sleeping mat keeps going flat at night.\", \"summary\": \"Customer reports the recalled Insulated Air Mat (TW-S202) deflates during use. Advised to pursue the recall remedy: full refund or replacement mat.\"}\n   result: Not recorded:\nSleeping mat keeps going flat at night. is not a problem type; use one of deflation, delivery, ignition, leak, missing-part, seam, sizing, strap, wrong-item, zipper.\n4. called record_contact {\"customer\": \"C-0083\", \"order\": \"O-00077\", \"sku\": \"TW-S202\", \"problem\": \"deflation\", \"summary\": \"Customer reports the recalled Insulated Air Mat deflates during use. Recall remedy is a full refund or replacement mat, at the customer's choice.\"}\n   result: Recorded as ticket:A-001 in memory.ttl.\n\nWhat is your next step?",
+ "answer": {
+  "action": "reply",
+  "tool": "none",
+  "arguments": {
+   "customer": "C-0083",
+   "order": "O-00077",
+   "sku": "TW-S202",
+   "problem": "deflation",
+   "summary": "Recall remedy offered"
+  },
+  "reply": "Your TW-S202 Insulated Air Mat has been recalled because its inflation valve can separate and cause deflation during use. You can choose either a full refund or a replacement mat. Please stop using it and contact Tarnwick Supply to arrange your preferred remedy."
+ },
+ "input_tokens": 848,
+ "output_tokens": 142,
+ "cost_usd": 0.00034
+}

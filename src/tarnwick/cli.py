@@ -22,6 +22,8 @@
     tarnwick extract [TICKET]   facts from ticket text, read by a language model
     tarnwick rag QUESTION       answer from retrieved text, graph facts, or both
     tarnwick write-query QUESTION   a language model writes the SPARQL
+    tarnwick mcp                the graph's tools as an MCP server on stdio
+    tarnwick agent CUSTOMER MESSAGE   a support agent using those tools
     tarnwick skos FILE.csv      a category spreadsheet as SKOS concepts
     tarnwick tree [FILE...]     a taxonomy as a tree, with its problems
     tarnwick coverage           which ontology terms each question needs
@@ -102,6 +104,16 @@ def main(argv=None):
                     help="the facts that pass every check, as Turtle")
     ex.add_argument("--free", action="store_true", help="read without the ontology")
     ex.add_argument("--policy", help="read the return rules in a policy document")
+    mc = sub.add_parser("mcp", help="serve the graph's tools over MCP on stdio")
+    mc.add_argument("--demo", action="store_true",
+                    help="start a server, send it three requests, print the messages")
+    ag = sub.add_parser("agent", help="a support agent with the graph as its memory")
+    ag.add_argument("customer")
+    ag.add_argument("message")
+    tl = sub.add_parser("tool", help="call one agent tool directly, as an agent would")
+    tl.add_argument("name")
+    tl.add_argument("arguments", nargs="*", metavar="NAME=VALUE",
+                    help="the tool's arguments, such as customer=C-0083")
     wq = sub.add_parser("write-query", help="a language model writes the SPARQL")
     wq.add_argument("question", nargs="?")
     wq.add_argument("--no-map", action="store_true", help="give the model no ontology map")
@@ -211,6 +223,26 @@ def main(argv=None):
     if args.command == "diff":
         from .diff import report as diff_report
         print(diff_report(args.old, args.new))
+        return 0
+    if args.command == "mcp":
+        from . import mcp
+        if args.demo:
+            print(mcp.demo())
+        else:
+            mcp.serve()
+        return 0
+    if args.command == "agent":
+        from .agent import report as agent_report
+        print(agent_report(args.customer, args.message))
+        return 0
+    if args.command == "tool":
+        from textwrap import wrap
+
+        from .tools import call
+        given = dict(a.split("=", 1) for a in args.arguments if "=" in a)
+        text, _ = call(args.name, given)
+        for line in text.split("\n"):
+            print("\n".join(wrap(line, 74, subsequent_indent="  ")) or "")
         return 0
     if args.command == "write-query":
         from . import textquery
