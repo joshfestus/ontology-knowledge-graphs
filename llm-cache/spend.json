@@ -1,8 +1,8 @@
 {
- "total_usd": 0.011601,
- "calls": 64,
- "input_tokens": 63853,
- "output_tokens": 4024,
+ "total_usd": 0.05862,
+ "calls": 156,
+ "input_tokens": 326484,
+ "output_tokens": 37140,
  "model": "gpt-5.6-luna",
  "note": "first call on 2026-11-11 lost before the ledger existed; its maximum possible cost is counted"
 }

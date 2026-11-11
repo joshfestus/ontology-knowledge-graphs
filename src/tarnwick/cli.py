@@ -21,6 +21,7 @@
     tarnwick chat QUESTION      ask a language model about Tarnwick
     tarnwick extract [TICKET]   facts from ticket text, read by a language model
     tarnwick rag QUESTION       answer from retrieved text, graph facts, or both
+    tarnwick write-query QUESTION   a language model writes the SPARQL
     tarnwick skos FILE.csv      a category spreadsheet as SKOS concepts
     tarnwick tree [FILE...]     a taxonomy as a tree, with its problems
     tarnwick coverage           which ontology terms each question needs
@@ -101,6 +102,17 @@ def main(argv=None):
                     help="the facts that pass every check, as Turtle")
     ex.add_argument("--free", action="store_true", help="read without the ontology")
     ex.add_argument("--policy", help="read the return rules in a policy document")
+    wq = sub.add_parser("write-query", help="a language model writes the SPARQL")
+    wq.add_argument("question", nargs="?")
+    wq.add_argument("--no-map", action="store_true", help="give the model no ontology map")
+    wq.add_argument("--no-reasoner", action="store_true",
+                    help="run on the facts as written, without inferred facts")
+    wq.add_argument("--bench", action="store_true",
+                    help="score the model on the competency questions")
+    wq.add_argument("--all-rows", action="store_true", help="print every row of the result")
+    wq.add_argument("--map-file", help="give the model this map instead of Tarnwick's")
+    wq.add_argument("--map", dest="show_map", action="store_true",
+                    help="print the ontology map the model is given")
     rg = sub.add_parser("rag", help="answer from retrieved text or graph facts")
     rg.add_argument("question")
     rg.add_argument("--using", default="graph", choices=("text", "graph", "both"))
@@ -199,6 +211,22 @@ def main(argv=None):
     if args.command == "diff":
         from .diff import report as diff_report
         print(diff_report(args.old, args.new))
+        return 0
+    if args.command == "write-query":
+        from . import textquery
+        if args.show_map:
+            print(textquery.ontology_map())
+            return 0
+        map_text = None
+        if args.map_file:
+            from pathlib import Path
+            map_text = Path(args.map_file).read_text(encoding="utf-8").rstrip("\n")
+        if args.bench:
+            print(textquery.bench(not args.no_map, map_text))
+        else:
+            print(textquery.report(args.question, not args.no_map,
+                                   not args.no_reasoner, map_text,
+                                   None if args.all_rows else 12))
         return 0
     if args.command == "rag":
         from .rag import report as rag_report

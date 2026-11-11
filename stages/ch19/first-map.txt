@@ -1,0 +1,116 @@
+Prefixes:
+PREFIX tw: <https://tarnwick.example/ontology#>
+PREFIX tid: <https://tarnwick.example/id/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX prod: <https://tarnwick.example/id/product/>
+PREFIX cat: <https://tarnwick.example/id/category/>
+PREFIX place: <https://tarnwick.example/id/place/>
+PREFIX sup: <https://tarnwick.example/id/supplier/>
+PREFIX store: <https://tarnwick.example/id/store/>
+PREFIX cust: <https://tarnwick.example/id/customer/>
+PREFIX order: <https://tarnwick.example/id/order/>
+PREFIX line: <https://tarnwick.example/id/line/>
+PREFIX stock: <https://tarnwick.example/id/stock/>
+PREFIX prob: <https://tarnwick.example/id/problem/>
+PREFIX pol: <https://tarnwick.example/id/policy/>
+PREFIX ticket: <https://tarnwick.example/id/ticket/>
+PREFIX recall: <https://tarnwick.example/id/recall/>
+PREFIX company: <https://tarnwick.example/id/org/>
+PREFIX match: <https://tarnwick.example/id/match/>
+PREFIX rule: <https://tarnwick.example/id/rule/>
+PREFIX source: <https://tarnwick.example/id/source/>
+PREFIX schema: <https://schema.org/>
+PREFIX wd: <http://www.wikidata.org/entity/>
+
+Classes:
+tw:Country (a kind of tw:Place): A sovereign state.
+tw:Customer: A person who has opened an account with Tarnwick. Whether a customer counts as active depends on whose definition is used.
+tw:NameMatch: A record that a name typed in one file was judged to mean a known organization, with the score and the method used, so the decision can be checked later.
+tw:Order: One purchase by one customer at one store on one day, made up of one or more order lines.
+tw:OrderLine: One product within an order, with the quantity bought and the price paid for each unit.
+tw:Organization: A company or other body that can own things, sign agreements and be responsible for products.
+tw:Place: A named area on the map, from a town up to a country.
+tw:Policy: A written Tarnwick rule document, such as the returns policy, in one numbered version.
+tw:Product: Something Tarnwick sells, identified by one SKU. Each size or version with its own SKU is a separate product.
+tw:ProductStatus: Whether Tarnwick is currently selling a product.
+tw:Recall: A public notice that a product is unsafe or faulty and that customers should return it.
+tw:Region (a kind of tw:Place): A group of states that Tarnwick reports sales for as one area.
+tw:ReturnRule: One rule from a policy saying how long customers have to return products in a category.
+tw:State (a kind of tw:Place): A US state.
+tw:StockLevel: How many units of one product one store held when the stock was last counted.
+tw:Store: A place where Tarnwick sells to customers, either a shop with an address or the online store.
+tw:Supplier (a kind of tw:Organization): An organization that Tarnwick buys products from, or has bought products from in the past.
+tw:SupportTicket: A message from a customer to Tarnwick's support team, kept as the customer wrote it.
+tw:Town (a kind of tw:Place): A town or city.
+
+Properties (from -> to):
+tw:aboutOrder (tw:SupportTicket -> tw:Order): Links a support ticket to the order the customer was asking about.
+tw:accountClosed (tw:Customer -> xsd:date): The date a customer closed their account. Absent while the account is open.
+tw:accountOpened (tw:Customer -> xsd:date): The date a customer's account was created.
+tw:announced (tw:Recall -> xsd:date): The date a recall was made public.
+tw:appliesToCategory (tw:ReturnRule -> skos:Concept): Links a return rule to the product category it covers, including every category beneath it.
+tw:atStore (tw:StockLevel -> tw:Store): Links a stock level to the store that holds the stock.
+tw:complaintAbout (tw:SupportTicket -> tw:Product) [also implies tw:mentions]: Links a support ticket to the product the customer reports a problem with. Every product a ticket complains about is also one it mentions, but a ticket can mention other products too.
+tw:condition (tw:ReturnRule -> xsd:string): What must be true of a returned product for a rule to apply, in plain words.
+tw:country (tw:Organization -> xsd:string): The country an organization is registered in, by its English name.
+tw:definedIn (tw:ReturnRule -> tw:Policy): Links a return rule to the policy document that states it.
+tw:effective (tw:Policy -> xsd:date): The date from which a policy version applies.
+tw:firstSupplied (tw:Supplier -> xsd:date): The date of the first delivery from a supplier.
+tw:fits (tw:Product -> tw:Product): Links an accessory to a product it is made to be used with, such as a footprint to the tent it is cut for.
+tw:handledUnder (tw:Recall -> tw:Policy): Links a recall to the policy that says how customers are treated.
+tw:hasLine (tw:Order -> tw:OrderLine) [inverse of tw:lineOf]: Links an order to one of its order lines.
+tw:hasStatus (tw:Product -> tw:ProductStatus) [one value at most]: Links a product to whether it is on sale. A product has exactly one status at a time.
+tw:homeTown (tw:Customer -> tw:Town): Links a customer to the town on their account.
+tw:inCategory (tw:Product -> skos:Concept): Links a product to a category in the Tarnwick product taxonomy. A product can be in more than one category.
+tw:lastSupplied (tw:Supplier -> xsd:date): The date Tarnwick stopped buying from a supplier. Absent for suppliers Tarnwick still buys from.
+tw:lineOf (tw:OrderLine -> tw:Order) [inverse of tw:hasLine]: Links an order line to the order it belongs to.
+tw:locatedIn (tw:Store -> tw:Town): Links a store to the town it is in. The online store has no location.
+tw:mainMaterial (tw:Product -> xsd:string): The material that makes up most of a product, as written on its label.
+tw:marketingOptIn (tw:Customer -> xsd:boolean): Whether a customer has agreed to receive marketing email.
+tw:matchMethod (tw:NameMatch -> xsd:string): How the match was made, such as exact after cleaning, similar spelling, or confirmed by a person.
+tw:matchScore (tw:NameMatch -> xsd:decimal): How alike the typed name and the matched name are, from 0 (nothing in common) to 1 (identical after cleaning).
+tw:matchedTo (tw:NameMatch -> tw:Organization): Links a name match to the organization the typed name was judged to mean.
+tw:mentions (tw:SupportTicket -> tw:Product): Links a support ticket to a product the customer wrote about. Found by reading the ticket text.
+tw:opened (tw:Store -> xsd:date): The date a store first opened to customers.
+tw:orderDate (tw:Order -> xsd:date): The day an order was placed.
+tw:parentOrganization (tw:Organization -> tw:Organization): Links a company to the company that owns it.
+tw:partOf (tw:Place -> tw:Place) [transitive]: Links a place to a larger place that contains it. A town in a state in a region is part of that region too.
+tw:placedBy (tw:Order -> tw:Customer): Links an order to the customer who placed it.
+tw:priceUSD (tw:Product -> xsd:decimal): The current shelf price of a product.
+tw:problemType (tw:SupportTicket -> skos:Concept): Links a support ticket to the kind of problem it reports, from the Tarnwick problem list.
+tw:product (anything -> tw:Product): Links an order line, stock level or recall to the product it is about.
+tw:quantity (anything -> xsd:integer): A number of units, of a product bought on an order line or held as stock.
+tw:raisedBy (tw:SupportTicket -> tw:Customer): Links a support ticket to the customer who wrote it.
+tw:reason (tw:Recall -> xsd:string): Why a product was recalled, in plain words.
+tw:received (tw:SupportTicket -> xsd:date): The day a support ticket arrived.
+tw:releaseDate (tw:Product -> xsd:date): The first day a product could be sold.
+tw:remedy (tw:Recall -> xsd:string): What customers are offered for a recalled product.
+tw:replacedBy (tw:Product -> tw:Product) [inverse of tw:replaces]: Links a discontinued product to the product sold in its place.
+tw:replaces (tw:Product -> tw:Product) [inverse of tw:replacedBy]: Links a product to the older product it took the place of.
+tw:returnWindowDays (tw:ReturnRule -> xsd:integer): How many days after delivery a customer has to return a product under a return rule.
+tw:seasonRating (tw:Product -> xsd:integer): How many seasons of the year a tent is designed for, from 2 (summer) to 4 (winter).
+tw:sku (tw:Product -> xsd:string) [one value at most]: The stock keeping unit code Tarnwick gives a product, such as TW-T102.
+tw:soldAt (tw:Order -> tw:Store): Links an order to the store that took it.
+tw:suppliedBy (tw:Product -> tw:Supplier) [inverse of tw:supplies]: Links a product to the supplier Tarnwick buys it from.
+tw:supplierNameAsTyped (tw:Product -> xsd:string): The supplier name exactly as a buyer typed it in the product file. Kept so that every supplier link can be traced back to what was written.
+tw:supplies (tw:Supplier -> tw:Product) [inverse of tw:suppliedBy]: Links a supplier to a product Tarnwick buys from it.
+tw:text (anything -> xsd:string): The words of a document or message, unchanged.
+tw:typedName (tw:NameMatch -> xsd:string): The name exactly as it appeared in the source file.
+tw:unitPriceUSD (tw:OrderLine -> xsd:decimal): The price paid for one unit on an order line.
+tw:webCategoryLabel (tw:Product -> xsd:string): The category word the website shows for a product. Chosen by the web team, not taken from the product taxonomy.
+tw:weightGrams (tw:Product -> xsd:integer): The weight of one unit as packed for a trip, without retail packaging. Footwear is weighed as a pair.
+
+How the data is written:
+Every thing has its name in rdfs:label, except categories and problem types, which are skos:Concept with skos:prefLabel, skos:altLabel for other names, skos:notation for the code, and skos:broader pointing to the parent category. Category labels are tagged @en.
+Product statuses are tw:Active, tw:Discontinued and tw:Recalled.
+Categories are in the scheme tid:categories, problem types in tid:problems.
+Identifiers: products prod:TW-T102, categories cat:TENT, places place:BEND (towns in capitals), stores store:ST-BND, suppliers sup:SUP-01, customers cust:C-0001, orders order:O-00001.
+Each source is loaded into its own named graph. In the default graph, each named graph has dcterms:source pointing to a thing whose rdfs:label is the file's path, or prov:wasGeneratedBy pointing to a program step whose rdfs:label names it.
+The graph also holds facts a reasoner inferred: inverses, transitive partOf links, and the classes implied by subclasses.
+Today is 2026-09-30.

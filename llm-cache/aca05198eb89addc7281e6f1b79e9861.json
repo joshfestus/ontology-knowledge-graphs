@@ -1,0 +1,11 @@
+{
+ "model": "gpt-5.6-luna",
+ "instructions": "You write SPARQL 1.1 SELECT queries over Tarnwick Supply's knowledge graph. Its terms use the prefix tw: <https://tarnwick.example/ontology#>. Write one query that answers the question. Return only the query.",
+ "input": "Question: Which tents weigh under 2 kg?",
+ "answer": {
+  "query": "PREFIX tw: <https://tarnwick.example/ontology#>\n\nSELECT ?tent\nWHERE {\n  ?tent a tw:Tent ;\n        tw:weight ?weight .\n  FILTER(?weight < 2)\n}"
+ },
+ "input_tokens": 91,
+ "output_tokens": 336,
+ "cost_usd": 0.000421
+}
