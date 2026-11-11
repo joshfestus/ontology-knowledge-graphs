@@ -29,7 +29,7 @@ def test_tent_constraint_follows_the_taxonomy():
 
 def test_full_data_has_the_two_planted_problems():
     r = validate_report()
-    assert "Checked 1,896 things" in r and "Problems: 2" in r
+    assert "Checked 1,924 things" in r and "Problems: 2" in r
     assert "order:O-00209" in r and "prod:TW-A107" in r
 
 
@@ -41,7 +41,7 @@ def test_pitfalls_before_and_after():
 
 
 def test_coverage_and_reports_fit_the_page():
-    assert len(unused()) == 27
-    for r in (coverage_report(True), pitfalls_report(),
+    assert len(unused(before=16)) == 35
+    for r in (coverage_report(True), coverage_report(True, before=16), pitfalls_report(),
               pitfalls_report(CH12 / "tarnwick-before.ttl")):
         assert max(len(line) for line in r.splitlines()) <= 74

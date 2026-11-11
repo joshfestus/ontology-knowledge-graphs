@@ -213,6 +213,16 @@ def load_policies(ds):
         g.add((p, URIRef("http://www.w3.org/2002/07/owl#versionInfo"), Literal(m.group(2))))
 
 
+def load_extracted(ds):
+    """Facts read from the ticket text (Chapter 16): those a language model
+    found and the checks passed, and those a person wrote after reading the
+    tickets the checks held back. Each set in its own graph."""
+    for name, file in (("extracted", "tickets.ttl"), ("reviewed", "reviewed.ttl")):
+        path = ROOT / "extracted" / file
+        if path.exists():
+            ds.graph(GRAPH[name]).parse(path)
+
+
 def load_all():
     """Every source in its own named graph, plus the ontology and taxonomy."""
     ds = new_dataset()
@@ -224,6 +234,7 @@ def load_all():
     load_customers_and_orders(ds)
     load_recalls_and_tickets(ds)
     load_policies(ds)
+    load_extracted(ds)
     return ds
 
 

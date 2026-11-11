@@ -62,18 +62,20 @@ KIND = {"MinCountConstraintComponent": "missing",
         "MinExclusiveConstraintComponent": "too small",
         "MinInclusiveConstraintComponent": "too small"}
 
-def validate_report(files=(), shapes_file=None):
+def validate_report(files=(), shapes_file=None, with_data=False):
     """Check data against shapes and list every problem in plain words.
 
     With no files, the full Tarnwick graph (as the build makes it) is
     checked against Tarnwick's shapes. With files, only those files are
-    checked, with Tarnwick's ontology available for class membership."""
+    checked, with Tarnwick's ontology available for class membership. With
+    files and with_data, the files are checked together with the full
+    graph, the way they would be once added to it."""
     from .implied import new_graph
     from .load import ONTOLOGY
     shapes = squeeze(Graph().parse(shapes_file or SHAPES))
     ontology = squeeze(Graph().parse(ONTOLOGY / "tarnwick.ttl"))
     data = new_graph()
-    if files:
+    if files and not with_data:
         # the taxonomy comes along, so a shape can follow a category upward
         squeeze(data.parse(ONTOLOGY / "taxonomy.ttl"))
         for f in files:
@@ -85,6 +87,8 @@ def validate_report(files=(), shapes_file=None):
             if g.identifier != GRAPH["ontology"]:
                 for triple in g:
                     data.add(triple)
+        for f in files:
+            squeeze(data.parse(f, format="turtle"))
     _, report, _ = shacl_validate(data, shacl_graph=shapes, ont_graph=ontology,
                                   inference="none", advanced=True)
     nm = data.namespace_manager

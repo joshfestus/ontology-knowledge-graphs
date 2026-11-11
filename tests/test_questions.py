@@ -221,6 +221,32 @@ def test_q16_one_company_many_spellings(ds):
     assert got == expected
 
 
+def ticket_key():
+    """What each ticket complains about, as a person reading it decided."""
+    with open(DATA.parent / "tests" / "tickets_key.csv", encoding="utf-8") as fh:
+        return list(csv.DictReader(fh))
+
+
+def test_q17_tickets_and_what_went_wrong(ds):
+    p = products()
+    expected = sorted((f"ticket:{r['ticket_id']}", p[r["sku"]]["name"],
+                       f"prob:{r['problem']}") for r in ticket_key())
+    assert answer(ds, "q17") == expected
+
+
+def test_q18_complaints_per_hundred_sold(ds):
+    complaints = Counter(r["sku"] for r in ticket_key())
+    sold = Counter()
+    for r in table("order_lines.csv"):
+        sold[r["sku"]] += int(r["quantity"])
+    def per_hundred(s):
+        return Decimal(round(Decimal(1000 * complaints[s]) / sold[s])) / 10
+
+    expected = sorted((-per_hundred(s), products()[s]["name"]) for s in complaints)[:8]
+    got = [(-Decimal(str(r[3])), r[0]) for r in answer(ds, "q18")]
+    assert got == expected
+
+
 def test_q19_policy_for_a_recalled_product(ds):
     assert answer(ds, "q19") == [
         ("TW-S202", "Tarnwick Supply Product Recall Policy", date(2026, 1, 1))]

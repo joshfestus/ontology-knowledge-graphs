@@ -28,7 +28,7 @@ def test_sources_are_things_not_text():
     sources = list(ds.objects(None, DCTERMS.source))
     assert sources and all(not hasattr(o, "language") for o in sources)
     _, rows = run_query(CH11 / "sources.rq")
-    assert len(rows) == len({r[0] for r in rows}) == 19
+    assert len(rows) == 22 and len({r[0] for r in rows}) == 21
 
 
 def test_schema_org_is_always_https():

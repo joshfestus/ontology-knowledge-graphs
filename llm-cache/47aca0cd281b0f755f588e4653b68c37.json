@@ -1,0 +1,17 @@
+{
+ "model": "gpt-5.6-luna",
+ "instructions": "You read support tickets written to Tarnwick Supply, an outdoor gear retailer, and record what each ticket is about, using only the products and problem types listed below.\ncomplaint_about: the product the customer reports a problem with. Use \"none\" if the ticket does not say enough to tell which product it is.\nalso_mentions: any other Tarnwick product the ticket refers to, such as one ordered with it or one the customer wants instead. Leave it empty if there is none.\nproblem: the problem type that fits best.\nFor each choice, copy the words from the ticket that show it, exactly as the customer wrote them.\n\nProducts (code, name):\nTW-T101 Backpacking Tent 1P\nTW-T102 Backpacking Tent 2P\nTW-T103 Ultralight Tent 2P\nTW-T104 Winter Tent 2P\nTW-T105 Backpacking Tent 3P\nTW-T106 Backpacking Tent 3P Mk II\nTW-T201 Family Tent 4P\nTW-T202 Family Tent 6P\nTW-T203 Cabin Tent 8P\nTW-T204 Pop Up Festival Tent 2P\nTW-A101 Footprint for Backpacking Tent 2P\nTW-A102 Footprint for Family Tent 4P\nTW-A103 Footprint for Family Tent 6P\nTW-A104 Aluminum Tent Stakes (12)\nTW-A105 Tent Repair Kit\nTW-A106 Footprint for Ultralight Tent 2P\nTW-A107 Seam Sealer\nTW-S101 Down Sleeping Bag 20F\nTW-S102 Down Sleeping Bag 0F\nTW-S103 Synthetic Sleeping Bag 30F\nTW-S104 Down Sleeping Bag 20F Mk II\nTW-S105 Down Sleeping Bag 0F Mk II\nTW-S201 Self Inflating Mat\nTW-S202 Insulated Air Mat\nTW-S203 Closed Cell Foam Mat\nTW-K101 Canister Stove\nTW-K102 Integrated Stove System\nTW-K103 Liquid Fuel Stove\nTW-K201 Titanium Pot 750 ml\nTW-K202 Cook Set 2P\nTW-K203 Camp Kettle 1 L\nTW-P101 Daypack 22 L\nTW-P102 Daypack 30 L\nTW-P201 Backpacking Pack 50 L\nTW-P202 Backpacking Pack 65 L\nTW-P203 Backpacking Pack 40 L Women's Fit\nTW-F101 Leather Hiking Boot Men's\nTW-F102 Leather Hiking Boot Women's\nTW-F103 Winter Hiking Boot\nTW-F201 Trail Running Shoe\nTW-F202 Waterproof Hiking Shoe\nTW-C101 Waterproof Jacket Men's\nTW-C102 Waterproof Jacket Women's\nTW-C103 Packable Rain Shell\nTW-C201 Down Insulated Jacket\nTW-C202 Synthetic Insulated Jacket\nTW-C203 Down Insulated Jacket Mk II\nTW-C301 Merino Base Layer Top\nTW-C302 Merino Base Layer Leggings\n\nProblem types (code: definition):\ndeflation: An inflatable product going soft or flat.\ndelivery: A late, lost or damaged delivery.\nignition: A stove that will not light, or burns unsafely.\nleak: Water getting in through fabric, seams or vents.\nmissing-part: A product arrived without one of its parts.\nseam: Stitching or bonding coming apart.\nsizing: A product that does not fit the customer.\nstrap: A strap, buckle or adjuster that breaks or slips.\nwrong-item: The customer received a different product from the one ordered.\nzipper: A zip that splits, sticks or breaks.",
+ "input": "Main zip on my women's waterproof jacket separates from the bottom when I pull it up.",
+ "answer": {
+  "complaint_about": {
+   "sku": "TW-C102",
+   "words": "women's waterproof jacket"
+  },
+  "also_mentions": [],
+  "problem": "zipper",
+  "problem_words": "zip ... separates from the bottom"
+ },
+ "input_tokens": 1258,
+ "output_tokens": 45,
+ "cost_usd": 8.3e-05
+}

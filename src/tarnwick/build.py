@@ -41,6 +41,8 @@ def build(reason=True):
     describe(ds, "ontology", "ontology/tarnwick.ttl")
     describe(ds, "taxonomy", "ontology/taxonomy.ttl")
     describe(ds, "policies", "ontology/policies.ttl")
+    describe(ds, "extracted", "extracted/tickets.ttl", made_by="language model extraction")
+    describe(ds, "reviewed", "extracted/reviewed.ttl")
     unmatched = resolve_suppliers(ds)
     describe(ds, "resolution", made_by="supplier name matching")
     if reason:

@@ -11,7 +11,7 @@ from tarnwick.text import squeeze
 
 STAGES = Path(__file__).resolve().parents[1] / "stages"
 # files a chapter shows going wrong on purpose
-DELIBERATELY_WRONG = {"missing-stop", "broken", "weight-as-text", "wrong-tree", "vendors",
+DELIBERATELY_WRONG = {"missing-stop", "broken", "weight-as-text", "wrong-tree", "vendors", "wrong-bag",
                       "opened-before", "supplier-sample", "tents-as-classes",
                       "home-state", "quantity-domain", "two-statuses", "stock-as-arrow", "draft",
                       "quantity-both", "quantity-either", "every-product-supplied",

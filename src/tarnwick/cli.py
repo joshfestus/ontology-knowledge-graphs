@@ -19,6 +19,7 @@
     tarnwick similar SKU        products bought by the same customers
     tarnwick diff OLD NEW       what changed between two ontology versions
     tarnwick chat QUESTION      ask a language model about Tarnwick
+    tarnwick extract [TICKET]   facts from ticket text, read by a language model
     tarnwick skos FILE.csv      a category spreadsheet as SKOS concepts
     tarnwick tree [FILE...]     a taxonomy as a tree, with its problems
     tarnwick coverage           which ontology terms each question needs
@@ -49,6 +50,8 @@ def main(argv=None):
     pg.add_argument("files", nargs="+")
     cv = sub.add_parser("coverage", help="ontology terms used by the competency questions")
     cv.add_argument("--summary", action="store_true", help="only the totals and unused terms")
+    cv.add_argument("--before", type=int, metavar="CHAPTER",
+                    help="only the questions first answered before this chapter")
     cl = sub.add_parser("classes", help="the class tree and its members")
     cl.add_argument("files", nargs="*")
     d = sub.add_parser("define", help="what a Tarnwick term is called and means")
@@ -71,6 +74,8 @@ def main(argv=None):
     va = sub.add_parser("validate", help="check data against SHACL shapes")
     va.add_argument("files", nargs="*")
     va.add_argument("--shapes", help="use this shapes file instead of Tarnwick's")
+    va.add_argument("--data", action="store_true",
+                    help="check the files together with all of Tarnwick's data")
     pf = sub.add_parser("pitfalls", help="check an ontology for common mistakes")
     pf.add_argument("--ontology", help="check this ontology file instead of Tarnwick's")
     mt = sub.add_parser("match", help="match typed supplier names to suppliers")
@@ -87,6 +92,14 @@ def main(argv=None):
     df = sub.add_parser("diff", help="compare two versions of an ontology")
     df.add_argument("old")
     df.add_argument("new")
+    ex = sub.add_parser("extract", help="facts from ticket text, by a language model")
+    ex.add_argument("ticket", nargs="?", help="a ticket ID such as T-024")
+    ex.add_argument("--all", action="store_true", help="every ticket, one line each")
+    ex.add_argument("--score", action="store_true", help="compare with the answer key")
+    ex.add_argument("--turtle", action="store_true",
+                    help="the facts that pass every check, as Turtle")
+    ex.add_argument("--free", action="store_true", help="read without the ontology")
+    ex.add_argument("--policy", help="read the return rules in a policy document")
     ch = sub.add_parser("chat", help="ask a language model about Tarnwick")
     ch.add_argument("question")
     ch.add_argument("--files", nargs="*", default=[],
@@ -149,7 +162,7 @@ def main(argv=None):
         return 0
     if args.command == "validate":
         from .validate import validate_report
-        print(validate_report(args.files, args.shapes))
+        print(validate_report(args.files, args.shapes, args.data))
         return 0
     if args.command == "pitfalls":
         from .pitfalls import pitfalls_report
@@ -179,6 +192,19 @@ def main(argv=None):
         from .diff import report as diff_report
         print(diff_report(args.old, args.new))
         return 0
+    if args.command == "extract":
+        from . import extract
+        if args.policy:
+            print(extract.policy(args.policy))
+        elif args.ticket:
+            print(extract.one(args.ticket, args.free))
+        elif args.score:
+            print(extract.score())
+        elif args.turtle:
+            print(extract.turtle())
+        else:
+            print(extract.table())
+        return 0
     if args.command == "chat":
         from .chat import report as chat_report
         print(chat_report(args.question, args.files))
@@ -193,7 +219,7 @@ def main(argv=None):
         return 0
     if args.command == "coverage":
         from .coverage import report as coverage_report
-        print(coverage_report(args.summary))
+        print(coverage_report(args.summary, args.before))
         return 0
     if args.command == "ask":
         from .build import print_table, run_query

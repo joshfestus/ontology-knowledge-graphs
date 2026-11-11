@@ -1,0 +1,10 @@
+# 17. Which support tickets mention a product, and what went wrong?
+PREFIX tw:   <https://tarnwick.example/ontology#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?ticket ?product ?problem WHERE {
+  ?ticket tw:complaintAbout ?p ;
+          tw:problemType ?problem .
+  ?p rdfs:label ?product .
+}
+ORDER BY ?ticket

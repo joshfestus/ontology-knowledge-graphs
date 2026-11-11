@@ -27,11 +27,24 @@ def ontology_terms():
     return names
 
 
-def questions():
-    """{question number: set of terms its query uses}"""
+FIRST = re.compile(r"^\| (\d+) \|.*\| Ch (\d+) \|", re.MULTILINE)
+
+
+def first_chapter():
+    """{question number: the chapter that first answers it}, from QUESTIONS.md"""
+    text = (ROOT / "QUESTIONS.md").read_text(encoding="utf-8")
+    return {int(q): int(ch) for q, ch in FIRST.findall(text)}
+
+
+def questions(before=None):
+    """{question number: set of terms its query uses}. With a chapter
+    number, only the questions first answered before that chapter."""
+    first = first_chapter()
     out = {}
     for path in sorted((ROOT / "queries").glob("q*.rq")):
-        out[int(path.stem[1:])] = set(TERM.findall(path.read_text(encoding="utf-8")))
+        n = int(path.stem[1:])
+        if before is None or first.get(n, 99) < before:
+            out[n] = set(TERM.findall(path.read_text(encoding="utf-8")))
     return out
 
 
@@ -55,13 +68,13 @@ def implied_classes(used):
     return found
 
 
-def used_terms():
-    named = set().union(*questions().values())
+def used_terms(before=None):
+    named = set().union(*questions(before).values())
     return named | implied_classes(named)
 
 
-def unused():
-    return sorted(ontology_terms() - used_terms())
+def unused(before=None):
+    return sorted(ontology_terms() - used_terms(before))
 
 
 def wrap(text, indent):
@@ -73,15 +86,15 @@ def wrap(text, indent):
     return lines + [text]
 
 
-def report(summary=False):
-    qs = questions()
+def report(summary=False, before=None):
+    qs = questions(before)
     terms = ontology_terms()
-    used = used_terms()
+    used = used_terms(before)
     lines = [(f"{len(qs)} questions with queries use {len(used & terms)} of the "
               f"{len(terms)} ontology terms."), ""]
     if summary:
         lines.append("Terms no question uses yet:")
-        lines += wrap("  " + ", ".join(unused()), 2)
+        lines += wrap("  " + ", ".join(unused(before)), 2)
         return "\n".join(lines)
     for n, ts in qs.items():
         text = f"Q{n:<3} " + ", ".join(sorted(ts))
@@ -91,7 +104,7 @@ def report(summary=False):
             text = "     " + text[cut + 2:]
         lines.append(text)
     lines += ["", "Terms no question uses yet:"]
-    text = "  " + ", ".join(unused())
+    text = "  " + ", ".join(unused(before))
     while len(text) > 74:
         cut = text.rfind(", ", 0, 73)
         lines.append(text[:cut + 1])

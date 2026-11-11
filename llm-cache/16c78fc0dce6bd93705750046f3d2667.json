@@ -1,0 +1,12 @@
+{
+ "model": "gpt-5.6-luna",
+ "instructions": "You read support tickets written to Tarnwick Supply, an outdoor gear retailer. Say which product the customer has a problem with, and what the problem is, in a few words each.",
+ "input": "New 3 person backpacking tent, the Mk II one. The fly is dripping at the vent after an hour of rain.",
+ "answer": {
+  "product": "Mk II 3-person backpacking tent",
+  "problem": "Fly leaks/drips at the vent during rain"
+ },
+ "input_tokens": 101,
+ "output_tokens": 31,
+ "cost_usd": 5.7e-05
+}

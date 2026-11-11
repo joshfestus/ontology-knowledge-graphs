@@ -4,6 +4,7 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 @prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix tid:  <https://tarnwick.example/id/> .
 
 # What a complete, sensible Tarnwick record looks like (Chapter 12).
 # The ontology says what things mean; these shapes say what the data
@@ -157,6 +158,29 @@ tws:StockShape a sh:NodeShape ;
         sh:path tw:quantity ;
         sh:minCount 1 ; sh:maxCount 1 ;
         sh:datatype xsd:integer ; sh:minInclusive 0 ] .
+
+# Facts read from ticket text (Chapter 16). The same checks as tarnwick
+# extract makes, so they guard the graph whoever adds the facts.
+tws:TicketShape a sh:NodeShape ;
+    sh:targetClass tw:SupportTicket ;
+    sh:property [
+        sh:path tw:complaintAbout ;
+        sh:maxCount 1 ;
+        sh:class tw:Product ;
+        sh:message "A ticket complains about at most one product." ] ;
+    sh:property [
+        sh:path ( tw:problemType skos:inScheme ) ;
+        sh:in ( tid:problems ) ;
+        sh:message "A problem type must come from the problem list." ] ;
+    sh:sparql [
+        sh:message """The product this ticket complains about is not on
+            the order the ticket is about.""" ;
+        sh:prefixes tws:prefixes ;
+        sh:select """
+            SELECT $this ?value WHERE {
+                $this tw:complaintAbout ?value ; tw:aboutOrder ?order .
+                FILTER NOT EXISTS { ?order tw:hasLine/tw:product ?value }
+            }""" ] .
 
 tws:prefixes sh:declare
     [ sh:prefix "tw" ;

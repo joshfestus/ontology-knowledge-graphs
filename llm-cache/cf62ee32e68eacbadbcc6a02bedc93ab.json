@@ -1,0 +1,12 @@
+{
+ "model": "gpt-5.6-luna",
+ "instructions": "You read support tickets written to Tarnwick Supply, an outdoor gear retailer. Say which product the customer has a problem with, and what the problem is, in a few words each.",
+ "input": "The Insulated Air Mat I bought for my son loses air through the valve. Please advise how to get a refund.",
+ "answer": {
+  "product": "Insulated Air Mat",
+  "problem": "Valve leaks air; customer requests a refund"
+ },
+ "input_tokens": 99,
+ "output_tokens": 26,
+ "cost_usd": 5.1e-05
+}
