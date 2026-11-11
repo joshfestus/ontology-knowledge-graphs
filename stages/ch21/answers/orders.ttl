@@ -1,0 +1,27 @@
+@prefix twm:    <https://tarnwick.example/metrics#> .
+@prefix metric: <https://tarnwick.example/id/metric/> .
+@prefix dim:    <https://tarnwick.example/id/dimension/> .
+@prefix term:   <https://tarnwick.example/id/term/> .
+@prefix tid:    <https://tarnwick.example/id/> .
+@prefix rdfs:   <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos:   <http://www.w3.org/2004/02/skos/core#> .
+
+# Task 21.3: the number of orders in a period.
+
+term:orders a skos:Concept ;
+    skos:inScheme tid:business-terms ;
+    skos:prefLabel "orders"@en .
+
+metric:orders a twm:Metric ;
+    rdfs:label "orders"@en ;
+    skos:definition """The number of orders placed in the period, counted
+        on the order date."""@en ;
+    twm:defines term:orders ;
+    twm:steward "Finance" ;
+    twm:aggregate "COUNT DISTINCT" ;
+    twm:measure "?order" ;
+    twm:where """
+        ?order tw:orderDate ?date .
+        FILTER (?date >= ?from
+                && ?date <= ?to)""" ;
+    twm:dimension dim:region .

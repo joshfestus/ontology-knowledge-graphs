@@ -24,6 +24,7 @@
     tarnwick write-query QUESTION   a language model writes the SPARQL
     tarnwick mcp                the graph's tools as an MCP server on stdio
     tarnwick agent CUSTOMER MESSAGE   a support agent using those tools
+    tarnwick metric NAME            a metric from the semantic layer
     tarnwick skos FILE.csv      a category spreadsheet as SKOS concepts
     tarnwick tree [FILE...]     a taxonomy as a tree, with its problems
     tarnwick coverage           which ontology terms each question needs
@@ -114,6 +115,19 @@ def main(argv=None):
     tl.add_argument("name")
     tl.add_argument("arguments", nargs="*", metavar="NAME=VALUE",
                     help="the tool's arguments, such as customer=C-0083")
+    me = sub.add_parser("metric", help="a metric from the semantic layer")
+    me.add_argument("names", nargs="*", metavar="NAME",
+                    help="metrics or business terms, such as revenue")
+    me.add_argument("--by", help="a dimension to split the metric by")
+    me.add_argument("--period", help="a period: 2026-Q3, 2026-09 or 2026")
+    me.add_argument("--as-of", default=None, help="the reporting date")
+    me.add_argument("--show-query", action="store_true",
+                    help="print the SPARQL instead of running it")
+    me.add_argument("--list", action="store_true", help="every metric and dimension")
+    me.add_argument("--check", action="store_true",
+                    help="check every metric and dimension, and run each request")
+    me.add_argument("--ask", metavar="QUESTION",
+                    help="a language model turns a question into a request")
     wq = sub.add_parser("write-query", help="a language model writes the SPARQL")
     wq.add_argument("question", nargs="?")
     wq.add_argument("--no-map", action="store_true", help="give the model no ontology map")
@@ -243,6 +257,26 @@ def main(argv=None):
         text, _ = call(args.name, given)
         for line in text.split("\n"):
             print("\n".join(wrap(line, 74, subsequent_indent="  ")) or "")
+        return 0
+    if args.command == "metric":
+        from . import metrics
+        if args.list:
+            print(metrics.listing())
+            return 0
+        if args.check:
+            ok, text = metrics.check()
+            print(text)
+            return 0 if ok else 1
+        if args.ask:
+            print(metrics.ask(args.ask))
+            return 0
+        try:
+            print(metrics.report(args.names, by=args.by, period=args.period,
+                                 as_of=args.as_of or metrics.TODAY,
+                                 show_query=args.show_query))
+        except metrics.MetricError as e:
+            print(e)
+            return 1
         return 0
     if args.command == "write-query":
         from . import textquery

@@ -40,7 +40,8 @@ def test_stage_facts_are_true_of_tarnwick():
     book can never print a number the data does not have."""
     full = build()[0]
     for path in sorted(STAGES.rglob("*.ttl")):
-        if path.stem in DELIBERATELY_WRONG | {"task-3-4"}:
+        # orders.ttl is Task 21.3's new metric, an addition to metrics.ttl
+        if path.stem in DELIBERATELY_WRONG | {"task-3-4", "orders"}:
             continue
         for triple in squeeze(Graph().parse(path)):
             if any(isinstance(node, BNode) for node in triple):
