@@ -1,0 +1,9 @@
+@prefix tw:   <https://tarnwick.example/ontology#> .
+@prefix sup:  <https://tarnwick.example/id/supplier/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+# Purchasing's vendor number kept as a value, not as the name.
+sup:SUP-01
+    rdfs:label "Brisgate Textiles Ltd" ;
+    tw:country "United Kingdom" ;
+    tw:vendorNumber "77" .

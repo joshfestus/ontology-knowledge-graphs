@@ -1,0 +1,12 @@
+# 6. Which products have been recalled, and which customers bought them?
+PREFIX tw: <https://tarnwick.example/ontology#>
+
+SELECT DISTINCT ?sku ?customer WHERE {
+  ?recall a tw:Recall ;
+          tw:product ?product .
+  ?product tw:sku ?sku .
+  ?order tw:hasLine/tw:product ?product ;
+         tw:placedBy ?c .
+  BIND (STRAFTER(STR(?c), "customer/") AS ?customer)
+}
+ORDER BY ?sku ?customer

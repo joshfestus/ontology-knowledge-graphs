@@ -1,0 +1,23 @@
+# 13. What was the revenue in each region last quarter?
+# Last quarter is July to September 2026. Online orders have no region.
+PREFIX tw:   <https://tarnwick.example/ontology#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#>
+
+SELECT ?region (SUM(?quantity * ?price) AS ?revenue) WHERE {
+  ?order tw:orderDate ?date ;
+         tw:soldAt ?store ;
+         tw:hasLine ?line .
+  ?line tw:quantity ?quantity ;
+        tw:unitPriceUSD ?price .
+  FILTER (?date >= "2026-07-01"^^xsd:date
+          && ?date <= "2026-09-30"^^xsd:date)
+  OPTIONAL {
+    ?store tw:locatedIn/tw:partOf ?r .
+    ?r a tw:Region ;
+       rdfs:label ?regionName .
+  }
+  BIND (COALESCE(?regionName, "Online") AS ?region)
+}
+GROUP BY ?region
+ORDER BY DESC(?revenue)

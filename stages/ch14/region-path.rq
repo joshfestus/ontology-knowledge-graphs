@@ -1,0 +1,10 @@
+# 20, written with a path. Which region is Bend in?
+PREFIX tw:    <https://tarnwick.example/ontology#>
+PREFIX place: <https://tarnwick.example/id/place/>
+PREFIX rdfs:  <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?region WHERE {
+  place:BEND tw:partOf+ ?r .
+  ?r a tw:Region ;
+     rdfs:label ?region .
+}

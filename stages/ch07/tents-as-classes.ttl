@@ -1,0 +1,14 @@
+@prefix tw:   <https://tarnwick.example/ontology#> .
+@prefix prod: <https://tarnwick.example/id/product/> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+tw:Product a owl:Class .
+tw:Tent a owl:Class ; rdfs:subClassOf tw:Product .
+tw:BackpackingTent a owl:Class ; rdfs:subClassOf tw:Tent .
+tw:FamilyTent a owl:Class ; rdfs:subClassOf tw:Tent .
+
+prod:TW-T101 a tw:BackpackingTent .
+prod:TW-T102 a tw:BackpackingTent .
+prod:TW-T201 a tw:FamilyTent .
+prod:TW-T204 a tw:Tent .

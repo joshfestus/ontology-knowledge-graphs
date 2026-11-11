@@ -1,0 +1,6 @@
+@prefix tw:     <https://tarnwick.example/ontology#> .
+@prefix ticket: <https://tarnwick.example/id/ticket/> .
+@prefix cust:   <https://tarnwick.example/id/customer/> .
+
+ticket:T-001 a tw:SupportTicket ;
+    tw:placedBy cust:C-0121 .

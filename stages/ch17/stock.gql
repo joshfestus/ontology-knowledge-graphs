@@ -1,0 +1,3 @@
+MATCH (s:Store)-[k:STOCKS]->(p:Product {sku: 'TW-T102'})
+RETURN s.name, k.quantity
+ORDER BY k.quantity DESC

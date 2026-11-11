@@ -1,0 +1,3 @@
+MATCH (o:Order)-[:SOLD_AT]->(s:Store), (o)-[c:CONTAINS]->(:Product)
+RETURN s.name, SUM(c.quantity * c.unitPriceUSD) AS revenue
+ORDER BY revenue DESC

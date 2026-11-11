@@ -1,0 +1,31 @@
+@prefix sh:   <http://www.w3.org/ns/shacl#> .
+@prefix twm:  <https://tarnwick.example/metrics#> .
+@prefix tws:  <https://tarnwick.example/shapes#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+
+# What every metric and dimension in metrics.ttl must state (Chapter 21).
+
+tws:MetricShape a sh:NodeShape ;
+    sh:targetClass twm:Metric ;
+    sh:property [ sh:path rdfs:label ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path skos:definition ;
+                  sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path twm:defines ; sh:minCount 1 ; sh:maxCount 1 ;
+                  sh:class skos:Concept ] ;
+    sh:property [ sh:path twm:steward ; sh:minCount 1 ; sh:maxCount 1 ;
+                  sh:datatype xsd:string ] ;
+    sh:property [ sh:path twm:aggregate ; sh:minCount 1 ; sh:maxCount 1 ;
+                  sh:in ( "COUNT DISTINCT" "SUM" ) ] ;
+    sh:property [ sh:path twm:measure ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path twm:where ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path twm:dimension ; sh:class twm:Dimension ] .
+
+tws:DimensionShape a sh:NodeShape ;
+    sh:targetClass twm:Dimension ;
+    sh:property [ sh:path rdfs:label ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path skos:definition ;
+                  sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path twm:needs ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path twm:where ; sh:minCount 1 ; sh:maxCount 1 ] .

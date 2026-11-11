@@ -1,0 +1,14 @@
+# 27. Where did each fact about a product come from?
+PREFIX prod:    <https://tarnwick.example/id/product/>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX prov:    <http://www.w3.org/ns/prov#>
+PREFIX rdfs:    <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?property ?value ?source WHERE {
+  GRAPH ?g { prod:TW-T102 ?p ?value }
+  { ?g dcterms:source ?file . ?file rdfs:label ?source }
+  UNION
+  { ?g prov:wasGeneratedBy ?step . ?step rdfs:label ?source }
+  BIND (STRAFTER(STR(?p), "#") AS ?property)
+}
+ORDER BY ?source ?property

@@ -1,0 +1,10 @@
+# How many orders did customer C-0001 place, and when were the first and
+# the last?
+PREFIX tw:   <https://tarnwick.example/ontology#>
+PREFIX cust: <https://tarnwick.example/id/customer/>
+
+SELECT (COUNT(?order) AS ?orders) (MIN(?date) AS ?first)
+       (MAX(?date) AS ?last) WHERE {
+  ?order tw:placedBy cust:C-0001 ;
+         tw:orderDate ?date .
+}

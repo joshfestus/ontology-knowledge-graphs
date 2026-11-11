@@ -1,0 +1,20 @@
+{
+ "model": "gpt-5.6-luna",
+ "instructions": "You check a customer service answer against the numbered facts it was written from. For each sentence, read only the facts it cites and decide: \"supported\" if everything the sentence says is in those facts; \"misstated\" if it changes something in them, such as a number, a condition, a product or who does what; \"added\" if it makes a claim the cited facts do not contain. Give a short reason for any verdict other than supported.",
+ "input": "Facts:\n[1] The Trail Running Shoe (TW-F201) is in the category Trail Shoes, which is part of Footwear, which is part of Hiking.\n[2] The Trail Running Shoe has the status active.\n[3] The return rule for the Trail Running Shoe is the footwear return window, set on Footwear, the nearest category above it with a rule: 60 days after delivery, on condition: Worn indoors only. It is stated in the Tarnwick Supply Returns Policy.\n[4] A recalled product can be returned at any time, in any condition, with or without proof of purchase. The customer chooses between a full refund of the price paid and a replacement product of equal or greater value. Return shipping is paid by Tarnwick.\n[5] Recalled products must not be resold, repaired or donated by store staff. Stores hold them in the returns area until the supplier collects them.\n[6] Footwear can be returned within 60 days of delivery if it has only been worn indoors. Boots and shoes with outdoor wear are handled under the Warranty Policy instead.\n\nSentences:\n1. You cannot return it under the standard footwear return rule because it was worn outdoors, and that rule requires indoor-only wear within 60 days of delivery. [3, 6] The information provided does not say whether you can return it under the Warranty Policy. [6]",
+ "answer": {
+  "sentences": [
+   {
+    "number": 1,
+    "verdict": "misstated",
+    "reason": "The cited facts state that outdoor-worn footwear is handled under the Warranty Policy, but do not establish that this particular item was worn outdoors. They also do not determine whether it qualifies for a return under that policy."
+   }
+  ]
+ },
+ "input_tokens": 449,
+ "cached_tokens": 0,
+ "output_tokens": 233,
+ "cost_usd": 0.000369,
+ "seconds": 3.91,
+ "run": 2
+}

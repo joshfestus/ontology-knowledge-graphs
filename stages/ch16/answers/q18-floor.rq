@@ -1,0 +1,17 @@
+# Question 18, only products with at least two complaints.
+PREFIX tw:   <https://tarnwick.example/ontology#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?product ?complaints ?sold ?per_hundred WHERE {
+  { SELECT ?p (COUNT(?ticket) AS ?complaints) WHERE {
+      ?ticket tw:complaintAbout ?p .
+    } GROUP BY ?p
+    HAVING (COUNT(?ticket) >= 2) }
+  { SELECT ?p (SUM(?quantity) AS ?sold) WHERE {
+      ?order tw:hasLine ?line .
+      ?line tw:product ?p ; tw:quantity ?quantity .
+    } GROUP BY ?p }
+  ?p rdfs:label ?product .
+  BIND (ROUND(1000 * ?complaints / ?sold) / 10 AS ?per_hundred)
+}
+ORDER BY DESC(?per_hundred) ?product

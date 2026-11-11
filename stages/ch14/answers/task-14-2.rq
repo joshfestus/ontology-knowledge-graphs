@@ -1,0 +1,9 @@
+# Which products on sale today appear on no order line?
+PREFIX tw: <https://tarnwick.example/ontology#>
+
+SELECT ?sku WHERE {
+  ?product tw:sku ?sku ;
+           tw:hasStatus tw:Active .
+  FILTER NOT EXISTS { ?line tw:product ?product . ?line a tw:OrderLine }
+}
+ORDER BY ?sku

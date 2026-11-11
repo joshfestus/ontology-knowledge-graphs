@@ -1,0 +1,13 @@
+# 21. Which suppliers belong to the same parent company?
+PREFIX tw:   <https://tarnwick.example/ontology#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?parent (GROUP_CONCAT(?supplier; separator=", ") AS ?suppliers)
+WHERE {
+  ?s a tw:Supplier ;
+     rdfs:label ?supplier ;
+     tw:parentOrganization ?p .
+  ?p rdfs:label ?parent .
+}
+GROUP BY ?parent
+HAVING (COUNT(?s) > 1)

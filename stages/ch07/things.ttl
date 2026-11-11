@@ -1,0 +1,16 @@
+@prefix tw:      <https://tarnwick.example/ontology#> .
+@prefix prod:    <https://tarnwick.example/id/product/> .
+@prefix sup:     <https://tarnwick.example/id/supplier/> .
+@prefix company: <https://tarnwick.example/id/org/> .
+@prefix store:   <https://tarnwick.example/id/store/> .
+@prefix place:   <https://tarnwick.example/id/place/> .
+
+prod:TW-T102 a tw:Product .
+prod:TW-A101 a tw:Product .
+sup:SUP-01 a tw:Supplier .
+sup:SUP-02 a tw:Supplier .
+company:ORG-01 a tw:Organization .
+store:ST-BOU a tw:Store .
+place:MTW a tw:Region .
+place:CO a tw:State .
+place:BOULDER a tw:Town .

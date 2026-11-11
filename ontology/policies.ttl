@@ -1,0 +1,39 @@
+@prefix tw:   <https://tarnwick.example/ontology#> .
+@prefix tid:  <https://tarnwick.example/id/> .
+@prefix pol:  <https://tarnwick.example/id/policy/> .
+@prefix recall: <https://tarnwick.example/id/recall/> .
+@prefix rule: <https://tarnwick.example/id/rule/> .
+@prefix cat:  <https://tarnwick.example/id/category/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+
+# The rules stated in data/policies/*.md, written as data. The documents
+# themselves are loaded by the build into the policies graph, whole.
+
+pol:POL-RET tw:effective "2025-03-01"^^xsd:date .
+pol:POL-RCL tw:effective "2026-01-01"^^xsd:date .
+pol:POL-WTY tw:effective "2025-03-01"^^xsd:date .
+pol:POL-SHP tw:effective "2025-06-15"^^xsd:date .
+
+rule:return-standard a tw:ReturnRule ;
+    rdfs:label "standard return window" ;
+    tw:definedIn pol:POL-RET ;
+    tw:returnWindowDays 30 ;
+    tw:condition "Unused and in the original packaging." ;
+    tw:appliesToCategory cat:CAMP , cat:HIKE , cat:CLOTH , cat:CLIMB .
+
+rule:return-footwear a tw:ReturnRule ;
+    rdfs:label "footwear return window" ;
+    tw:definedIn pol:POL-RET ;
+    tw:returnWindowDays 60 ;
+    tw:condition "Worn indoors only." ;
+    tw:appliesToCategory cat:FOOT .
+
+rule:return-sleep a tw:ReturnRule ;
+    rdfs:label "sleeping gear return window" ;
+    tw:definedIn pol:POL-RET ;
+    tw:returnWindowDays 30 ;
+    tw:condition "Compression sack or packaging seal unbroken." ;
+    tw:appliesToCategory cat:SLEEP .
+
+recall:R-2026-01 tw:handledUnder pol:POL-RCL .

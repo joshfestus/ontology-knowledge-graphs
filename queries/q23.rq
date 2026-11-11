@@ -1,0 +1,25 @@
+# 23. How many days does a customer have to return a given product?
+# The rule on the nearest category wins: footwear beats the general rule
+# for hiking. A recalled product has no time limit at all.
+PREFIX tw:   <https://tarnwick.example/ontology#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+SELECT DISTINCT ?sku ?days ?rule WHERE {
+  ?product tw:sku ?sku .
+  OPTIONAL {
+    ?product tw:inCategory/skos:broader* ?category .
+    ?r tw:appliesToCategory ?category ;
+       tw:returnWindowDays ?ruleDays ;
+       rdfs:label ?ruleName .
+    FILTER NOT EXISTS {
+      ?product tw:inCategory/skos:broader* ?nearer .
+      ?nearer skos:broader+ ?category .
+      ?other tw:appliesToCategory ?nearer .
+    }
+  }
+  OPTIONAL { ?recall a tw:Recall ; tw:product ?product }
+  BIND (IF(BOUND(?recall), "no limit", STR(?ruleDays)) AS ?days)
+  BIND (IF(BOUND(?recall), "recall policy", ?ruleName) AS ?rule)
+}
+ORDER BY ?sku

@@ -1,0 +1,10 @@
+# 14. Which accessories fit which tents?
+PREFIX tw:   <https://tarnwick.example/ontology#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?accessory ?tent WHERE {
+  ?a tw:fits ?t .
+  ?a rdfs:label ?accessory .
+  ?t rdfs:label ?tent .
+}
+ORDER BY ?tent

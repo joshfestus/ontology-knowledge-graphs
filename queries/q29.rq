@@ -1,0 +1,27 @@
+# 29. Which store relies most on a single supplier for the stock on its
+#     shelves?
+PREFIX tw:   <https://tarnwick.example/ontology#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?storeName ?supplierName ?units ?share WHERE {
+  {
+    SELECT ?store ?supplier (SUM(?quantity) AS ?units) WHERE {
+      ?level tw:atStore ?store ;
+             tw:product/tw:suppliedBy ?supplier ;
+             tw:quantity ?quantity .
+    }
+    GROUP BY ?store ?supplier
+  }
+  {
+    SELECT ?store (SUM(?quantity) AS ?total) WHERE {
+      ?level tw:atStore ?store ;
+             tw:quantity ?quantity .
+    }
+    GROUP BY ?store
+  }
+  ?store rdfs:label ?storeName .
+  ?supplier rdfs:label ?supplierName .
+  BIND (ROUND(100 * ?units / ?total) AS ?share)
+}
+ORDER BY DESC(?share)
+LIMIT 5

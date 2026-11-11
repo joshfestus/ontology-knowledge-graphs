@@ -1,0 +1,12 @@
+{
+ "model": "gpt-5.6-luna",
+ "instructions": "You read support tickets written to Tarnwick Supply, an outdoor gear retailer. Say which product the customer has a problem with, and what the problem is, in a few words each.",
+ "input": "My insulated air mat went flat twice in one night. I can't find a hole. The valve feels loose when I press it. I saw something online about a recall?",
+ "answer": {
+  "product": "Insulated air mat",
+  "problem": "Deflates overnight; possibly a loose valve or recall issue"
+ },
+ "input_tokens": 109,
+ "output_tokens": 29,
+ "cost_usd": 5.7e-05
+}

@@ -1,0 +1,5 @@
+@prefix tw:   <https://tarnwick.example/ontology#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+# Meant as "a store or a customer"; read by OWL as "a store and a customer".
+tw:locatedIn rdfs:domain tw:Customer .

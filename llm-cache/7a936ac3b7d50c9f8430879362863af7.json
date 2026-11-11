@@ -1,0 +1,19 @@
+{
+ "model": "gpt-5.6-luna",
+ "instructions": "You check a customer service answer against the customer's question and the numbered facts it was written from. What the customer says about their own situation, such as how long ago something arrived, may be taken as true. For each sentence, read the question and the facts it cites and decide: \"supported\" if everything the sentence says follows from those; \"misstated\" if it changes something in them, such as a number, a date, a condition, a product or who does what; \"added\" if it makes a claim neither the question nor the cited facts contain. Give a short reason for any verdict other than supported.",
+ "input": "Customer question: My Trail Running Shoe split after two months of running on trails. Can I return it?\n\nFacts:\n[1] The Trail Running Shoe (TW-F201) is in the category Trail Shoes, which is part of Footwear, which is part of Hiking.\n[2] The Trail Running Shoe has the status active.\n[3] The return rule for the Trail Running Shoe is the footwear return window, set on Footwear, the nearest category above it with a rule: 60 days after delivery, on condition: Worn indoors only. It is stated in the Tarnwick Supply Returns Policy.\n[4] A recalled product can be returned at any time, in any condition, with or without proof of purchase. The customer chooses between a full refund of the price paid and a replacement product of equal or greater value. Return shipping is paid by Tarnwick.\n[5] Recalled products must not be resold, repaired or donated by store staff. Stores hold them in the returns area until the supplier collects them.\n[6] Footwear can be returned within 60 days of delivery if it has only been worn indoors. Boots and shoes with outdoor wear are handled under the Warranty Policy instead.\n\nSentences:\n1. The Trail Running Shoe can be returned within 60 days of delivery only if it was worn indoors, so outdoor trail wear is handled under the Warranty Policy instead. [3, 6] I cannot tell from the information provided whether it qualifies for a warranty return. [6]",
+ "answer": {
+  "sentences": [
+   {
+    "number": 1,
+    "verdict": "supported",
+    "reason": ""
+   }
+  ]
+ },
+ "input_tokens": 504,
+ "cached_tokens": 0,
+ "output_tokens": 85,
+ "cost_usd": 0.000203,
+ "seconds": 2.71
+}

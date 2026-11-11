@@ -1,0 +1,17 @@
+@prefix tw:   <https://tarnwick.example/ontology#> .
+@prefix prod: <https://tarnwick.example/id/product/> .
+@prefix sup:  <https://tarnwick.example/id/supplier/> .
+@prefix cat:  <https://tarnwick.example/id/category/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+prod:TW-T102
+    rdfs:label "Backpacking Tent 2P"@en ;
+    tw:inCategory cat:TENT-BP ;
+    tw:suppliedBy sup:SUP-01 .
+
+prod:TW-A101
+    rdfs:label "Footprint for Backpacking Tent 2P"@en ;
+    tw:fits prod:TW-T102 ;
+    tw:suppliedBy sup:SUP-01 .
+
+sup:SUP-01 rdfs:label "Brisgate Textiles Ltd" .

@@ -1,0 +1,11 @@
+# 24. Which customers bought a tent and the footprint that fits it?
+PREFIX tw: <https://tarnwick.example/ontology#>
+
+SELECT DISTINCT ?customer ?tent WHERE {
+  ?footprint tw:fits ?t .
+  ?o1 tw:placedBy ?c ; tw:hasLine/tw:product ?t .
+  ?o2 tw:placedBy ?c ; tw:hasLine/tw:product ?footprint .
+  ?t tw:sku ?tent .
+  BIND (STRAFTER(STR(?c), "customer/") AS ?customer)
+}
+ORDER BY ?customer ?tent

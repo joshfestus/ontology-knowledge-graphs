@@ -1,0 +1,464 @@
+@prefix tw:   <https://tarnwick.example/ontology#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix schema: <https://schema.org/> .
+
+<https://tarnwick.example/ontology>
+    a owl:Ontology ;
+    rdfs:label "Tarnwick Supply ontology" ;
+    owl:versionInfo "1.0" ;
+    dcterms:creator "Josh Festus" ;
+    rdfs:comment """The meaning of the things Tarnwick Supply sells, buys,
+        stocks and talks about, written so that people and programs read
+        it the same way.""" .
+
+# ---------------------------------------------------------------- classes
+
+tw:Product a owl:Class ;
+    rdfs:label "product" ;
+    skos:definition """Something Tarnwick sells, identified by one SKU.
+        Each size or version with its own SKU is a separate product.""" .
+
+tw:Organization a owl:Class ;
+    rdfs:label "organization" ;
+    skos:definition """A company or other body that can own things, sign
+        agreements and be responsible for products.""" .
+
+tw:Supplier a owl:Class ;
+    rdfs:subClassOf tw:Organization ;
+    rdfs:label "supplier" ;
+    skos:definition """An organization that Tarnwick buys products from,
+        or has bought products from in the past.""" .
+
+tw:Place a owl:Class ;
+    rdfs:label "place" ;
+    skos:definition """A named area on the map, from a town up to a
+        country.""" .
+
+tw:Country a owl:Class ; rdfs:subClassOf tw:Place ; rdfs:label "country" ;
+    skos:definition "A sovereign state." .
+tw:Region a owl:Class ; rdfs:subClassOf tw:Place ; rdfs:label """sales
+    region""" ;
+    skos:definition """A group of states that Tarnwick reports sales for
+        as one area.""" .
+tw:State a owl:Class ; rdfs:subClassOf tw:Place ; rdfs:label "state" ;
+    skos:definition "A US state." .
+tw:Town a owl:Class ; rdfs:subClassOf tw:Place ; rdfs:label "town" ;
+    skos:definition "A town or city." .
+
+[] a owl:AllDisjointClasses ;
+    owl:members ( tw:Country tw:Region tw:State tw:Town ) .
+
+tw:Store a owl:Class ;
+    rdfs:label "store" ;
+    skos:definition """A place where Tarnwick sells to customers, either a
+        shop with an address or the online store.""" .
+
+tw:Customer a owl:Class ;
+    rdfs:label "customer" ;
+    skos:definition """A person who has opened an account with Tarnwick.
+        Whether a customer counts as active depends on whose definition is
+        used.""" .
+
+tw:Order a owl:Class ;
+    rdfs:label "order" ;
+    skos:definition """One purchase by one customer at one store on one
+        day, made up of one or more order lines.""" .
+
+tw:OrderLine a owl:Class ;
+    rdfs:label "order line" ;
+    skos:definition """One product within an order, with the quantity
+        bought and the price paid for each unit.""" .
+
+tw:StockLevel a owl:Class ;
+    rdfs:label "stock level" ;
+    skos:definition """How many units of one product one store held when
+        the stock was last counted.""" .
+
+tw:Recall a owl:Class ;
+    rdfs:label "recall" ;
+    skos:definition """A public notice that a product is unsafe or faulty
+        and that customers should return it.""" .
+
+tw:SupportTicket a owl:Class ;
+    rdfs:label "support ticket" ;
+    skos:definition """A message from a customer to Tarnwick's support
+        team, kept as the customer wrote it.""" .
+
+tw:Policy a owl:Class ;
+    rdfs:label "policy" ;
+    skos:definition """A written Tarnwick rule document, such as the
+        returns policy, in one numbered version.""" .
+
+tw:ReturnRule a owl:Class ;
+    rdfs:label "return rule" ;
+    skos:definition """One rule from a policy saying how long customers
+        have to return products in a category.""" .
+
+tw:NameMatch a owl:Class ;
+    rdfs:label "name match" ;
+    skos:definition """A record that a name typed in one file was judged
+        to mean a known organization, with the score and the method used,
+        so the decision can be checked later.""" .
+
+tw:ProductStatus a owl:Class ;
+    rdfs:label "product status" ;
+    skos:definition "Whether Tarnwick is currently selling a product." ;
+    owl:oneOf ( tw:Active tw:Discontinued tw:Recalled ) .
+
+tw:Active a tw:ProductStatus ; rdfs:label "active" ;
+    skos:definition "On sale now." .
+tw:Discontinued a tw:ProductStatus ; rdfs:label "discontinued" ;
+    skos:definition """No longer sold, usually because a newer product
+        replaced it.""" .
+tw:Recalled a tw:ProductStatus ; rdfs:label "recalled" ;
+    skos:definition "Withdrawn from sale under a recall notice." .
+
+tw:Active owl:differentFrom tw:Discontinued , tw:Recalled .
+tw:Discontinued owl:differentFrom tw:Recalled .
+
+[] a owl:AllDisjointClasses ;
+    owl:members ( tw:Product tw:Organization tw:Place tw:Store
+                  tw:Customer tw:Order tw:OrderLine tw:StockLevel
+                  tw:Recall tw:SupportTicket tw:Policy tw:ReturnRule
+                  tw:ProductStatus tw:NameMatch ) .
+
+# ------------------------------------------------------ relationships
+
+tw:inCategory a owl:ObjectProperty ;
+    rdfs:label "in category" ;
+    skos:definition """Links a product to a category in the Tarnwick
+        product taxonomy. A product can be in more than one category.""" ;
+    rdfs:domain tw:Product ;
+    rdfs:range skos:Concept .
+
+tw:suppliedBy a owl:ObjectProperty ;
+    rdfs:label "supplied by" ;
+    skos:definition """Links a product to the supplier Tarnwick buys it
+        from.""" ;
+    rdfs:domain tw:Product ;
+    rdfs:range tw:Supplier ;
+    owl:inverseOf tw:supplies .
+
+tw:supplies a owl:ObjectProperty ;
+    rdfs:label "supplies" ;
+    skos:definition """Links a supplier to a product Tarnwick buys from
+        it.""" .
+
+tw:parentOrganization a owl:ObjectProperty ;
+    rdfs:label "parent organization" ;
+    skos:definition "Links a company to the company that owns it." ;
+    rdfs:domain tw:Organization ;
+    rdfs:range tw:Organization .
+
+tw:replacedBy a owl:ObjectProperty ;
+    rdfs:label "replaced by" ;
+    skos:definition """Links a discontinued product to the product sold in
+        its place.""" ;
+    rdfs:domain tw:Product ;
+    rdfs:range tw:Product ;
+    owl:inverseOf tw:replaces .
+
+tw:replaces a owl:ObjectProperty ;
+    rdfs:label "replaces" ;
+    skos:definition """Links a product to the older product it took the
+        place of.""" .
+
+tw:fits a owl:ObjectProperty ;
+    rdfs:label "fits" ;
+    skos:definition """Links an accessory to a product it is made to be
+        used with, such as a footprint to the tent it is cut for.""" ;
+    rdfs:domain tw:Product ;
+    rdfs:range tw:Product .
+
+tw:hasStatus a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:label "has status" ;
+    skos:definition """Links a product to whether it is on sale. A product
+        has exactly one status at a time.""" ;
+    rdfs:domain tw:Product ;
+    rdfs:range tw:ProductStatus .
+
+tw:partOf a owl:ObjectProperty , owl:TransitiveProperty ;
+    rdfs:label "part of" ;
+    skos:definition """Links a place to a larger place that contains it. A
+        town in a state in a region is part of that region too.""" ;
+    rdfs:domain tw:Place ;
+    rdfs:range tw:Place .
+
+tw:locatedIn a owl:ObjectProperty ;
+    rdfs:label "located in" ;
+    skos:definition """Links a store to the town it is in. The online
+        store has no location.""" ;
+    rdfs:domain tw:Store ;
+    rdfs:range tw:Town .
+
+tw:homeTown a owl:ObjectProperty ;
+    rdfs:label "home town" ;
+    skos:definition "Links a customer to the town on their account." ;
+    rdfs:domain tw:Customer ;
+    rdfs:range tw:Town .
+
+tw:placedBy a owl:ObjectProperty ;
+    rdfs:label "placed by" ;
+    skos:definition "Links an order to the customer who placed it." ;
+    rdfs:domain tw:Order ;
+    rdfs:range tw:Customer .
+
+tw:soldAt a owl:ObjectProperty ;
+    rdfs:label "sold at" ;
+    skos:definition "Links an order to the store that took it." ;
+    rdfs:domain tw:Order ;
+    rdfs:range tw:Store .
+
+tw:hasLine a owl:ObjectProperty ;
+    rdfs:label "has line" ;
+    skos:definition "Links an order to one of its order lines." ;
+    rdfs:domain tw:Order ;
+    rdfs:range tw:OrderLine ;
+    owl:inverseOf tw:lineOf .
+
+tw:lineOf a owl:ObjectProperty ;
+    rdfs:label "line of" ;
+    skos:definition "Links an order line to the order it belongs to." .
+
+tw:product a owl:ObjectProperty ;
+    rdfs:label "product" ;
+    skos:definition """Links an order line, stock level or recall to the
+        product it is about.""" ;
+    rdfs:range tw:Product .
+
+tw:atStore a owl:ObjectProperty ;
+    rdfs:label "at store" ;
+    skos:definition """Links a stock level to the store that holds the
+        stock.""" ;
+    rdfs:domain tw:StockLevel ;
+    rdfs:range tw:Store .
+
+tw:raisedBy a owl:ObjectProperty ;
+    rdfs:label "raised by" ;
+    skos:definition """Links a support ticket to the customer who wrote
+        it.""" ;
+    rdfs:domain tw:SupportTicket ;
+    rdfs:range tw:Customer .
+
+tw:aboutOrder a owl:ObjectProperty ;
+    rdfs:label "about order" ;
+    skos:definition """Links a support ticket to the order the customer
+        was asking about.""" ;
+    rdfs:domain tw:SupportTicket ;
+    rdfs:range tw:Order .
+
+tw:mentions a owl:ObjectProperty ;
+    rdfs:label "mentions" ;
+    skos:definition """Links a support ticket to a product the customer
+        wrote about. Found by reading the ticket text.""" ;
+    rdfs:domain tw:SupportTicket ;
+    rdfs:range tw:Product .
+
+tw:problemType a owl:ObjectProperty ;
+    rdfs:label "problem type" ;
+    skos:definition """Links a support ticket to the kind of problem it
+        reports, from the Tarnwick problem list.""" ;
+    rdfs:domain tw:SupportTicket ;
+    rdfs:range skos:Concept .
+
+tw:definedIn a owl:ObjectProperty ;
+    rdfs:label "defined in" ;
+        skos:definition """Links a rule to the policy document that states
+        it.""" ;
+    rdfs:range tw:Policy .
+
+tw:appliesToCategory a owl:ObjectProperty ;
+    rdfs:label "applies to category" ;
+    skos:definition """Links a return rule to the product category it
+        covers, including every category beneath it.""" ;
+    rdfs:domain tw:ReturnRule ;
+    rdfs:range skos:Concept .
+
+tw:handledUnder a owl:ObjectProperty ;
+    rdfs:label "handled under" ;
+    skos:definition """Links a recall to the policy that says how
+        customers are treated.""" ;
+    rdfs:domain tw:Recall ;
+    rdfs:range tw:Policy .
+
+# ------------------------------------------------------------ values
+
+tw:sku a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:label "SKU" ;
+    skos:definition """The stock keeping unit code Tarnwick gives a
+        product, such as TW-T102.""" ;
+    rdfs:domain tw:Product ; rdfs:range xsd:string .
+
+tw:priceUSD a owl:DatatypeProperty ;
+    rdfs:label "price in US dollars" ;
+    skos:definition "The current shelf price of a product." ;
+    rdfs:domain tw:Product ; rdfs:range xsd:decimal .
+
+tw:weightGrams a owl:DatatypeProperty ;
+    rdfs:label "weight in grams" ;
+    skos:definition """The weight of one unit as packed for a trip,
+        without retail packaging. Footwear is weighed as a pair.""" ;
+    rdfs:domain tw:Product ; rdfs:range xsd:integer .
+
+tw:seasonRating a owl:DatatypeProperty ;
+    rdfs:label "season rating" ;
+    skos:definition """How many seasons of the year a tent is designed
+        for, from 2 (summer) to 4 (winter).""" ;
+    rdfs:domain tw:Product ; rdfs:range xsd:integer .
+
+tw:releaseDate a owl:DatatypeProperty ;
+    rdfs:label "release date" ;
+    skos:definition "The first day a product could be sold." ;
+    rdfs:domain tw:Product ; rdfs:range xsd:date .
+
+tw:mainMaterial a owl:DatatypeProperty ;
+    rdfs:label "main material" ;
+    skos:definition """The material that makes up most of a product, as
+        written on its label.""" ;
+    rdfs:domain tw:Product ; rdfs:range xsd:string .
+
+tw:supplierNameAsTyped a owl:DatatypeProperty ;
+    rdfs:label "supplier name as typed" ;
+    skos:definition """The supplier name exactly as a buyer typed it in
+        the product file. Kept so that every supplier link can be traced
+        back to what was written.""" ;
+    rdfs:domain tw:Product ; rdfs:range xsd:string .
+
+tw:country a owl:DatatypeProperty ;
+    rdfs:label "country" ;
+    skos:definition """The country an organization is registered in, by
+        its English name.""" ;
+    rdfs:domain tw:Organization ; rdfs:range xsd:string .
+
+tw:firstSupplied a owl:DatatypeProperty ;
+    rdfs:label "first supplied" ;
+    skos:definition "The date of the first delivery from a supplier." ;
+    rdfs:domain tw:Supplier ; rdfs:range xsd:date .
+
+tw:lastSupplied a owl:DatatypeProperty ;
+    rdfs:label "last supplied" ;
+    skos:definition """The date Tarnwick stopped buying from a supplier.
+        Absent for suppliers Tarnwick still buys from.""" ;
+    rdfs:domain tw:Supplier ; rdfs:range xsd:date .
+
+tw:opened a owl:DatatypeProperty ;
+    rdfs:label "opened" ;
+    skos:definition "The date a store first opened to customers." ;
+    rdfs:domain tw:Store ; rdfs:range xsd:date .
+
+tw:accountOpened a owl:DatatypeProperty ;
+    rdfs:label "account opened" ;
+    skos:definition "The date a customer's account was created." ;
+    rdfs:domain tw:Customer ; rdfs:range xsd:date .
+
+tw:accountClosed a owl:DatatypeProperty ;
+    rdfs:label "account closed" ;
+    skos:definition """The date a customer closed their account. Absent
+        while the account is open.""" ;
+    rdfs:domain tw:Customer ; rdfs:range xsd:date .
+
+tw:marketingOptIn a owl:DatatypeProperty ;
+    rdfs:label "marketing opt in" ;
+    skos:definition """Whether a customer has agreed to receive marketing
+        email.""" ;
+    rdfs:domain tw:Customer ; rdfs:range xsd:boolean .
+
+tw:orderDate a owl:DatatypeProperty ;
+    rdfs:label "order date" ;
+    skos:definition "The day an order was placed." ;
+    rdfs:domain tw:Order ; rdfs:range xsd:date .
+
+tw:quantity a owl:DatatypeProperty ;
+    rdfs:label "quantity" ;
+    skos:definition """A number of units, of a product bought on an order
+        line or held as stock.""" ;
+    rdfs:range xsd:integer .
+
+tw:unitPriceUSD a owl:DatatypeProperty ;
+    rdfs:label "unit price in US dollars" ;
+    skos:definition "The price paid for one unit on an order line." ;
+    rdfs:domain tw:OrderLine ; rdfs:range xsd:decimal .
+
+tw:announced a owl:DatatypeProperty ;
+    rdfs:label "announced" ;
+    skos:definition "The date a recall was made public." ;
+    rdfs:domain tw:Recall ; rdfs:range xsd:date .
+
+tw:reason a owl:DatatypeProperty ;
+    rdfs:label "reason" ;
+    skos:definition "Why a product was recalled, in plain words." ;
+    rdfs:domain tw:Recall ; rdfs:range xsd:string .
+
+tw:remedy a owl:DatatypeProperty ;
+    rdfs:label "remedy" ;
+    skos:definition "What customers are offered for a recalled product." ;
+    rdfs:domain tw:Recall ; rdfs:range xsd:string .
+
+tw:received a owl:DatatypeProperty ;
+    rdfs:label "received" ;
+    skos:definition "The day a support ticket arrived." ;
+    rdfs:domain tw:SupportTicket ; rdfs:range xsd:date .
+
+tw:text a owl:DatatypeProperty ;
+    rdfs:label "text" ;
+    skos:definition "The words of a document or message, unchanged." ;
+    rdfs:range xsd:string .
+
+tw:effective a owl:DatatypeProperty ;
+    rdfs:label "effective" ;
+    skos:definition "The date from which a policy version applies." ;
+    rdfs:domain tw:Policy ; rdfs:range xsd:date .
+
+tw:returnWindowDays a owl:DatatypeProperty ;
+    rdfs:label "return window in days" ;
+    skos:definition """How many days after delivery a customer has to
+        return a product under a return rule.""" ;
+    rdfs:domain tw:ReturnRule ; rdfs:range xsd:integer .
+
+tw:condition a owl:DatatypeProperty ;
+    rdfs:label "condition" ;
+    skos:definition """What must be true of a returned product for a rule
+        to apply, in plain words.""" ;
+    rdfs:domain tw:ReturnRule ; rdfs:range xsd:string .
+
+tw:webCategoryLabel a owl:DatatypeProperty ;
+    rdfs:label "web category label" ;
+    skos:definition """The category word the website shows for a product.
+        Chosen by the web team, not taken from the product taxonomy.""" ;
+    rdfs:domain tw:Product ; rdfs:range xsd:string .
+
+tw:typedName a owl:DatatypeProperty ;
+    rdfs:label "typed name" ;
+        skos:definition """The name exactly as it appeared in the source
+        file.""" ;
+    rdfs:domain tw:NameMatch ; rdfs:range xsd:string .
+
+tw:matchedTo a owl:ObjectProperty ;
+    rdfs:label "matched to" ;
+    skos:definition """Links a name match to the organization the typed
+        name was judged to mean.""" ;
+    rdfs:domain tw:NameMatch ; rdfs:range tw:Organization .
+
+tw:matchScore a owl:DatatypeProperty ;
+    rdfs:label "match score" ;
+    skos:definition """How alike the typed name and the matched name are,
+        from 0 (nothing in common) to 1 (identical after cleaning).""" ;
+    rdfs:domain tw:NameMatch ; rdfs:range xsd:decimal .
+
+tw:matchMethod a owl:DatatypeProperty ;
+    rdfs:label "match method" ;
+    skos:definition """How the match was made, such as exact after
+        cleaning, similar spelling, or confirmed by a person.""" ;
+    rdfs:domain tw:NameMatch ; rdfs:range xsd:string .
+
+# ------------------------------------------------- borrowed terms (Ch 11)
+
+tw:Product rdfs:subClassOf schema:Product .
+tw:Organization rdfs:subClassOf schema:Organization .
+tw:sku rdfs:subPropertyOf schema:sku .
+tw:parentOrganization rdfs:subPropertyOf schema:parentOrganization .

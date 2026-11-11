@@ -1,0 +1,16 @@
+@prefix tw:     <https://tarnwick.example/ontology#> .
+@prefix prod:   <https://tarnwick.example/id/product/> .
+@prefix cat:    <https://tarnwick.example/id/category/> .
+@prefix rule:   <https://tarnwick.example/id/rule/> .
+@prefix recall: <https://tarnwick.example/id/recall/> .
+@prefix pol:    <https://tarnwick.example/id/policy/> .
+@prefix skos:   <http://www.w3.org/2004/02/skos/core#> .
+
+# The facts graph retrieval gathers for the Insulated Air Mat.
+prod:TW-S202 tw:inCategory cat:SLEEP-MAT ;
+    tw:hasStatus tw:Recalled .
+cat:SLEEP-MAT skos:broader cat:SLEEP .
+rule:return-sleep tw:appliesToCategory cat:SLEEP ;
+    tw:returnWindowDays 30 .
+recall:R-2026-01 tw:product prod:TW-S202 ;
+    tw:handledUnder pol:POL-RCL .

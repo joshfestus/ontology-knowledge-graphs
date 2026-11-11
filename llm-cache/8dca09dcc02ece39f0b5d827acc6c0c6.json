@@ -1,0 +1,40 @@
+{
+ "model": "gpt-5.6-luna",
+ "instructions": "You read a Tarnwick Supply policy document and list each rule that says how many days a customer has to return products.\ndays: the number of days, or null if the rule sets no limit.\ncondition: what must be true of the product, in a few plain words.\ncategories: the product categories the rule covers, from the list below. A category covers every category beneath it.\nwords: the sentence of the document that states the rule, exactly as written.\n\nCategories (code, name, the category it is under):\nCAMP Camping\nTENT Tents, under CAMP\nTENT-BP Backpacking Tents, under TENT\nTENT-FAM Family Tents, under TENT\nTENT-ACC Tent Accessories, under CAMP\nSLEEP Sleeping, under CAMP\nSLEEP-BAG Sleeping Bags, under SLEEP\nSLEEP-MAT Sleeping Mats, under SLEEP\nKITCHEN Camp Kitchen, under CAMP\nSTOVE Stoves, under KITCHEN\nCOOK Cookware, under KITCHEN\nREPAIR Repair and Care, under CAMP\nHIKE Hiking\nFOOT Footwear, under HIKE\nBOOT Hiking Boots, under FOOT\nSHOE Trail Shoes, under FOOT\nPACK Packs, under HIKE\nPACK-DAY Daypacks, under PACK\nPACK-BP Backpacking Packs, under PACK\nCLOTH Clothing\nJACKET Jackets, under CLOTH\nJACKET-WP Waterproof Jackets, under JACKET\nJACKET-INS Insulated Jackets, under JACKET\nBASE Base Layers, under CLOTH\nCLIMB Climbing\nHARNESS Harnesses, under CLIMB",
+ "input": "# Tarnwick Supply Returns Policy\n\nPolicy POL-RET, version 4, effective 1 March 2025.\n\nMost products can be returned within 30 days of delivery for a full refund,\nprovided they are unused and in their original packaging.\n\nFootwear can be returned within 60 days of delivery if it has only been worn\nindoors. Boots and shoes with outdoor wear are handled under the Warranty\nPolicy instead.\n\nSleeping bags and sleeping mats can be returned within 30 days only if the\ncompression sack or packaging seal is unbroken, for hygiene reasons.\n\nProducts named in a recall notice are not covered by the time limits in this\npolicy. See the Product Recall Policy.\n\nRefunds are made to the original payment method within 10 business days of\nthe return arriving at our warehouse. Orders placed at Tarnwick Online can be\nreturned to any Tarnwick store.\n",
+ "answer": {
+  "rules": [
+   {
+    "days": 30,
+    "condition": "Unused and in original packaging",
+    "categories": [
+     "CAMP",
+     "HIKE",
+     "CLOTH",
+     "CLIMB"
+    ],
+    "words": "Most products can be returned within 30 days of delivery for a full refund, provided they are unused and in their original packaging."
+   },
+   {
+    "days": 60,
+    "condition": "Only worn indoors",
+    "categories": [
+     "FOOT"
+    ],
+    "words": "Footwear can be returned within 60 days of delivery if it has only been worn indoors."
+   },
+   {
+    "days": 30,
+    "condition": "Compression sack or packaging seal is unbroken",
+    "categories": [
+     "SLEEP-BAG",
+     "SLEEP-MAT"
+    ],
+    "words": "Sleeping bags and sleeping mats can be returned within 30 days only if the compression sack or packaging seal is unbroken, for hygiene reasons."
+   }
+  ]
+ },
+ "input_tokens": 683,
+ "output_tokens": 617,
+ "cost_usd": 0.000877
+}

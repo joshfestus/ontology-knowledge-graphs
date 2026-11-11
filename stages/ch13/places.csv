@@ -1,0 +1,20 @@
+place_id,name,kind,part_of
+US,United States,country,
+MTW,Mountain West,region,US
+PNW,Pacific Northwest,region,US
+SE,Southeast,region,US
+NE,Northeast,region,US
+CO,Colorado,state,MTW
+OR,Oregon,state,PNW
+WA,Washington,state,PNW
+NC,North Carolina,state,SE
+VT,Vermont,state,NE
+BOULDER,Boulder,town,CO
+DENVER,Denver,town,CO
+BEND,Bend,town,OR
+PORTLAND,Portland,town,OR
+SEATTLE,Seattle,town,WA
+ASHEVILLE,Asheville,town,NC
+CHARLOTTE,Charlotte,town,NC
+BURLINGTON,Burlington,town,VT
+MONTPELIER,Montpelier,town,VT

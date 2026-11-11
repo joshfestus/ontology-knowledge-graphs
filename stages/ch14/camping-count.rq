@@ -1,0 +1,8 @@
+# How many products are in Camping or any category beneath it?
+PREFIX tw:   <https://tarnwick.example/ontology#>
+PREFIX cat:  <https://tarnwick.example/id/category/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+SELECT (COUNT(DISTINCT ?product) AS ?products) WHERE {
+  ?product tw:inCategory/skos:broader* cat:CAMP .
+}

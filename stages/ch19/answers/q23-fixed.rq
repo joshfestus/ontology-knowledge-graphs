@@ -1,0 +1,20 @@
+# The model's query for question 23, with the nearest rule filter added.
+PREFIX tw:   <https://tarnwick.example/ontology#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+SELECT DISTINCT ?product ?productName ?returnWindowDays
+WHERE {
+  ?product a tw:Product ;
+           rdfs:label ?productName ;
+           tw:inCategory/skos:broader* ?category .
+  ?rule a tw:ReturnRule ;
+        tw:appliesToCategory ?category ;
+        tw:returnWindowDays ?returnWindowDays .
+  FILTER NOT EXISTS {
+    ?product tw:inCategory/skos:broader* ?nearer .
+    ?nearer skos:broader+ ?category .
+    ?other tw:appliesToCategory ?nearer .
+  }
+}
+ORDER BY ?productName ?returnWindowDays

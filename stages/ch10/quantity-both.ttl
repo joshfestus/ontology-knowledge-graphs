@@ -1,0 +1,5 @@
+@prefix tw:   <https://tarnwick.example/ontology#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+tw:quantity rdfs:domain tw:OrderLine .
+tw:quantity rdfs:domain tw:StockLevel .

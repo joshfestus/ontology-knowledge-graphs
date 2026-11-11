@@ -1,0 +1,6 @@
+@prefix tw:     <https://tarnwick.example/ontology#> .
+@prefix rdfs:   <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+
+# Every main material is a material a product is made from.
+tw:mainMaterial rdfs:subPropertyOf schema:material .

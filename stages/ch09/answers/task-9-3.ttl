@@ -1,0 +1,6 @@
+@prefix cat:  <https://tarnwick.example/id/category/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+
+# Siblings often bought together, in different parts of the tree.
+cat:SHOE skos:related cat:BOOT .
+cat:BASE skos:related cat:JACKET-INS .

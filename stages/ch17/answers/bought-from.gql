@@ -1,0 +1,4 @@
+MATCH (c:Customer {code: 'C-0001'})-[:PLACED]->(o:Order)
+      -[:CONTAINS]->(p:Product)-[:SUPPLIED_BY]->(s:Supplier {code: 'SUP-03'})
+RETURN o.code, o.date, p.sku, p.name
+ORDER BY o.date

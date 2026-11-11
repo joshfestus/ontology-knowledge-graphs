@@ -1,0 +1,10 @@
+# 2. Which products sit in more than one category?
+PREFIX tw: <https://tarnwick.example/ontology#>
+
+SELECT ?sku (COUNT(?category) AS ?categories) WHERE {
+  ?product tw:sku ?sku ;
+           tw:inCategory ?category .
+}
+GROUP BY ?sku
+HAVING (COUNT(?category) > 1)
+ORDER BY ?sku

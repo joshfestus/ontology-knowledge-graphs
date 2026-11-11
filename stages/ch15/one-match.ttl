@@ -1,0 +1,16 @@
+@prefix tw:    <https://tarnwick.example/ontology#> .
+@prefix prod:  <https://tarnwick.example/id/product/> .
+@prefix sup:   <https://tarnwick.example/id/supplier/> .
+@prefix match: <https://tarnwick.example/id/match/> .
+
+# From the product file, as the buyer typed it.
+prod:TW-T102 tw:supplierNameAsTyped "Brisgate Textiles" .
+
+# From the name matching: the decision, its evidence, and the link.
+match:Brisgate-Textiles a tw:NameMatch ;
+    tw:typedName "Brisgate Textiles" ;
+    tw:matchedTo sup:SUP-01 ;
+    tw:matchScore 1.0 ;
+    tw:matchMethod "exact after cleaning" .
+
+prod:TW-T102 tw:suppliedBy sup:SUP-01 .

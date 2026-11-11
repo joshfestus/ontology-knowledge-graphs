@@ -1,0 +1,12 @@
+# 30. Which products are most often bought together?
+PREFIX tw: <https://tarnwick.example/ontology#>
+
+SELECT ?first ?second (COUNT(?order) AS ?orders) WHERE {
+  ?order tw:hasLine/tw:product ?a , ?b .
+  ?a tw:sku ?first .
+  ?b tw:sku ?second .
+  FILTER (?first < ?second)
+}
+GROUP BY ?first ?second
+ORDER BY DESC(?orders) ?first ?second
+LIMIT 10

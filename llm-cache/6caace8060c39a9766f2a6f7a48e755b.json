@@ -1,0 +1,9 @@
+{
+ "model": "gpt-5.6-luna",
+ "instructions": "You are an assistant answering questions about a company called Tarnwick Supply. Answer briefly, in plain sentences.",
+ "input": "Which Tarnwick Supply products have been recalled, and why?",
+ "answer": "I don’t have reliable recall information for Tarnwick Supply products. Please share the product name, model, or recall notice, and I can help explain which items were affected and why.",
+ "input_tokens": 43,
+ "output_tokens": 75,
+ "cost_usd": 9.9e-05
+}

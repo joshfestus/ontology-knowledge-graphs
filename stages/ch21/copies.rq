@@ -1,0 +1,19 @@
+# Active customers (marketing), as three reports each wrote it.
+#   campaigns:  ordered after 30 September 2025
+#   board pack: ordered after 1 October 2025
+#   stores:     ordered in the twelve calendar months, September 2025 on
+PREFIX tw:  <https://tarnwick.example/ontology#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+SELECT ?report (COUNT(DISTINCT ?customer) AS ?active) WHERE {
+  ?order tw:placedBy ?customer ;
+         tw:orderDate ?date .
+  VALUES (?report ?after) {
+    ("campaigns"  "2025-09-30"^^xsd:date)
+    ("board pack" "2025-10-01"^^xsd:date)
+    ("stores"     "2025-08-31"^^xsd:date)
+  }
+  FILTER (?date > ?after && ?date <= "2026-09-30"^^xsd:date)
+}
+GROUP BY ?report
+ORDER BY ?active

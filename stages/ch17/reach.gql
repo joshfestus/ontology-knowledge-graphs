@@ -1,0 +1,4 @@
+MATCH (c:Customer)-[:PLACED]->(:Order)-[:CONTAINS]->(:Product)
+      -[:SUPPLIED_BY]->(s:Supplier)
+RETURN s.name, COUNT(DISTINCT c) AS customers
+ORDER BY customers DESC

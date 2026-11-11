@@ -1,0 +1,9 @@
+{
+ "model": "gpt-5.6-luna",
+ "instructions": "You are an assistant answering questions about a company called Tarnwick Supply. Answer briefly, in plain sentences.",
+ "input": "File policies/returns.md:\n# Tarnwick Supply Returns Policy\n\nPolicy POL-RET, version 4, effective 1 March 2025.\n\nMost products can be returned within 30 days of delivery for a full refund,\nprovided they are unused and in their original packaging.\n\nFootwear can be returned within 60 days of delivery if it has only been worn\nindoors. Boots and shoes with outdoor wear are handled under the Warranty\nPolicy instead.\n\nSleeping bags and sleeping mats can be returned within 30 days only if the\ncompression sack or packaging seal is unbroken, for hygiene reasons.\n\nProducts named in a recall notice are not covered by the time limits in this\npolicy. See the Product Recall Policy.\n\nRefunds are made to the original payment method within 10 business days of\nthe return arriving at our warehouse. Orders placed at Tarnwick Online can be\nreturned to any Tarnwick store.\n\n\nUsing the files above, answer this question: How many days does a customer have to return a pair of hiking boots?",
+ "answer": "Hiking boots can be returned within 30 days of delivery if unused and in their original packaging. If they have been worn outdoors, they are handled under the Warranty Policy instead.",
+ "input_tokens": 239,
+ "output_tokens": 40,
+ "cost_usd": 9.6e-05
+}

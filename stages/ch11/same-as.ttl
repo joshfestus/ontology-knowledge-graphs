@@ -1,0 +1,8 @@
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix place: <https://tarnwick.example/id/place/> .
+@prefix store: <https://tarnwick.example/id/store/> .
+@prefix wd:    <http://www.wikidata.org/entity/> .
+
+place:BOULDER owl:sameAs wd:Q192517 .
+place:CO owl:sameAs wd:Q1261 .
+store:ST-BOU owl:sameAs wd:Q192517 .

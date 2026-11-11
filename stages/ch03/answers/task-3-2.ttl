@@ -1,0 +1,43 @@
+@prefix tw:   <https://tarnwick.example/ontology#> .
+@prefix prod: <https://tarnwick.example/id/product/> .
+@prefix sup:  <https://tarnwick.example/id/supplier/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+
+prod:TW-T102
+    rdfs:label "Backpacking Tent 2P"@en ;
+    tw:sku "TW-T102" ;
+    tw:priceUSD 249.00 ;
+    tw:weightGrams 1640 ;
+    tw:seasonRating 3 ;
+    tw:releaseDate "2024-03-01"^^xsd:date ;
+    tw:suppliedBy sup:SUP-01 .
+
+prod:TW-A101
+    rdfs:label "Footprint for Backpacking Tent 2P"@en ;
+    tw:sku "TW-A101" ;
+    tw:priceUSD 49.00 ;
+    tw:weightGrams 210 ;
+    tw:fits prod:TW-T102 ;
+    tw:suppliedBy sup:SUP-01 .
+
+sup:SUP-01
+    rdfs:label "Brisgate Textiles Ltd" ;
+    tw:country "United Kingdom" .
+
+prod:TW-T201
+    rdfs:label "Family Tent 4P"@en ;
+    tw:sku "TW-T201" ;
+    tw:priceUSD 399.00 ;
+    tw:weightGrams 7800 ;
+    tw:seasonRating 3 ;
+    tw:releaseDate "2024-04-01"^^xsd:date ;
+    tw:suppliedBy sup:SUP-01 .
+
+prod:TW-A102
+    rdfs:label "Footprint for Family Tent 4P"@en ;
+    tw:sku "TW-A102" ;
+    tw:priceUSD 69.00 ;
+    tw:weightGrams 640 ;
+    tw:fits prod:TW-T201 ;
+    tw:suppliedBy sup:SUP-01 .

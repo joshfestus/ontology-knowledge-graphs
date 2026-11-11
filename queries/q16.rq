@@ -1,0 +1,16 @@
+# 16. Which supplier names in the files refer to the same company?
+PREFIX tw:   <https://tarnwick.example/ontology#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?supplier ?typed WHERE {
+  {
+    SELECT ?s WHERE { ?m a tw:NameMatch ; tw:matchedTo ?s . }
+    GROUP BY ?s
+    HAVING (COUNT(?m) > 1)
+  }
+  ?match a tw:NameMatch ;
+         tw:typedName ?typed ;
+         tw:matchedTo ?s .
+  ?s rdfs:label ?supplier .
+}
+ORDER BY ?supplier ?typed

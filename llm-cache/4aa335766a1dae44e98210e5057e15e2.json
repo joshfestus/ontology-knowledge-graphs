@@ -1,0 +1,19 @@
+{
+ "model": "gpt-5.6-luna",
+ "instructions": "You check a customer service answer against the numbered facts it was written from. For each sentence, read only the facts it cites and decide: \"supported\" if everything the sentence says is in those facts; \"misstated\" if it changes something in them, such as a number, a condition, a product or who does what; \"added\" if it makes a claim the cited facts do not contain. Give a short reason for any verdict other than supported.",
+ "input": "Facts:\n[1] The Leather Hiking Boot Women's (TW-F102) is in the category Hiking Boots, which is part of Footwear, which is part of Hiking.\n[2] The Leather Hiking Boot Women's has the status active.\n[3] The return rule for the Leather Hiking Boot Women's is the footwear return window, set on Footwear, the nearest category above it with a rule: 60 days after delivery, on condition: Worn indoors only. It is stated in the Tarnwick Supply Returns Policy.\n[4] A recalled product can be returned at any time, in any condition, with or without proof of purchase. The customer chooses between a full refund of the price paid and a replacement product of equal or greater value. Return shipping is paid by Tarnwick.\n[5] Most products can be returned within 30 days of delivery for a full refund, provided they are unused and in their original packaging.\n[6] Footwear can be returned within 60 days of delivery if it has only been worn indoors. Boots and shoes with outdoor wear are handled under the Warranty Policy instead.\n\nSentences:\n1. I cannot tell from the information provided how long the refund takes. [1, 3, 6]",
+ "answer": {
+  "sentences": [
+   {
+    "number": 1,
+    "verdict": "supported",
+    "reason": ""
+   }
+  ]
+ },
+ "input_tokens": 416,
+ "cached_tokens": 0,
+ "output_tokens": 26,
+ "cost_usd": 0.000114,
+ "seconds": 1.81
+}

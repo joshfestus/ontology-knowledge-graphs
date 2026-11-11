@@ -1,0 +1,10 @@
+# 3. Which supplier makes each product?
+PREFIX tw:   <https://tarnwick.example/ontology#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?sku ?supplier WHERE {
+  ?product tw:sku ?sku ;
+           tw:suppliedBy ?s .
+  ?s rdfs:label ?supplier .
+}
+ORDER BY ?sku

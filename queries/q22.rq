@@ -1,0 +1,11 @@
+# 22. Which product replaced a discontinued one?
+PREFIX tw:   <https://tarnwick.example/ontology#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?old ?new WHERE {
+  ?o tw:hasStatus tw:Discontinued ;
+     tw:replacedBy ?n .
+  ?o rdfs:label ?old .
+  ?n rdfs:label ?new .
+}
+ORDER BY ?old

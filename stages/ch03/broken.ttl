@@ -1,0 +1,9 @@
+@prefix tw:   <https://tarnwick.example/ontology#> .
+@prefix prod: <https://tarnwick.example/id/product/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+
+prod:TW-T101
+    rdfs:label "Backpacking Tent 1P"@en ;
+    tw:weight grams 1150 ;
+    tw:releaseDate 2024-03-01 .

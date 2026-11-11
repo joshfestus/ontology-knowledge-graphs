@@ -1,0 +1,25 @@
+{
+ "model": "gpt-5.6-luna",
+ "instructions": "You check a customer service answer against the customer's question and the numbered facts it was written from. What the customer says about their own situation, such as how long ago something arrived, may be taken as true. For each sentence, read the question and the facts it cites and decide: \"supported\" if everything the sentence says follows from those; \"misstated\" if it changes something in them, such as a number, a date, a condition, a product or who does what; \"added\" if it makes a claim neither the question nor the cited facts contain. Give a short reason for any verdict other than supported.",
+ "input": "Customer question: I have the old Down Sleeping Bag 20F. Is it still sold, and what replaced it?\n\nFacts:\n[1] The Down Sleeping Bag 20F (TW-S101) is in the category Sleeping Bags, which is part of Sleeping, which is part of Camping.\n[2] The Down Sleeping Bag 20F has the status discontinued.\n[3] The Down Sleeping Bag 20F was replaced by the Down Sleeping Bag 20F Mk II (TW-S104).\n[4] The return rule for the Down Sleeping Bag 20F is the sleeping gear return window, set on Sleeping, the nearest category above it with a rule: 30 days after delivery, on condition: Compression sack or packaging seal unbroken. It is stated in the Tarnwick Supply Returns Policy.\n[5] The Down Sleeping Bag 20F Mk II (TW-S104) is in the category Sleeping Bags, which is part of Sleeping, which is part of Camping.\n[6] The Down Sleeping Bag 20F Mk II has the status active.\n[7] The return rule for the Down Sleeping Bag 20F Mk II is the sleeping gear return window, set on Sleeping, the nearest category above it with a rule: 30 days after delivery, on condition: Compression sack or packaging seal unbroken. It is stated in the Tarnwick Supply Returns Policy.\n[8] Sleeping bags and sleeping mats can be returned within 30 days only if the compression sack or packaging seal is unbroken, for hygiene reasons.\n[9] Stoves and cookware are covered for 1 year. Sleeping bags and sleeping mats are covered for 1 year.\n[10] The warranty does not cover normal wear, damage from accidents, improper care, or alterations. Seam leaks in a tent's first year are treated as a defect and repaired or replaced at no cost.\n\nSentences:\n1. The old Down Sleeping Bag 20F is discontinued and is no longer sold. [2] It was replaced by the Down Sleeping Bag 20F Mk II (TW-S104), which is active. [3, 6]",
+ "answer": {
+  "sentences": [
+   {
+    "number": 1,
+    "verdict": "supported",
+    "reason": ""
+   },
+   {
+    "number": 2,
+    "verdict": "supported",
+    "reason": ""
+   }
+  ]
+ },
+ "input_tokens": 631,
+ "cached_tokens": 0,
+ "output_tokens": 156,
+ "cost_usd": 0.000313,
+ "seconds": 2.88,
+ "run": 3
+}

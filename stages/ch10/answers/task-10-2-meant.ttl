@@ -1,0 +1,11 @@
+@prefix tw:   <https://tarnwick.example/ontology#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+
+# What was meant needs a class made from both. The ontology's own domain,
+# tw:Store, must also be removed, or every customer with a town becomes
+# a store.
+tw:locatedIn rdfs:domain [
+    a owl:Class ;
+    owl:unionOf ( tw:Store tw:Customer )
+] .

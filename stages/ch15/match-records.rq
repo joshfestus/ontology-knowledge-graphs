@@ -1,0 +1,11 @@
+# Every decision the name matching made, with its evidence.
+PREFIX tw: <https://tarnwick.example/ontology#>
+
+SELECT ?typed ?supplier ?score ?method WHERE {
+  ?match a tw:NameMatch ;
+         tw:typedName ?typed ;
+         tw:matchedTo ?supplier ;
+         tw:matchScore ?score ;
+         tw:matchMethod ?method .
+}
+ORDER BY ?supplier ?typed

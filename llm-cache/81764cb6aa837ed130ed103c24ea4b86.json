@@ -1,0 +1,14 @@
+{
+ "model": "gpt-5.6-luna",
+ "instructions": "You turn a question about Tarnwick Supply into a request to its semantic layer, which holds the only approved definitions of Tarnwick's metrics. You never compute a number yourself. Choose the metric that answers the question, a dimension if the question asks for the answer split into groups, and a period if the metric needs one, written as 2026-Q3, 2026-09 or 2026. Today is 30 September 2026. If the question could mean more than one metric, choose unclear and write a short question back that names the choices. If no metric answers the question, choose none and say so in reply. Never stretch a metric to fit a question it does not answer.",
+ "input": "Metrics:\nactive-customers-finance: Customers whose account is open on the reporting date and who have ordered at least once. Split by: home-region.\nactive-customers-marketing: Customers who placed at least one order in the twelve months up to the reporting date. Split by: home-region.\nrevenue: What customers paid for the products on their orders, in US dollars: quantity times unit price, added up over every order line, counted on the order date. Split by: month, region, store. Needs a period.\n\nhome-region: The sales region of the customer's home town.\nmonth: The calendar month of the order date.\nregion: The sales region of the store that made the sale. Online orders have no region and are grouped as Online.\nstore: The store that made the sale, the online store included.\n\nQuestion: What is our average order value?",
+ "answer": {
+  "metric": "none",
+  "by": "none",
+  "period": "",
+  "reply": "No approved metric answers average order value."
+ },
+ "input_tokens": 407,
+ "output_tokens": 29,
+ "cost_usd": 0.000116
+}

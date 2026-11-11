@@ -1,0 +1,9 @@
+@prefix tw:   <https://tarnwick.example/ontology#> .
+@prefix sup:  <https://tarnwick.example/id/supplier/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+
+sup:SUP-01
+    rdfs:label "Brisgate Textiles Ltd" ;
+    tw:country "United Kingdom" ;
+    tw:firstSupplied "2019-02-01"^^xsd:date .

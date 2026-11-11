@@ -1,0 +1,12 @@
+# 8. Which products are in Camping, including every category beneath it?
+PREFIX tw:   <https://tarnwick.example/ontology#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+SELECT DISTINCT ?sku ?name WHERE {
+  ?camping skos:prefLabel "Camping"@en .
+  ?product tw:inCategory/skos:broader* ?camping ;
+           tw:sku ?sku ;
+           rdfs:label ?name .
+}
+ORDER BY ?sku

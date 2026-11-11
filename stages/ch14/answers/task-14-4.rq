@@ -1,0 +1,10 @@
+# Which stores are in the Pacific Northwest?
+PREFIX tw:    <https://tarnwick.example/ontology#>
+PREFIX place: <https://tarnwick.example/id/place/>
+PREFIX rdfs:  <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?store WHERE {
+  ?s tw:locatedIn/tw:partOf+ place:PNW ;
+     rdfs:label ?store .
+}
+ORDER BY ?store

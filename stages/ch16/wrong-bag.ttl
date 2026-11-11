@@ -1,0 +1,9 @@
+@prefix tw:     <https://tarnwick.example/ontology#> .
+@prefix ticket: <https://tarnwick.example/id/ticket/> .
+@prefix prod:   <https://tarnwick.example/id/product/> .
+@prefix prob:   <https://tarnwick.example/id/problem/> .
+
+# The model's reading of ticket T-027, as it would be if loaded unchecked.
+ticket:T-027 tw:complaintAbout prod:TW-S103 ;
+    tw:mentions prod:TW-S104 ;
+    tw:problemType prob:wrong-item .

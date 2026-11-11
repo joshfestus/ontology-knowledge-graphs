@@ -1,0 +1,16 @@
+# 10. Which tents weigh under 2 kg and are rated for at least three
+#     seasons?
+PREFIX tw:   <https://tarnwick.example/ontology#>
+PREFIX cat:  <https://tarnwick.example/id/category/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+SELECT ?sku ?name ?grams ?seasons WHERE {
+  ?product tw:inCategory/skos:broader* cat:TENT ;
+           tw:sku ?sku ;
+           rdfs:label ?name ;
+           tw:weightGrams ?grams ;
+           tw:seasonRating ?seasons .
+  FILTER (?grams < 2000 && ?seasons >= 3)
+}
+ORDER BY ?grams

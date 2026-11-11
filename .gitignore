@@ -1,0 +1,11 @@
+# Python and tools
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+# built output, made again by `tarnwick build`
+build/
+# never commit keys; the model key lives in ~/.config/tarnwick/openai.env
+.env
+*.env

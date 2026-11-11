@@ -1,0 +1,12 @@
+@prefix tw:      <https://tarnwick.example/ontology#> .
+@prefix sup:     <https://tarnwick.example/id/supplier/> .
+@prefix country: <https://tarnwick.example/id/country/> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+
+sup:SUP-01
+    rdfs:label "Brisgate Textiles Ltd" ;
+    tw:basedIn country:GB .
+
+country:GB
+    rdfs:label "United Kingdom"@en ;
+    rdfs:label "Royaume-Uni"@fr .

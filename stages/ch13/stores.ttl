@@ -1,0 +1,30 @@
+@prefix place: <https://tarnwick.example/id/place/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix store: <https://tarnwick.example/id/store/> .
+@prefix tw: <https://tarnwick.example/ontology#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+store:ST-AVL a tw:Store ;
+    rdfs:label "Tarnwick Asheville" ;
+    tw:locatedIn place:ASHEVILLE ;
+    tw:opened "2021-03-15"^^xsd:date .
+
+store:ST-BND a tw:Store ;
+    rdfs:label "Tarnwick Bend" ;
+    tw:locatedIn place:BEND ;
+    tw:opened "2020-05-01"^^xsd:date .
+
+store:ST-BOU a tw:Store ;
+    rdfs:label "Tarnwick Boulder" ;
+    tw:locatedIn place:BOULDER ;
+    tw:opened "2019-04-01"^^xsd:date .
+
+store:ST-BTV a tw:Store ;
+    rdfs:label "Tarnwick Burlington" ;
+    tw:locatedIn place:BURLINGTON ;
+    tw:opened "2022-06-01"^^xsd:date .
+
+store:ST-WEB a tw:Store ;
+    rdfs:label "Tarnwick Online" ;
+    tw:opened "2019-04-01"^^xsd:date .
+

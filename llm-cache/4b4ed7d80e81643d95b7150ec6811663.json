@@ -1,0 +1,20 @@
+{
+ "model": "gpt-5.6-luna",
+ "instructions": "You check a customer service answer against the numbered facts it was written from. For each sentence, read only the facts it cites and decide: \"supported\" if everything the sentence says is in those facts; \"misstated\" if it changes something in them, such as a number, a condition, a product or who does what; \"added\" if it makes a claim the cited facts do not contain. Give a short reason for any verdict other than supported.",
+ "input": "Facts:\n[1] The Insulated Air Mat (TW-S202) is in the category Sleeping Mats, which is part of Sleeping, which is part of Camping.\n[2] The Insulated Air Mat has the status recalled.\n[3] The return rule for the Insulated Air Mat is the sleeping gear return window, set on Sleeping, the nearest category above it with a rule: 30 days after delivery, on condition: Compression sack or packaging seal unbroken. It is stated in the Tarnwick Supply Returns Policy.\n[4] The Insulated Air Mat was recalled on 2026-05-12. Reason: The inflation valve can separate from the mat, which then deflates during use. Remedy: Full refund or a replacement mat, at the customer's choice. The recall is handled under the Tarnwick Supply Product Recall Policy.\n[5] A recalled product can be returned at any time, in any condition, with or without proof of purchase. The customer chooses between a full refund of the price paid and a replacement product of equal or greater value. Return shipping is paid by Tarnwick.\n[6] Sleeping bags and sleeping mats can be returned within 30 days only if the compression sack or packaging seal is unbroken, for hygiene reasons.\n[7] If an order arrives damaged, contact customer support within 7 days with photos of the box and the product. Tarnwick will send a replacement or issue a refund.\n\nSentences:\n1. Tarnwick pays the return shipping for the recalled Insulated Air Mat. [2, 5]",
+ "answer": {
+  "sentences": [
+   {
+    "number": 1,
+    "verdict": "supported",
+    "reason": ""
+   }
+  ]
+ },
+ "input_tokens": 482,
+ "cached_tokens": 0,
+ "output_tokens": 26,
+ "cost_usd": 0.000128,
+ "seconds": 1.71,
+ "run": 2
+}

@@ -1,0 +1,21 @@
+@prefix tw:     <https://tarnwick.example/ontology#> .
+@prefix ticket: <https://tarnwick.example/id/ticket/> .
+@prefix prod:   <https://tarnwick.example/id/product/> .
+@prefix prob:   <https://tarnwick.example/id/problem/> .
+
+# Written by hand by a person who read the three tickets that
+# tarnwick extract held back.
+
+# The model's reading was right, but its quote joined words that are
+# apart in the ticket.
+ticket:T-008 tw:complaintAbout prod:TW-P203 ;
+    tw:problemType prob:strap .
+
+# "The new down jacket" on order O-00373 is the Mk II.
+ticket:T-020 tw:complaintAbout prod:TW-C203 ;
+    tw:problemType prob:delivery .
+
+# The complaint is about the bag that was ordered and not sent.
+ticket:T-027 tw:complaintAbout prod:TW-S104 ;
+    tw:mentions prod:TW-S103 ;
+    tw:problemType prob:wrong-item .

@@ -1,0 +1,50 @@
+sku,name,category,supplier,price_usd,weight_g,season_rating,release_date,status,replaced_by,material
+TW-T101,Backpacking Tent 1P,TENT-BP,Brisgate Textiles,189.00,1150,3,2024-03-01,active,,ripstop nylon
+TW-T102,Backpacking Tent 2P,TENT-BP,Brisgate Textiles,249.00,1640,3,2024-03-01,active,,ripstop nylon
+TW-T103,Ultralight Tent 2P,TENT-BP,BRISGATE TEXTILES LTD,389.00,980,3,2025-04-15,active,,ripstop nylon
+TW-T104,Winter Tent 2P,TENT-BP,Brisgate Textiles,529.00,2900,4,2024-10-01,active,,ripstop nylon
+TW-T105,Backpacking Tent 3P,TENT-BP,Brisgate Textile Ltd,319.00,2150,3,2023-03-01,discontinued,TW-T106,ripstop nylon
+TW-T106,Backpacking Tent 3P Mk II,TENT-BP,Brisgate Textiles,339.00,1990,3,2025-03-01,active,,ripstop nylon
+TW-T201,Family Tent 4P,TENT-FAM,Brisgate Textiles,399.00,7800,3,2024-04-01,active,,polyester
+TW-T202,Family Tent 6P,TENT-FAM,BRISGATE TEXTILES LTD,549.00,11200,3,2024-04-01,active,,polyester
+TW-T203,Cabin Tent 8P,TENT-FAM,Brisgate Textiles,699.00,16500,3,2025-05-01,active,,polyester
+TW-T204,Pop Up Festival Tent 2P,TENT,Brisgate Textiles,89.00,2400,2,2025-05-15,active,,polyester
+TW-A101,Footprint for Backpacking Tent 2P,TENT-ACC,Brisgate Textiles,49.00,210,,2024-03-01,active,,polyethylene
+TW-A102,Footprint for Family Tent 4P,TENT-ACC,Brisgate Textiles,69.00,640,,2024-04-01,active,,polyethylene
+TW-A103,Footprint for Family Tent 6P,TENT-ACC,BRISGATE TEXTILES LTD,79.00,820,,2024-04-01,active,,polyethylene
+TW-A104,Aluminum Tent Stakes (12),TENT-ACC,Corran Alloy Works,24.00,160,,2023-01-15,active,,aluminum alloy
+TW-A105,Tent Repair Kit,TENT-ACC,Brisgate Textiles,19.00,90,,2023-01-15,active,,ripstop nylon
+TW-A106,Footprint for Ultralight Tent 2P,TENT-ACC,BRISGATE TEXTILES LTD,59.00,150,,2025-04-15,active,,polyethylene
+TW-A107,Seam Sealer,REPAIR,Brisgate Textiles,12.00,,,2023-01-15,active,,silicone
+TW-S101,Down Sleeping Bag 20F,SLEEP-BAG,Mirefield Down Co.,279.00,980,,2023-09-01,discontinued,TW-S104,goose down
+TW-S102,Down Sleeping Bag 0F,SLEEP-BAG,Mirefield Down Company,419.00,1450,,2023-09-01,active,,goose down
+TW-S103,Synthetic Sleeping Bag 30F,SLEEP-BAG,Wrenmoor Insulation,129.00,1300,,2024-08-01,active,,synthetic insulation
+TW-S104,Down Sleeping Bag 20F Mk II,SLEEP-BAG,Wrenmoor Insulation,299.00,940,,2025-08-01,active,,duck down
+TW-S105,Down Sleeping Bag 0F Mk II,SLEEP-BAG,Wrenmoor Insulation,439.00,1400,,2025-08-01,active,,duck down
+TW-S201,Self Inflating Mat,SLEEP-MAT,Wrenmoor Insulation,89.00,1100,,2024-03-01,active,,polyester
+TW-S202,Insulated Air Mat,SLEEP-MAT,Wrenmoor Insulation,149.00,520,,2024-03-01,recalled,,nylon
+TW-S203,Closed Cell Foam Mat,SLEEP-MAT,Quillan Packworks,39.00,410,,2023-01-15,active,,polyethylene foam
+TW-K101,Canister Stove,STOVE,Corran Alloy Works,59.00,85,,2023-01-15,active,,aluminum alloy
+TW-K102,Integrated Stove System,STOVE,Corran Alloy Works,139.00,450,,2024-05-01,active,,aluminum alloy
+TW-K103,Liquid Fuel Stove,STOVE,Corran Alloy Works,159.00,390,,2023-01-15,active,,stainless steel
+TW-K201,Titanium Pot 750 ml,COOK,Corran Alloy Works,49.00,105,,2023-01-15,active,,titanium
+TW-K202,Cook Set 2P,COOK,Corran Alloy Works,69.00,420,,2023-01-15,active,,aluminum alloy
+TW-K203,Camp Kettle 1 L,COOK,Corran Alloy Works,35.00,230,,2024-05-01,active,,aluminum alloy
+TW-P101,Daypack 22 L,PACK-DAY,Quillan Packworks,89.00,620,,2023-01-15,active,,nylon
+TW-P102,Daypack 30 L,PACK-DAY,Quillan Pack Works,109.00,780,,2023-01-15,active,,nylon
+TW-P201,Backpacking Pack 50 L,PACK-BP,Quillan Packworks,229.00,1500,,2023-03-01,active,,nylon
+TW-P202,Backpacking Pack 65 L,PACK-BP,Quillan Pack Works,269.00,1850,,2023-03-01,active,,nylon
+TW-P203,Backpacking Pack 40 L Women's Fit,PACK-BP,Quillan Packworks,219.00,1350,,2024-03-01,active,,nylon
+TW-F101,Leather Hiking Boot Men's,BOOT,Tallowmere Footwear,229.00,1300,,2023-03-01,active,,leather
+TW-F102,Leather Hiking Boot Women's,BOOT,Tallowmere Footwear,229.00,1150,,2023-03-01,active,,leather
+TW-F103,Winter Hiking Boot,BOOT,Tallowmere Footwear,279.00,1600,,2024-10-01,active,,leather
+TW-F201,Trail Running Shoe,SHOE,Tallowmere Footwear,149.00,620,,2024-03-01,active,,mesh
+TW-F202,Waterproof Hiking Shoe,SHOE,Tallowmere Footwear,169.00,780,,2024-03-01,active,,mesh
+TW-C101,Waterproof Jacket Men's,JACKET-WP,Brisgate Textiles,249.00,420,,2023-09-01,active,,polyester
+TW-C102,Waterproof Jacket Women's,JACKET-WP,Brisgate Textiles,249.00,380,,2023-09-01,active,,polyester
+TW-C103,Packable Rain Shell,JACKET-WP,Brisgate Textile Ltd,159.00,230,,2024-03-01,active,,nylon
+TW-C201,Down Insulated Jacket,JACKET-INS,Mirefield Down Co.,249.00,390,,2023-09-01,discontinued,TW-C203,goose down
+TW-C202,Synthetic Insulated Jacket,JACKET-INS,Wrenmoor Insulation,189.00,450,,2024-09-01,active,,synthetic insulation
+TW-C203,Down Insulated Jacket Mk II,JACKET-INS,Wrenmoor Insulation,269.00,360,,2025-09-01,active,,duck down
+TW-C301,Merino Base Layer Top,BASE,Brisgate Textiles,89.00,210,,2023-09-01,active,,merino wool
+TW-C302,Merino Base Layer Leggings,BASE,Brisgate Textiles,79.00,190,,2023-09-01,active,,merino wool

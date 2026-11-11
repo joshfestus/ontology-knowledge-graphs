@@ -1,0 +1,13 @@
+@prefix tw:   <https://tarnwick.example/ontology#> .
+@prefix prod: <https://tarnwick.example/id/product/> .
+@prefix cat:  <https://tarnwick.example/id/category/> .
+
+prod:TW-T102 a tw:Product ;
+    tw:inCategory cat:TENT-BP ;
+    tw:seasonRating 3 .
+
+prod:TW-T201 a tw:Product ;
+    tw:inCategory cat:TENT-FAM .
+
+prod:TW-A101 a tw:Product ;
+    tw:inCategory cat:TENT-ACC .

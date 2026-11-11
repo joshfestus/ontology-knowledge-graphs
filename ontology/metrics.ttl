@@ -1,0 +1,195 @@
+@prefix twm:    <https://tarnwick.example/metrics#> .
+@prefix tid:    <https://tarnwick.example/id/> .
+@prefix metric: <https://tarnwick.example/id/metric/> .
+@prefix dim:    <https://tarnwick.example/id/dimension/> .
+@prefix term:   <https://tarnwick.example/id/term/> .
+@prefix owl:    <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs:   <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos:   <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd:    <http://www.w3.org/2001/XMLSchema#> .
+
+# Tarnwick's semantic layer: the business terms people use in reports,
+# the metrics that define them, and the dimensions a metric can be split
+# by. It is kept apart from tarnwick.ttl, because metrics change more
+# often than what a customer or an order is.
+
+<https://tarnwick.example/metrics>
+    a owl:Ontology ;
+    rdfs:label "Tarnwick metrics" ;
+    owl:versionInfo "1.0" .
+
+# ---------------------------------------------------- the vocabulary
+
+twm:Metric a owl:Class ;
+    rdfs:label "metric"@en ;
+    skos:definition """A number Tarnwick reports, with one written rule
+        for computing it and one steward who answers for it."""@en .
+
+twm:Dimension a owl:Class ;
+    rdfs:label "dimension"@en ;
+    skos:definition """A way of splitting a metric into groups, such as
+        by region or by month."""@en .
+
+twm:defines a owl:ObjectProperty ;
+    rdfs:label "defines"@en ;
+    rdfs:domain twm:Metric ; rdfs:range skos:Concept ;
+    skos:definition """The business term this metric is a definition
+        of."""@en .
+
+twm:steward a owl:DatatypeProperty ;
+    rdfs:label "steward"@en ;
+    rdfs:domain twm:Metric ; rdfs:range xsd:string ;
+    skos:definition "The team that answers for the definition."@en .
+
+twm:aggregate a owl:DatatypeProperty ;
+    rdfs:label "aggregate"@en ;
+    rdfs:domain twm:Metric ; rdfs:range xsd:string ;
+    skos:definition """How the values are combined into one number: COUNT
+        DISTINCT or SUM."""@en .
+
+twm:measure a owl:DatatypeProperty ;
+    rdfs:label "measure"@en ;
+    rdfs:domain twm:Metric ; rdfs:range xsd:string ;
+    skos:definition """The SPARQL expression that is counted or added
+        up."""@en .
+
+twm:where a owl:DatatypeProperty ;
+    rdfs:label "where"@en ;
+    rdfs:range xsd:string ;
+    skos:definition """The SPARQL graph pattern that finds what is
+        counted, or that finds the group for a dimension."""@en .
+
+twm:dimension a owl:ObjectProperty ;
+    rdfs:label "dimension"@en ;
+    rdfs:domain twm:Metric ; rdfs:range twm:Dimension ;
+    skos:definition "A dimension this metric may be split by."@en .
+
+twm:needs a owl:DatatypeProperty ;
+    rdfs:label "needs"@en ;
+    rdfs:domain twm:Dimension ; rdfs:range xsd:string ;
+    skos:definition """The variable a metric's pattern must bind for this
+        dimension to work, such as ?order."""@en .
+
+twm:sortByGroup a owl:DatatypeProperty ;
+    rdfs:label "sort by group"@en ;
+    rdfs:domain twm:Dimension ; rdfs:range xsd:boolean ;
+    skos:definition """True when the groups have an order of their own,
+        such as months, so results are listed by group and not by
+        size."""@en .
+
+# ---------------------------------------------------- business terms
+
+tid:business-terms a skos:ConceptScheme ;
+    skos:prefLabel "Tarnwick business terms"@en .
+
+term:active-customer a skos:Concept ;
+    skos:inScheme tid:business-terms ;
+    skos:prefLabel "active customer"@en ;
+    skos:altLabel "active customers"@en ;
+    skos:scopeNote """Marketing and finance define this differently, and
+        both definitions are in use. A report must name the one it
+        means."""@en .
+
+term:revenue a skos:Concept ;
+    skos:inScheme tid:business-terms ;
+    skos:prefLabel "revenue"@en ;
+    skos:altLabel "sales"@en .
+
+# ----------------------------------------------------------- metrics
+# Every pattern may use ?asOf, the reporting date, and ?yearBefore, the
+# same date a year earlier. A pattern that uses ?from and ?to needs a
+# period.
+
+metric:active-customers-marketing a twm:Metric ;
+    rdfs:label "active customers (marketing)"@en ;
+    skos:definition """Customers who placed at least one order in the
+        twelve months up to the reporting date."""@en ;
+    twm:defines term:active-customer ;
+    twm:steward "Marketing" ;
+    twm:aggregate "COUNT DISTINCT" ;
+    twm:measure "?customer" ;
+    twm:where """
+        ?order tw:placedBy ?customer ;
+               tw:orderDate ?date .
+        FILTER (?date > ?yearBefore
+                && ?date <= ?asOf)""" ;
+    twm:dimension dim:home-region .
+
+metric:active-customers-finance a twm:Metric ;
+    rdfs:label "active customers (finance)"@en ;
+    skos:definition """Customers whose account is open on the reporting
+        date and who have ordered at least once."""@en ;
+    twm:defines term:active-customer ;
+    twm:steward "Finance" ;
+    twm:aggregate "COUNT DISTINCT" ;
+    twm:measure "?customer" ;
+    twm:where """
+        ?order tw:placedBy ?customer ;
+               tw:orderDate ?date .
+        FILTER (?date <= ?asOf)
+        FILTER NOT EXISTS {
+            ?customer tw:accountClosed ?closed .
+            FILTER (?closed <= ?asOf)
+        }""" ;
+    twm:dimension dim:home-region .
+
+metric:revenue a twm:Metric ;
+    rdfs:label "revenue"@en ;
+    skos:definition """What customers paid for the products on their
+        orders, in US dollars: quantity times unit price, added up over
+        every order line, counted on the order date."""@en ;
+    twm:defines term:revenue ;
+    twm:steward "Finance" ;
+    twm:aggregate "SUM" ;
+    twm:measure "?quantity * ?price" ;
+    twm:where """
+        ?order tw:orderDate ?date ;
+               tw:hasLine ?line .
+        ?line tw:quantity ?quantity ;
+              tw:unitPriceUSD ?price .
+        FILTER (?date >= ?from
+                && ?date <= ?to)""" ;
+    twm:dimension dim:region , dim:store , dim:month .
+
+# -------------------------------------------------------- dimensions
+
+dim:region a twm:Dimension ;
+    rdfs:label "region"@en ;
+    skos:definition """The sales region of the store that made the sale.
+        Online orders have no region and are grouped as Online."""@en ;
+    twm:needs "?order" ;
+    twm:where """
+        ?order tw:soldAt ?store .
+        OPTIONAL {
+            ?store tw:locatedIn/tw:partOf+ ?r .
+            ?r a tw:Region ;
+               rdfs:label ?regionName .
+        }
+        BIND (COALESCE(?regionName, "Online") AS ?group)""" .
+
+dim:store a twm:Dimension ;
+    rdfs:label "store"@en ;
+    skos:definition """The store that made the sale, the online store
+        included."""@en ;
+    twm:needs "?order" ;
+    twm:where """
+        ?order tw:soldAt ?store .
+        ?store rdfs:label ?group .""" .
+
+dim:month a twm:Dimension ;
+    rdfs:label "month"@en ;
+    skos:definition "The calendar month of the order date."@en ;
+    twm:needs "?date" ;
+    twm:sortByGroup true ;
+    twm:where """
+        BIND (SUBSTR(STR(?date), 1, 7) AS ?group)""" .
+
+dim:home-region a twm:Dimension ;
+    rdfs:label "home region"@en ;
+    skos:definition "The sales region of the customer's home town."@en ;
+    twm:needs "?customer" ;
+    twm:where """
+        ?customer tw:homeTown ?town .
+        ?town tw:partOf+ ?r .
+        ?r a tw:Region ;
+           rdfs:label ?group .""" .

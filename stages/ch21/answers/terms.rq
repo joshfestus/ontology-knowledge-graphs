@@ -1,0 +1,12 @@
+# Task 21.4: each business term and how many metrics define it.
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX twm:  <https://tarnwick.example/metrics#>
+PREFIX tid:  <https://tarnwick.example/id/>
+
+SELECT ?term (COUNT(?metric) AS ?metrics) WHERE {
+  ?t skos:inScheme tid:business-terms ;
+     skos:prefLabel ?term .
+  OPTIONAL { ?metric twm:defines ?t }
+}
+GROUP BY ?term
+ORDER BY DESC(?metrics) ?term

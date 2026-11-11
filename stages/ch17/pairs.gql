@@ -1,0 +1,5 @@
+MATCH (a:Product)<-[:CONTAINS]-(o:Order)-[:CONTAINS]->(b:Product)
+WHERE a.sku < b.sku
+RETURN a.sku, b.sku, COUNT(o) AS orders
+ORDER BY orders DESC, a.sku
+LIMIT 5
